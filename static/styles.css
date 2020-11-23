@@ -87,3 +87,62 @@ header{
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+#LoginHeader{
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin: 2.5%;
+}
+
+.encapsule{
+  padding: 20px;
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 5%;
+  border: 3px solid orange;
+  padding: 10px;
+  color: #777;
+
+}
+
+.LoginContent{
+  margin-left: 25%;
+  margin-right: 25%;
+  font-size: 1.5vw;
+}
+
+#Username,#Password,.LoginFormButton{
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+}
+
+#Username{
+  margin-bottom: 10px;
+}
+
+.LoginFormButton{
+  background-color: rgba(255, 255, 255, 0.3);
+  font-family: arial;
+  font-weight: lighter;
+  text-align: center;
+  cursor: pointer;
+  color: #2f2f2f;
+  background-color: #CDCDCD;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 0;
+  font-size: 2vw;
+  margin-top: 10px;
+}
+
+.LoginFormButton:hover{
+  background-color: red;
+  color: white;
+  font-weight: normal;
+  box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.5);
+  -webkit-transition-duration: 0.7s;
+}
