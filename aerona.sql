@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS OrderItems;
 
 CREATE TABLE IF NOT EXISTS `Users` (
   `userID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -55,3 +56,15 @@ CREATE TABLE IF NOT EXISTS `Orders` (
 
 INSERT INTO 'Orders'('userID', 'customerID') VALUES (2, 3);
 INSERT INTO 'Orders'('userID', 'customerID') VALUES (2, 4);
+
+CREATE TABLE IF NOT EXISTS `OrderItems` (
+  `orderItemsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `itemID`	INTEGER NOT NULL,
+  `orderID`	INTEGER NOT NULL
+);
+
+INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (2, 1);
+INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (4, 1);
+INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (6, 1);
+INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (2, 2);
+INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (8, 2);
