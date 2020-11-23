@@ -87,3 +87,16 @@ header{
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.logoutbtn {
+  right: 0;
+  position: absolute;
+  padding: 5px 12px;
+  font-size: 12px;
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: grey;
+}

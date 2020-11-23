@@ -67,7 +67,9 @@ def Suppliers():
     return render_template('suppliers.html')
 
 
-
+@app.route("/SelectPDF")
+def SelectPDF():
+    return render_template('selectPDF.html')
 
 
 
