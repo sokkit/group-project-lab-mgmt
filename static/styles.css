@@ -1,4 +1,9 @@
 /*css*/
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: arial, sans-serif;
   font-size: 0.7em;
@@ -10,37 +15,75 @@ header{
   font-size: 30px;
   font-family: sans-serif;
   padding: 4px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
   color: white;
   align-items: right;
   text-indent: 20px;
 }
 
 
-.navBar{
-  position: absolute;
-  float: right;
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-  height: auto;
-  align-items: stretch;
-  justify-content: space-between;
-  bottom: 0;
+.navBar {
+  overflow: hidden;
+  background-color: #2e2e2e;
+  border-top-style: solid;
+  border-color: black;
+  border-bottom-style: solid;
 }
 
-.navBar a{
-  text-align: center;
+.navBar a {
+  float: left;
   font-size: 18px;
-  font-family: sans-serif;
-  text-decoration: none;
-  flex-grow: 5;
-  padding: 8px;
-  background-color: #0324fc;
   color: white;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.navBar a:hover{
-  background-color: #001bcc;
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 18px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 10px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navBar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
   transition: all 500ms ease;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2e2e2e;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: red;
+  transition: all 500ms ease;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
