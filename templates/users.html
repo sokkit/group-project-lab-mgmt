@@ -1,1 +1,33 @@
 {%extends 'index.html'%}
+{%block mainBlock%}
+<h6>Users</h6>
+{% for n in userList %}
+<div class="userContents">
+  <h5>Username : {{username}}</h5>
+  <h5>Role : {{role}}</h5>
+</div>
+{% endfor %}
+<div class="UserAdminPanel">
+  <form name="selectUser">
+    <label for="selectedUser">Select User: </label>
+    <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username">
+    <div>
+      <div class="selectButtonLeft">Select</div>
+      <div class="resetButtonRight">Reset</div>
+    </div>
+  </form>
+</div>
+<div class="UserAdminPanel" style="top: 40%;">
+  <form name="changeDetails">
+    <label for="RoleChange">Admin? : </label>
+    <input type="checkbox" id="RoleChange" name="RoleChange" value="Admin"><br>
+    <label for="newPassword"> Change Password: </label>
+    <input type="text" id="newPassword" name="newPassword" placeholder="enter new password"><br>
+    <label for="Delete">Delete User? : </label>
+    <input type="checkbox" id="Delete" name="Delete" value="Delete"><br>
+    <label for="confirmation">Confirm changes? : </label>
+    <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
+  </form>
+  <div class="button1">submit changes</div>
+</div>
+{%endblock%}
