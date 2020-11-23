@@ -1,0 +1,12 @@
+{%extends 'index.html'%}
+
+{%block mainBlock%}
+<h2>Login</h2>
+<form id='myForm' action="/Login" method="post">
+  <label>User name:<input type = "text" name = "username"><br></label>
+  <label>Password:<input type = "password" name = "password"><br></label>
+  <button type = "submit"> submit </button>
+</form>
+
+<p> result of operation : {{ msg }} </p>
+{%endblock%}

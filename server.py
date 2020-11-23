@@ -1,5 +1,5 @@
 import os
-from flask import Flask, redirect, request, render_template
+from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
 
 #DATABASE = '.db'
@@ -7,19 +7,49 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 
+@app.route("/Home")
+def admin():
+    username = request.cookies.get('username')
+    usertype = "null"
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == "Admin":
+        return render_template('home.html', msg = 'logged in as admin', username = username)
+    else:
+        return render_template('selectPDF.html', msg = 'no access', username = username)
 
+app.secret_key = 'bqxe6dx12x7fxa9xd5xdcycxx04xdf4xb6chxca@;Pxdax02xcf' #using os.urandom(24)
 
+@app.route("/Login", methods = ['GET','POST'])
+def login():
+    if request.method=='POST':
+        uName = request.form.get('username', default="Error")
+        pw = request.form.get('password', default="Error")
+        if checkCredentials(uName, pw):
+            print("checking login details")
+            session['username'] = request.form['username']
+            session['Password'] = 'pa55wrd' #Need to check this bit with Ian
+            if (uName =="Admin"):
+                session['usertype'] = 'Admin'
+                resp = make_response(render_template('home.html', msg='hello '+uName, username = uName))
+            else:
+                session['usertype'] = 'Staff'
+                resp = make_response(render_template('selectPDF.html', msg='hello '+uName, username = uName))
+        else:
+            resp = make_response(render_template('login.html', msg='Incorrect login'))
+        return resp
+    else:
+        username = 'none'
+        if 'username' in session:
+            username = escape(session['username'])
+        return render_template('Login.html', msg='', username = username)
 
+def checkCredentials(uName, pw):
+    return pw == 'password'
 
-
-
-
-
-
-
-
-
-
+@app.route("/Index")
+def index():
+    return render_template('index.html')
 
 
 
