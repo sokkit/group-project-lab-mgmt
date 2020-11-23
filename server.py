@@ -50,6 +50,21 @@ def checkCredentials(uName, pw):
 def index():
     return render_template('index.html')
 
+@app.route("/Users")
+def users():
+    return render_template('users.html')
+
+@app.route("/Products")
+def Products():
+    return render_template('products.html')
+
+@app.route("/Customers")
+def Customers():
+    return render_template('customers.html')
+
+@app.route("/Suppliers")
+def Suppliers():
+    return render_template('suppliers.html')
 
 
 
