@@ -28,7 +28,6 @@ def login():
         if checkCredentials(uName, pw):
             print("checking login details")
             session['username'] = request.form['username']
-            session['Password'] = 'pa55wrd' #Need to check this bit with Ian
             if (uName =="Admin"):
                 session['usertype'] = 'Admin'
                 resp = make_response(render_template('home.html', msg='hello '+uName, username = uName))
