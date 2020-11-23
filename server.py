@@ -53,7 +53,15 @@ def index():
 
 @app.route("/Users")
 def users():
-    return render_template('users.html')
+    username = request.cookies.get('username')
+    usertype = "null"
+    if 'usertype' in session:
+        usertype = escape(session['usertype'])
+    if usertype == "Admin":
+        return render_template('users.html', username = username)
+    else:
+        return render_template('selectPDF.html', msg = 'no access to users page', username = username)
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
