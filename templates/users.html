@@ -28,6 +28,17 @@
     <label for="confirmation">Confirm changes? : </label>
     <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
   </form>
-  <div class="button1">submit changes</div>
+  <div class="button1">Submit changes</div>
+</div>
+<div class="UserAdminPanel" style="top: 65%;">
+  <form name="createNewUser">
+    <label for="newUsername">Username : </label>
+    <input type="textbox" id="newUsername" name="newUsername"><br>
+    <label for="newPassword">Password: </label>
+    <input type="text" id="newPassword" name="newPassword" placeholder="enter new password"><br>
+    <label for="RoleChange">Admin? : </label>
+    <input type="checkbox" id="RoleChange" name="RoleChange" value="Admin"><br>
+  </form>
+  <div class="button1">Create User</div>
 </div>
 {%endblock%}
