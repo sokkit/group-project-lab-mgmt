@@ -238,6 +238,7 @@ header{
   }
   .customerTable  {
     border-collapse: collapse;
+    margin: 0 auto;
   }
   .customerTable thead {
     border: solid;
@@ -250,5 +251,8 @@ header{
     padding: 5px;
   }
   .customerTable tbody tr:nth-child(odd) {
-  background: #eee;
+  background: #0324fc;
 }
+  .customerTable tbody tr:nth-child(even) {
+  background: #F5F5F5;
+  }
