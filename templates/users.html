@@ -22,7 +22,7 @@
     <label for="selectedUser">Select User: </label>
     <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username">
     <div>
-      <div class="selectButtonLeft" onclick="selectUserFromValidation()">Select</div>
+      <div class="selectButtonLeft" onclick="validateSelectUser()">Select</div>
       <div class="resetButtonRight">Reset</div>
     </div>
   </form>
@@ -50,6 +50,6 @@
     <label for="RoleChange">Admin? : </label>
     <input type="checkbox" id="RoleGiven" name="RoleGiven" value="Admin"><br>
   </form>
-  <div class="button1">Create User</div>
+  <div class="button1" onclick="validateNewUser()">Create User</div>
 </div>
 {%endblock%}
