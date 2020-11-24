@@ -146,7 +146,7 @@ header{
   box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.5);
   -webkit-transition-duration: 0.7s;
  }
- 
+
   .logoutbtn {
     padding: 5px 12px;
     font-size: 12px;
@@ -222,3 +222,19 @@ header{
     margin-top: 8px;
     border-style: solid;
   }
+  .customerTable  {
+    border-collapse: collapse;
+  }
+  .customerTable thead {
+    border: solid;
+    font-weight: bold;
+  }
+  .customerTable, td {
+    border: solid;
+  }
+  .customerTable td, th  {
+    padding: 5px;
+  }
+  .customerTable tbody tr:nth-child(odd) {
+  background: #eee;
+}
