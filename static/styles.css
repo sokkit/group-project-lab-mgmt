@@ -112,12 +112,17 @@ header{
   font-size: 1.5vw;
 }
 
-#Username,#Password,.LoginFormButton{
+#Username,#Password{
   display: inline-block;
   width: 100%;
   padding: 10px;
   border: 3px solid #ccc;
   box-sizing: border-box;
+
+}
+
+#Username:focus,#Password:focus{
+  outline: none !important;
 }
 
 #Username{
@@ -125,6 +130,10 @@ header{
 }
 
 .LoginFormButton{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
   background-color: rgba(255, 255, 255, 0.3);
   font-family: arial;
   font-weight: lighter;
@@ -168,8 +177,13 @@ header{
     margin: 15px;
     width: 100%;
   }
+  .userContainerColumn {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
   .userContents {
-    float:left;
     padding: 10px;
     border-style: solid;
   }
