@@ -2,11 +2,21 @@
 {%extends 'index.html'%}
 {%block mainBlock%}
 <h6>Customers</h6>
-{% for n in userList %}
-<div class="userContents">
-  <h5>Username : {{username}}</h5>
-  <h5>Role : {{role}}</h5>
-</div>
-{% endfor %}
+<table>
+  <thead>
+     <td>Customer Name</td>
+     <td>Address</td>
+     <td>Delivery Address</td>
+
+  </thead>
+  {% for row in data %}
+  <tr>
+  <td>{{row[0]}}</td>
+  <td>{{row[1]}}</td>
+  <td>{{row[2]}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
 
 {%endblock%}

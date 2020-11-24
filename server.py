@@ -89,7 +89,7 @@ def customer():
             try:
                 conn = sqlite3.connect(DATABASE)
                 cur = conn.cursor()
-                cur.execute("SELECT customerName FROM Customers") #check that this is secure as it doesn't use the "?"
+                cur.execute("SELECT customerName, address, deliveryAddress FROM Customers") #check that this is secure as it doesn't use the "?"
                 data = cur.fetchall()
                 print(data)
             except:
@@ -97,8 +97,8 @@ def customer():
                 conn.close()
             finally:
                 conn.close()
-                return str(data)
-    			# return render_template('customers.html', data = data)
+                # return str(data)
+                return render_template('customers.html', data = data)
         else:
             return render_template('selectPDF.html', msg = 'no access to users page', username = username)
 
