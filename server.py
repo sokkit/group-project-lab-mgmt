@@ -48,7 +48,7 @@ def login():
 
 def checkCredentials(uName, pw):
     return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
-    # Long string of characters is the hashed password for admin 
+    # Long string of characters is the hashed password for admin
 
 
 @app.route("/Index")
@@ -99,6 +99,18 @@ def fetchuserinfo():
     # Closes the file to prevent memory leaks
     return render_template("users.html", username = username_array, role = role_array)
     # ^ Shows the user users.html with the required data
+
+@app.route("/Products")
+def products():
+    if request.method == 'GET':
+        username = request.cookies.get('username')
+        usertype = "null"
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == "Admin":
+            return render_template("products.html")
+        else:
+            return render_template("home.html")
 
 @app.route("/Customers")
 def customer():
