@@ -26,6 +26,8 @@ def login():
     if request.method=='POST':
         uName = request.form.get('username', default="Error")
         pw = bcrypt.hashpw(request.form.get('password', default="Error").encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
+        # Hashes received password with the same salt as used for admin password
+        # Tip: When hashing make sure to encode the string being passed to UTF-8
         if checkCredentials(uName, pw):
             print("checking login details")
             session['username'] = request.form['username']
@@ -46,6 +48,8 @@ def login():
 
 def checkCredentials(uName, pw):
     return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
+    # Long string of characters is the hashed password for admin 
+
 
 @app.route("/Index")
 def index():
@@ -64,19 +68,24 @@ def users():
 
 @app.route("/FetchUser")
 def fetchuserinfo():
-    db = sqlite3.connect("database.db")
+    db = sqlite3.connect("database.db") # Opens the DB
     curs = db.cursor()
-    curs.execute("SELECT username, role FROM Users")
+    curs.execute("SELECT username, role FROM Users") # Executes the SQL query
     results = curs.fetchall()
+    # ^ Creates an array of tuples for the rows of the table with selected cols
     username_array = []
     role_array = []
+    # Initializes 2 lists which will later be passed to users.html
     for idx, val in enumerate(results):
         username_array.append(results[idx][0])
         role_array.append(results[idx][1])
+        # Appends the lists with the data required
     print(username_array,role_array)
     curs.close()
     db.close()
+    # Closes the file to prevent memory leaks
     return render_template("users.html", username = username_array, role = role_array)
+    # ^ Shows the user users.html with the required data
 
 @app.route("/Customers")
 def customer():
