@@ -62,6 +62,23 @@ def users():
     else:
         return render_template('selectPDF.html', msg = 'no access to users page', username = username)
 
+@app.route("/FetchUser")
+def fetchuserinfo():
+    db = sqlite3.connect("database.db")
+    curs = db.cursor()
+    curs.execute("SELECT username, role FROM Users")
+    results = curs.fetchall()
+    username_array = []
+    role_array = []
+    for idx, val in enumerate(results):
+        username_array.append(results[idx][0])
+        role_array.append(results[idx][1])
+    print(username_array,role_array)
+    curs.close()
+    db.close()
+    return render_template("users.html", username = username_array, role = role_array)
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
