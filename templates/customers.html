@@ -1,1 +1,11 @@
 {%extends 'index.html'%}
+{%block mainBlock%}
+<h6>Customers</h6>
+{% for n in userList %}
+<div class="userContents">
+  <h5>Username : {{username}}</h5>
+  <h5>Role : {{role}}</h5>
+</div>
+{% endfor %}
+
+{%endblock%}

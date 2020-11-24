@@ -3,7 +3,7 @@ import bcrypt
 from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
 
-#DATABASE = '.db'
+DATABASE = 'database.db'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -61,6 +61,30 @@ def users():
         return render_template('users.html', username = username)
     else:
         return render_template('selectPDF.html', msg = 'no access to users page', username = username)
+
+@app.route("/Customers")
+def customer():
+    if request.method == 'GET':
+        username = request.cookies.get('username')
+        usertype = "null"
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype == "Admin":
+            try:
+                conn = sqlite3.connect(DATABASE)
+                cur = conn.cursor()
+                cur.execute("SELECT customerName FROM Customers") #check that this is secure as it doesn't use the "?"
+                data = cur.fetchall()
+                print(data)
+            except:
+                print('there was an error', data)
+                conn.close()
+            finally:
+                conn.close()
+                return str(data)
+    			# return render_template('customers.html', data = data)
+        else:
+            return render_template('selectPDF.html', msg = 'no access to users page', username = username)
 
 
 if __name__ == "__main__":
