@@ -51,16 +51,29 @@ def checkCredentials(uName, pw):
 def index():
     return render_template('index.html')
 
-@app.route("/Users")
+@app.route("/Users", methods=['GET'])
 def users():
-    username = request.cookies.get('username')
-    usertype = "null"
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == "Admin":
-        return render_template('users.html', username = username)
-    else:
-        return render_template('selectPDF.html', msg = 'no access to users page', username = username)
+    if request.method == 'GET':
+        username = request.cookies.get('username')
+        usertype = "null"
+        if 'usertype' in session:
+            usertype = escape(session['usertype'])
+        if usertype != "Admin":
+            return render_template('selectPDF.html', msg = 'no access', username = username)
+        db = sqlite3.connect("database.db")
+        curs = db.cursor()
+        curs.execute("SELECT username, role FROM Users")
+        results = curs.fetchall()
+        username_array = []
+        role_array = []
+        for idx, val in enumerate(results):
+            username_array.append(results[idx][0])
+            role_array.append(results[idx][1])
+        print(username_array,role_array)
+        curs.close()
+        db.close()
+        return render_template("users.html", usernames = username_array, roles = role_array)
+
 
 @app.route("/FetchUser")
 def fetchuserinfo():

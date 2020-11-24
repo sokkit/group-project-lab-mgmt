@@ -146,7 +146,7 @@ header{
   box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.5);
   -webkit-transition-duration: 0.7s;
  }
- 
+
   .logoutbtn {
     padding: 5px 12px;
     font-size: 12px;
@@ -168,8 +168,13 @@ header{
     margin: 15px;
     width: 100%;
   }
+  .userContainerColumn {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
   .userContents {
-    float:left;
     padding: 10px;
     border-style: solid;
   }

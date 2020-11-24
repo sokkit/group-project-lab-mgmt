@@ -1,23 +1,33 @@
-<script type="text/javascript" src="../static/globaljs.js"></script>
 {%extends 'index.html'%}
 {%block mainBlock%}
 <h6>Users</h6>
-{% for n in userList %}
-<div class="userContents">
-  <h5>Username : {{username}}</h5>
-  <h5>Role : {{role}}</h5>
+<div class="userContainerColumn">
+  {% for user in usernames %}
+  <div class="userContents">
+    <h5>Username : {{user}}</h5>
+  </div><br>
+  {% endfor %}
 </div>
-{% endfor %}
+
+<div class="userContainerColumn">
+  {% for role in roles %}
+  <div class="userContents">
+    <h5>Role : {{role}}</h5>
+  </div><br>
+  {% endfor %}
+</div>
+
 <div class="UserAdminPanel">
   <form name="selectUser">
     <label for="selectedUser">Select User: </label>
     <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username">
     <div>
-      <div class="selectButtonLeft">Select</div>
+      <div class="selectButtonLeft" onclick="selectUserFromValidation()">Select</div>
       <div class="resetButtonRight">Reset</div>
     </div>
   </form>
 </div>
+
 <div class="UserAdminPanel" style="top: 40%;">
   <form name="changeDetails">
     <label for="RoleChange">Admin? : </label>
