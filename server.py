@@ -17,7 +17,7 @@ def checkAdmin():
 @app.route("/Home")
 def admin():
     username = request.cookies.get('username')
-    if checkAdmin()
+    if checkAdmin():
         return render_template('home.html', msg = 'logged in as admin', username = username)
     else:
         return render_template('selectPDF.html', msg = 'no access', username = username)
