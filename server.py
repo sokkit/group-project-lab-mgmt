@@ -50,6 +50,12 @@ def checkCredentials(uName, pw):
     return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
     # Long string of characters is the hashed password for admin
 
+def checkAdmin():
+    usertype = "null"
+    if "usertype" in session:
+        usertype = escape(session['usertype'])
+    return usertype == "Admin"
+
 
 @app.route("/Index")
 def index():
@@ -103,11 +109,7 @@ def fetchuserinfo():
 @app.route("/Products")
 def products():
     if request.method == 'GET':
-        username = request.cookies.get('username')
-        usertype = "null"
-        if 'usertype' in session:
-            usertype = escape(session['usertype'])
-        if usertype == "Admin":
+        if checkAdmin():
             return render_template("products.html")
         else:
             return render_template("home.html")
