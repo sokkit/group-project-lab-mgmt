@@ -48,7 +48,7 @@ def login():
 
 def checkCredentials(uName, pw):
     return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
-    # Long string of characters is the hashed password for admin 
+    # Long string of characters is the hashed password for admin
 
 
 @app.route("/Index")
@@ -122,8 +122,28 @@ def customer():
                 # return str(data)
                 return render_template('customers.html', data = data)
         else:
-            return render_template('selectPDF.html', msg = 'no access to users page', username = username)
+            return render_template('selectPDF.html', msg = 'no access to customers page', username = username)
 
+@app.route("/Customer/AddCustomer", methods = ['POST','GET'])
+def add_customer():
+    if request.method == 'POST':
+        name = request.form.get('name', default="Error")
+        address = request.form.get('address', default="Error")
+        delivery = request.form.get('delivery', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            cur.execute("INSERT INTO Customers ('name', 'address', 'delivery')\
+            VALUES (?,?,?)",
+            (name, address, delivery) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
 
 if __name__ == "__main__":
 	app.run(debug=True)

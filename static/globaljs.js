@@ -25,3 +25,23 @@ function validateNewUser(){
     //do not carry out creating new user SQL code
   }
 }
+
+function addCustomer() {
+  var firstName = document.forms["addCustomer"]["name"].value;
+  var surname = document.forms["addCustomer"]["address"].value;
+  var termLocation = document.forms["addCustomer"]["deliveryAddress"].value;
+  params = 'name='+name+'&address='+address+'&deliveryAddress='+deliveryAddress;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  xhttp.send(params);
+  return false;
+}

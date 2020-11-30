@@ -17,5 +17,11 @@
   </tr>
   {% endfor %}
 </table>
-
+<form id="addCustomer" onsubmit="return addCustomer()">
+  <label>Name:<input type = "text" name = "name"><br></label>
+  <label>Address:<input type = "text" name = "address"><br></label>
+  <label>Delivery Address:<input type = "text" name = "deliveryAddress"><br></label>
+  <button type = "submit"> Add New Customer </button>
+</form>
+<span id='txt'></span>
 {%endblock%}
