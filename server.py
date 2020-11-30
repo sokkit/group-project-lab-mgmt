@@ -30,7 +30,7 @@ def login():
         uName = request.form.get('username', default="Error")
         pw = bcrypt.hashpw(request.form.get('password', default="Error").encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
         # Hashes received password with the same salt as used for admin password
-        # Tip: When hashing make sure to encode the string being passed to UTF-8
+        # Tip: When hashing make sure to encode the string being passed to UTF-8 (.encode() by default is UTF-8)
         if checkCredentials(uName, pw):
             print("checking login details")
             session['username'] = request.form['username']
@@ -105,7 +105,14 @@ def fetchuserinfo():
 def products():
     if request.method == 'GET':
         if checkAdmin():
-            return render_template("products.html")
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("SELECT * FROM Items")
+            results = curs.fetchall()
+
+            curs.close()
+            db.close()
+            return render_template("products.html", data = results)
         else:
             return render_template("home.html")
 
