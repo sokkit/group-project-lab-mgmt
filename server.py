@@ -105,6 +105,10 @@ def fetchuserinfo():
 def selectpdfpage():
     return render_template("selectPDF.html")
 
+@app.route("/EditorPDF")
+def editorPDF():
+    return render_template("editorPDF.html")
+
 @app.route("/Products")
 def products():
     if request.method == 'GET':
