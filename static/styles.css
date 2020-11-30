@@ -94,7 +94,7 @@ header{
   text-align: center;
   margin: 2.5%;
 }
-
+/* formStyles */
 .encapsule{
   padding: 20px;
   width: 50%;
@@ -106,30 +106,24 @@ header{
 
 }
 
-.LoginContent{
+.InputContent{
   margin-left: 25%;
   margin-right: 25%;
   font-size: 1.5vw;
 }
 
-#Username,#Password{
-  display: inline-block;
+.InputContent label, .InputContent input, .InputContent select{
+  display: block;
   width: 100%;
+}
+
+.InputContent input, .InputContent select{
   padding: 10px;
   border: 3px solid #ccc;
   box-sizing: border-box;
-
 }
 
-#Username:focus,#Password:focus{
-  outline: none !important;
-}
-
-#Username{
-  margin-bottom: 10px;
-}
-
-.LoginFormButton{
+.EditorFormButton, .LoginFormButton{
   display: inline-block;
   box-sizing: border-box;
   width: 100%;
@@ -148,7 +142,32 @@ header{
   margin-top: 10px;
 }
 
-.LoginFormButton:hover{
+.LoginContent{
+  margin-left: 25%;
+  margin-right: 25%;
+  font-size: 1.5vw;
+}
+
+
+#Username,#Password{
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+
+}
+
+#Username:focus,#Password:focus{
+  outline: none !important;
+}
+
+#Username{
+  margin-bottom: 10px;
+}
+
+
+.LoginFormButton:hover, .EditorFormButton:hover{
   background-color: red;
   color: white;
   font-weight: normal;
