@@ -101,6 +101,10 @@ def fetchuserinfo():
     return render_template("users.html", username = username_array, role = role_array)
     # ^ Shows the user users.html with the required data
 
+@app.route("/SelectPDF")
+def selectpdfpage():
+    return render_template("selectPDF.html")
+
 @app.route("/Products")
 def products():
     if request.method == 'GET':
