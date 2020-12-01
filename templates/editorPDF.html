@@ -10,50 +10,89 @@
 
 <h2>Input Data</h2>
 
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
 
-<div class="encapsule">
+<script type="text/javascript">
+  $(document).ready(function(){
+    var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required><option>Placeholder</option><option>Placeholder 2</option><option>Placeholder 3</option></select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
+
+    $("#InsertRow").click(function(){
+      $("#SingleProductTable > tbody").prepend(newrow);
+    });
+
+
+  });
+
+</script>
+
+
+
+<div class="EditorEncapsule">
   <main class="InputContent">
     <form id='EditorForm' action="/Login" method="post"">
-
       <label for="OrderNumber">Order Number</label>
-      <input id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
+      <input class="Inputlist" id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
 
       <label for="Date">Date</label>
-      <input id = "Date" type = "date" name = "date" required placeholder="Enter The Date">
+      <input class="Inputlist" id = "Date" type = "date" name = "date" required placeholder="Enter The Date">
 
       <label for="ConsignmentNumber">Consignment Number</label>
-      <select id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
+      <select class="Inputlist" id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
         <option value="DHL">DHL</option>
         <option value="FedEx">FedEx</option>
         <option value="Royal Mail">Royal Mail</option>
         <option value="Hermes">Hermes</option>
         <option value="UPS">UPS</option>
       </select>
-      <!-- product -->
-      <label for="Product">Product</label>
-      <select id = "Product"  name = "product" required>
-        <option>Placeholder</option>
-        <option>Placeholder 2</option>
-        <option>Placeholder 3</option>
-      </select>
-      <!-- Quantity -->
-      <label for="Quantity">Quantity</label>
-      <input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity">
-      <!-- Batch Number -->
-      <label for="BatchNumber">Batch Number</label>
-      <input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number">
-      <!-- Expiry Date -->
-      <label for="ExpiryDate">Expiry Date</label>
-      <input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date">
-      <!-- temp -->
-      <label for="Temperature">Temperature</label>
-      <select id = "Temperature" name = "temperature" required>
-        <option value="Ambient">Ambient</option>
-        <option value="Coldchain">Cold chain</option>
-      </select>
-      <!-- origin -->
-      <label for="Origin">Origin</label>
-      <input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location">
+      <div class="EditorFormContent">
+        <!-- Multiple Entry Section -->
+        <div class="SingleProduct">
+        <table id = "SingleProductTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Batch Number</th>
+              <th>Expiry Date</th>
+              <th>Temperature</th>
+              <th>Origin</th>
+            </tr>
+            <tr>
+          </thead>
+            <tbody id="MainFormContent">
+              <td id= "LeftTableColumn"><!-- product -->
+                <select id = "Product"  name = "product" required>
+                  <option>Placeholder</option>
+                  <option>Placeholder 2</option>
+                  <option>Placeholder 3</option>
+                </select></td>
+                <td><!-- Quantity -->
+                  <input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
+                  <td><!-- Batch Number -->
+                    <input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td>
+                    <td><!-- Expiry Date -->
+                      <input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td>
+                      <td><!-- temp -->
+                        <select id = "Temperature" name = "temperature" required>
+                          <option value="Ambient">Ambient</option>
+                          <option value="Coldchain">Cold chain</option>
+                        </select></td>
+                        <td id="RightTableColumn"><!-- origin -->
+                          <input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td>
+                        </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+          <!-- End Of Multiple Entry Section -->
+        </div>
+      </div>
+
+      <input type="button" id="InsertRow" value="Insert Row">
 
 
       <button class="EditorFormButton" type = "submit" > Submit </button>

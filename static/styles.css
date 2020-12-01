@@ -94,7 +94,6 @@ header{
   text-align: center;
   margin: 2.5%;
 }
-/* formStyles */
 .encapsule{
   padding: 20px;
   width: 50%;
@@ -103,13 +102,59 @@ header{
   border: 3px solid orange;
   padding: 10px;
   color: #777;
+}
+/* formStyles */
 
+.EditorFormContent{
+  height: 50%;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 0;
 }
 
+#SingleProductTable{
+  border-spacing: 1px;
+  width: 100%;
+}
+#SingleProductTable, #SingleProductTable td, #SingleProductTable th{
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  border-top: none;
+  border-left: none;
+}
+
+#SingleProductTable th{
+  background-color: #EEEEEE
+}
+
+#SingleProductTable #RightTableColumn{
+ border-right: none;
+}
+
+#SingleProductTable input, #SingleProductTable select{
+  border: 0px;
+}
+
+#SingleProductTable th{
+  text-align: left;
+}
+
+/* .SingleProduct{
+  display: inline;
+  margin-left: 0%;
+  margin-right: 0%;
+  font-size: 0.5vw;
+} */
+
 .InputContent{
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
   font-size: 1.5vw;
+}
+
+.Inputlist{
+  display: block;
 }
 
 .InputContent label, .InputContent input, .InputContent select{
@@ -118,8 +163,8 @@ header{
 }
 
 .InputContent input, .InputContent select{
-  padding: 10px;
-  border: 3px solid #ccc;
+  padding: 5px;
+  /* border: 2px solid #ccc; */
   box-sizing: border-box;
 }
 
