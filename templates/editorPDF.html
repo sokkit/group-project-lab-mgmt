@@ -18,6 +18,43 @@
       <label for="OrderNumber">Order Number</label>
       <input id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
 
+      <label for="Date">Date</label>
+      <input id = "Date" type = "date" name = "date" required placeholder="Enter The Date">
+
+      <label for="ConsignmentNumber">Consignment Number</label>
+      <select id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
+        <option value="DHL">DHL</option>
+        <option value="FedEx">FedEx</option>
+        <option value="Royal Mail">Royal Mail</option>
+        <option value="Hermes">Hermes</option>
+        <option value="UPS">UPS</option>
+      </select>
+      <!-- product -->
+      <label for="Product">Product</label>
+      <select id = "Product"  name = "product" required>
+        <option>Placeholder</option>
+        <option>Placeholder 2</option>
+        <option>Placeholder 3</option>
+      </select>
+      <!-- Quantity -->
+      <label for="Quantity">Quantity</label>
+      <input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity">
+      <!-- Batch Number -->
+      <label for="BatchNumber">Batch Number</label>
+      <input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number">
+      <!-- Expiry Date -->
+      <label for="ExpiryDate">Expiry Date</label>
+      <input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date">
+      <!-- temp -->
+      <label for="Temperature">Temperature</label>
+      <select id = "Temperature" name = "temperature" required>
+        <option value="Ambient">Ambient</option>
+        <option value="Coldchain">Cold chain</option>
+      </select>
+      <!-- origin -->
+      <label for="Origin">Origin</label>
+      <input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location">
+
 
       <button class="EditorFormButton" type = "submit" > Submit </button>
 

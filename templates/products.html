@@ -1,2 +1,27 @@
-<script type="text/javascript" src="../static/globaljs.js"></script>
 {%extends 'index.html'%}
+{%block mainBlock%}
+<script type="text/javascript" src="../static/globaljs.js"></script>
+
+<h2>Products page</h2>
+<section id = "productinfo">
+  <table class="customerTable">
+    <thead>
+       <td>Product ID</td>
+       <td>Product Name</td>
+       <td>Storage Temperature</td>
+       <td>Country of origin</td>
+
+    </thead>
+    {% for row in data %}
+    <tr>
+    <td>{{row[0]}}</td>
+    <td>{{row[1]}}</td>
+    <td>{{row[2]}}</td>
+    <td>{{row[3]}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</section>
+
+
+{%endblock%}

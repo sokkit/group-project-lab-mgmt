@@ -8,13 +8,16 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 
+def checkAdmin():
+    usertype = "null"
+    if "usertype" in session:
+        usertype = escape(session['usertype'])
+    return usertype == "Admin"
+
 @app.route("/Home")
 def admin():
     username = request.cookies.get('username')
-    usertype = "null"
-    if 'usertype' in session:
-        usertype = escape(session['usertype'])
-    if usertype == "Admin":
+    if checkAdmin():
         return render_template('home.html', msg = 'logged in as admin', username = username)
     else:
         return render_template('selectPDF.html', msg = 'no access', username = username)
@@ -27,7 +30,7 @@ def login():
         uName = request.form.get('username', default="Error")
         pw = bcrypt.hashpw(request.form.get('password', default="Error").encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
         # Hashes received password with the same salt as used for admin password
-        # Tip: When hashing make sure to encode the string being passed to UTF-8
+        # Tip: When hashing make sure to encode the string being passed to UTF-8 (.encode() by default is UTF-8)
         if checkCredentials(uName, pw):
             print("checking login details")
             session['username'] = request.form['username']
@@ -51,6 +54,7 @@ def checkCredentials(uName, pw):
     # Long string of characters is the hashed password for admin
 
 
+
 @app.route("/Index")
 def index():
     return render_template('index.html')
@@ -59,10 +63,7 @@ def index():
 def users():
     if request.method == 'GET':
         username = request.cookies.get('username')
-        usertype = "null"
-        if 'usertype' in session:
-            usertype = escape(session['usertype'])
-        if usertype != "Admin":
+        if not checkAdmin():
             return render_template('selectPDF.html', msg = 'no access', username = username)
         db = sqlite3.connect("database.db")
         curs = db.cursor()
@@ -100,14 +101,34 @@ def fetchuserinfo():
     return render_template("users.html", username = username_array, role = role_array)
     # ^ Shows the user users.html with the required data
 
+@app.route("/SelectPDF")
+def selectpdfpage():
+    return render_template("selectPDF.html")
+
+@app.route("/EditorPDF")
+def editorPDF():
+    return render_template("editorPDF.html")
+
+@app.route("/Products")
+def products():
+    if request.method == 'GET':
+        if checkAdmin():
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("SELECT * FROM Items")
+            results = curs.fetchall()
+
+            curs.close()
+            db.close()
+            return render_template("products.html", data = results)
+        else:
+            return render_template("home.html")
+
 @app.route("/Customers")
 def customer():
     if request.method == 'GET':
         username = request.cookies.get('username')
-        usertype = "null"
-        if 'usertype' in session:
-            usertype = escape(session['usertype'])
-        if usertype == "Admin":
+        if checkAdmin():
             try:
                 conn = sqlite3.connect(DATABASE)
                 cur = conn.cursor()
@@ -144,6 +165,33 @@ def add_customer():
         finally:
             conn.close()
             return msg
+
+@app.route("/Users/Add", methods=['POST','GET'])
+def userAddDetails():
+    if request.method == 'GET':
+        return render_template("users.html")
+    if request.method == 'POST':
+        newUsernameCreate = request.form.get('newUsername', default="Error")
+        newPasswordCreate = request.form.get('newPassword', default="Error")
+        newUserRole = request.form.get('newUserRole', default="Error")
+        if newUserRole == True:
+            newUserRole = "Admin"
+        else:
+            newUserRole = "Staff"
+        console.log("taken in variables, beginning connection with database")
+        try:
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()#Below needs password to be added but idk if there is a password field in db so far, and same for firstname and surname
+            curs.execute("INSERT INTO 'Users'(username', 'role' ) Values (?, ?)"),(newUsernameCreate, newUserRole)
+            db.commit()
+            msg = "User successfully added to database"
+        except:
+            db.rollback()
+            msg = "Error creating user"
+        finally:
+            db.close()
+            return msg
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
