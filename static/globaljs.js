@@ -27,10 +27,10 @@ function validateNewUser(){
 }
 
 function addCustomer() {
-  var firstName = document.forms["addCustomer"]["name"].value;
-  var surname = document.forms["addCustomer"]["address"].value;
-  var termLocation = document.forms["addCustomer"]["deliveryAddress"].value;
-  params = 'name='+name+'&address='+address+'&deliveryAddress='+deliveryAddress;
+  var customerName = document.forms["addCustomer"]["customerName"].value;
+  var address = document.forms["addCustomer"]["address"].value;
+  var deliveryAddress = document.forms["addCustomer"]["deliveryAddress"].value;
+  params = 'customerName='+customerName+'&address='+address+'&deliveryAddress='+deliveryAddress;
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

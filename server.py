@@ -127,15 +127,15 @@ def customer():
 @app.route("/Customer/AddCustomer", methods = ['POST','GET'])
 def add_customer():
     if request.method == 'POST':
-        name = request.form.get('name', default="Error")
+        customerName = request.form.get('customerName', default="Error")
         address = request.form.get('address', default="Error")
-        delivery = request.form.get('delivery', default="Error")
+        deliveryAddress = request.form.get('deliveryAddress', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
-            cur.execute("INSERT INTO Customers ('name', 'address', 'delivery')\
+            cur.execute("INSERT INTO Customers ('customerName', 'address', 'deliveryAddress')\
             VALUES (?,?,?)",
-            (name, address, delivery) )
+            (customerName, address, deliveryAddress) )
             conn.commit()
             msg = "Record successfully added"
         except Exception as e:
