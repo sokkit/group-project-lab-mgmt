@@ -146,5 +146,32 @@ def customer():
             return render_template('selectPDF.html', msg = 'no access to users page', username = username)
 
 
+@app.route("/Users/Add", methods=['POST','GET'])
+def userAddDetails():
+    if request.method == 'GET':
+        return render_template("users.html")
+    if request.method == 'POST':
+        newUsernameCreate = request.form.get('newUsername', default="Error")
+        newPasswordCreate = request.form.get('newPassword', default="Error")
+        newUserRole = request.form.get('newUserRole', default="Error")
+        if newUserRole == True:
+            newUserRole = "Admin"
+        else:
+            newUserRole = "Staff"
+        console.log("taken in variables, beginning connection with database")
+        try:
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()#Below needs password to be added but idk if there is a password field in db so far, and same for firstname and surname
+            curs.execute("INSERT INTO 'Users'(username', 'role' ) Values (?, ?)"),(newUsernameCreate, newUserRole)
+            db.commit()
+            msg = "User successfully added to database"
+        except:
+            db.rollback()
+            msg = "Error creating user"
+        finally:
+            db.close()
+            return msg
+
+
 if __name__ == "__main__":
 	app.run(debug=True)
