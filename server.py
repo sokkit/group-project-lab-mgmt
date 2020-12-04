@@ -191,21 +191,26 @@ def userAddDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        newUsernameCreate = request.form.get('newUsername', default="Error")
-        newPasswordCreate = request.form.get('newPassword', default="Error")
-        newUserRole = request.form.get('newUserRole', default="Error")
-        if newUserRole == True:
-            newUserRole = "Admin"
+        console.log("recieved POST request")
+        Firstname = request.form.get('newFirstnameVar', default="Error")
+        Surname = request.form.get('newSurnameVar', default="Error")
+        Public = request.form.get('newPublicVar', default="Error")
+        Username = request.form.get('newUsernameVar', default="Error")
+        Password = request.form.get('newPasswordVar', default="Error")
+        UserRole = request.form.get('newUserRoleVar', default="False")
+        console.log("taken in variables")
+        if UserRole == True: #field box is a yes/no so I convert a "yes" into "Admin"
+            UserRole = "Admin"
         else:
-            newUserRole = "Staff"
+            UserRole = "Staff"#vice versa for "Staff"
         console.log("taken in variables, beginning connection with database")
         try:
             db = sqlite3.connect("database.db")
-            curs = db.cursor()#Below needs password to be added but idk if there is a password field in db so far, and same for firstname and surname
-            curs.execute("INSERT INTO 'Users'(username', 'role' ) Values (?, ?)"),(newUsernameCreate, newUserRole)
+            curs = db.cursor()
+            curs.execute("INSERT INTO 'Users'('firstName', 'surname', 'public', 'username', 'role' ) Values (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
             db.commit()
             msg = "User successfully added to database"
-        except:
+        except Exception as e:
             db.rollback()
             msg = "Error creating user"
         finally:

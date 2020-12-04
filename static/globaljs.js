@@ -8,39 +8,46 @@ function validateSelectUser(){
 }
 
 function validateNewUser(){
-  alert("function called");
+  var newFirstnameVar = document.forms["createNewUser"]["newFirstname"].value; //taking values from form
+  var newSurnameVar = document.forms["createNewUser"]["newSurname"].value;
+  var public = "No"; //we are not gonna bother with public field, it will be no by default
   var newUsernameVar = document.forms["createNewUser"]["newUsername"].value;
   var newPasswordVar = document.forms["createNewUser"]["newPassword"].value;
-  var valid = True;
-  alert("function called");
+  var valid = 0; // 0 means its valid, 1 means its invalid
+  if (newFirstnameVar == ""){ //presence checking
+    valid = 1;
+    alert("Please enter a firstname");
+  }
+  if (newSurnameVar == ""){
+    valid = 1;
+    alert("Please enter a surname");
+  }
   if (newUsernameVar == ""){
-    valid = False;
+    valid = 1;
     alert("Please enter a username");
   }
-  alert("Test1");
   if (newPasswordVar == ""){
     alert("Please enter a password");
-      valid = False;
+      valid = 1;
   }
-  alert("Test2");
-  if (valid == False){
-    //do not carry out creating new user SQL code
-  }
-  params = 'newUsernameCreate='+newUsernameVar+'&newPasswordCreate'+newPasswordVar;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.onload = function() {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      console.log(xhttp.responseText);
-      document.getElementById("txt").innerHTML = xhttp.responseText;
-    } else {
-      console.error(xhttp.statusText);
+  if (valid == 0){ //if all boxes are valid xhttp request is made
+    params = 'newFirstname='+newFirstnameVar+'&newSurname='+newSurnameVar+'&newPublic='+public+'&newUsername='+newUsernameVar+'&newPassword'+newPasswordVar;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/Users/Add', true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
     }
+    xhttp.send(params);
+    return false;
+  } else { //doesn't do xhttp request due to invalid data
+    alert("Data was not sent to server due to not being valid")
   }
-  xhttp.send(params);
-  return false;
-
 }
 
 function addCustomer() {

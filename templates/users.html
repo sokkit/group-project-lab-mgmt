@@ -32,22 +32,26 @@
   <form name="changeDetails">
     <label for="RoleChange">Admin? : </label>
     <input type="checkbox" id="RoleChange" name="RoleChange" value="Admin"><br>
-    <label for="newPassword"> Change Password: </label>
-    <input type="text" id="newPassword" name="newPassword" placeholder="enter new password"><br>
+    <label for="newPassword2"> Change Password: </label>
+    <input type="text" id="newPassword2" name="newPassword2" placeholder="enter new password"><br>
     <label for="confirmation">Confirm changes? : </label>
     <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
   </form>
   <div class="button1">Submit changes</div>
 </div>
 <div class="UserAdminPanel" style="top: 70%;">
-  <form name="createNewUser">
+  <form name="createNewUser" onsubmit="validateNewUser()">
+    <label for="newFirstname"> FirstName : </label>
+    <input type="textbox" id="newFirstname" name="newFirstname"><br>
+    <label for="newSurname"> Surname : </label>
+    <input type="textbox" id="newSurname" name="newSurname"><br>
     <label for="newUsername">Username : </label>
     <input type="textbox" id="newUsername" name="newUsername"><br>
     <label for="newPassword">Password: </label>
-    <input type="text" id="newPassword" name="newPassword" placeholder="enter new password"><br>
+    <input type="password" id="newPassword" name="newPassword" placeholder="enter new password"><br>
     <label for="RoleChange">Admin? : </label>
     <input type="checkbox" id="RoleGiven" name="RoleGiven" value="Admin"><br>
+    <button type="submit" class="selectButtonLeft">Create User<div/>
   </form>
-  <div class="button1" onclick="validateNewUser()">Create User</div>
 </div>
 {%endblock%}
