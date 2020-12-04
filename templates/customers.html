@@ -17,16 +17,19 @@
   </tr>
   {% endfor %}
 </table>
-<form id="addCustomer" onsubmit="return addCustomer()">
-  <label>Name:<input type = "text" name = "customerName"><br></label>
-  <label>Address:<input type = "text" name = "address"><br></label>
-  <label>Delivery Address:<input type = "text" name = "deliveryAddress"><br></label>
-  <button type = "submit"> Add New Customer </button>
-</form>
+<div class="customerAdminPanel">
+  <form id="addCustomer" onsubmit="return addCustomer()">
+    <label>Name:<input type = "text" name = "customerName"><br></label>
+    <label>Address:<input type = "text" name = "address"><br></label>
+    <label>Delivery Address:<input type = "text" name = "deliveryAddress"><br></label>
+    <button type = "submit"> Add New Customer </button>
+  </form> <br>
 
-<form id="delCustomer" onsubmit="return delCustomer()">
-  <label>Name:<input type = "text" name = "name"><br></label>
-  <button type = "submit"> Remove Customer </button>
-</form>
+  <form id="delCustomer" onsubmit="return delCustomer()">
+    <label>Name:<input type = "text" name = "name"><br></label>
+    <button type = "submit"> Remove Customer </button>
+  </form>
+</div>
+
 <span id='txt'></span>
 {%endblock%}

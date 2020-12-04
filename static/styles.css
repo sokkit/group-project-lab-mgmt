@@ -320,3 +320,28 @@ header{
   .customerTable tbody tr:nth-child(even) {
   background: #F5F5F5;
   }
+
+  .customerAdminPanel {
+    padding: 10px;
+    border-style: solid;
+    margin: 10px;
+    background-color: lightgrey;
+    display: block;
+    max-width: 60%;
+    margin: auto;
+    margin-top: 20px;
+  }
+
+  .customerAdminPanel input {
+    width: 100%;
+  }
+
+  .customerAdminPanel button {
+    background-color: #46d446;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 8px;
+    border-style: solid;
+    border-color: black;
+  }
