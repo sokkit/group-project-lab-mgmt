@@ -132,7 +132,7 @@ def customer():
             try:
                 conn = sqlite3.connect(DATABASE)
                 cur = conn.cursor()
-                cur.execute("SELECT customerName, address, deliveryAddress FROM Customers") #check that this is secure as it doesn't use the "?"
+                cur.execute("SELECT customerName, address, deliveryAddress FROM Customers")
                 data = cur.fetchall()
                 print(data)
             except:
@@ -148,14 +148,16 @@ def customer():
 @app.route("/Customer/AddCustomer", methods = ['POST','GET'])
 def add_customer():
     if request.method == 'POST':
+        #retrieve values
         customerName = request.form.get('customerName', default="Error")
         address = request.form.get('address', default="Error")
         deliveryAddress = request.form.get('deliveryAddress', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
+            #insert values into databse
             cur.execute("INSERT INTO Customers ('customerName', 'address', 'deliveryAddress')\
-            VALUES (?,?,?)",
+            VALUES (?,?,?)", #this method avoids SQL injection
             (customerName, address, deliveryAddress) )
             conn.commit()
             msg = "Record successfully added"

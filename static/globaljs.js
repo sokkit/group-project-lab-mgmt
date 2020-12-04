@@ -44,6 +44,7 @@ function validateNewUser(){
 }
 
 function addCustomer() {
+  // collects data from form and turn them into params
   var customerName = document.forms["addCustomer"]["customerName"].value;
   var address = document.forms["addCustomer"]["address"].value;
   var deliveryAddress = document.forms["addCustomer"]["deliveryAddress"].value;
@@ -59,6 +60,7 @@ function addCustomer() {
       console.error(xhttp.statusText);
     }
   };
+  //sends params to server
   xhttp.send(params);
   return false;
 }
