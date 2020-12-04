@@ -23,5 +23,10 @@
   <label>Delivery Address:<input type = "text" name = "deliveryAddress"><br></label>
   <button type = "submit"> Add New Customer </button>
 </form>
+
+<form id="delCustomer" onsubmit="return delCustomer()">
+  <label>Name:<input type = "text" name = "name"><br></label>
+  <button type = "submit"> Remove Customer </button>
+</form>
 <span id='txt'></span>
 {%endblock%}

@@ -62,3 +62,21 @@ function addCustomer() {
   xhttp.send(params);
   return false;
 }
+
+function delCustomer() {
+  var name = document.forms["delCustomer"]["name"].value;
+  params = 'name='+name;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  xhttp.send(params);
+  return false;
+}

@@ -166,6 +166,24 @@ def add_customer():
             conn.close()
             return msg
 
+@app.route("/Customer/DelCustomer", methods = ['POST','GET'])
+def del_customer():
+    if request.method == 'POST':
+        name = request.form.get('name', default="Error")
+        try:
+            print(name)
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            cur.execute("DELETE FROM Customers WHERE customerName=?;", [name])
+            conn.commit()
+            msg = "Record successfully deleted"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in delete operation"
+        finally:
+            conn.close()
+            return msg
+
 @app.route("/Users/Add", methods=['POST','GET'])
 def userAddDetails():
     if request.method == 'GET':
