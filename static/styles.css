@@ -315,7 +315,7 @@ header{
     padding: 5px;
   }
   .customerTable tbody tr:nth-child(odd) {
-  background: #0324fc;
+  background: #62BBF5;
 }
   .customerTable tbody tr:nth-child(even) {
   background: #F5F5F5;

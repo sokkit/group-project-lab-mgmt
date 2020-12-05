@@ -73,6 +73,7 @@ def login():
 
 def checkCredentials(uName, pw):
     #new login method using databse
+    db_pass = None #avoids error if user has incorrect details
     try:
         conn = sqlite3.connect(DATABASE)
         cur = conn.cursor()

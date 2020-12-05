@@ -74,18 +74,25 @@ function addCustomer() {
 
 function delCustomer() {
   var name = document.forms["delCustomer"]["name"].value;
-  params = 'name='+name;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.onload = function() {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      console.log(xhttp.responseText);
-      document.getElementById("txt").innerHTML = xhttp.responseText;
-    } else {
-      console.error(xhttp.statusText);
-    }
-  };
-  xhttp.send(params);
-  return false;
+  // checks if user is sure they want to delete
+  var delChoice = confirm(`Are you sure you want to delete ${name}?`);
+  if (delChoice == true) {
+    params = 'name='+name;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+    xhttp.send(params);
+    return false;
+  } else {
+    xhttp.open("GET", '/Customers', true);
+  }
+
 }
