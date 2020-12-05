@@ -31,15 +31,37 @@ def login():
         pw = bcrypt.hashpw(request.form.get('password', default="Error").encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
         # Hashes received password with the same salt as used for admin password
         # Tip: When hashing make sure to encode the string being passed to UTF-8 (.encode() by default is UTF-8)
+        print(checkCredentials(uName, pw))
         if checkCredentials(uName, pw):
             print("checking login details")
             session['username'] = request.form['username']
-            if (uName =="Admin"):
+        #new login method using databse
+            try:
+                conn = sqlite3.connect(DATABASE)
+                cur = conn.cursor()
+                cur.execute("SELECT * FROM Users WHERE username=?;", [uName])
+                data = cur.fetchall()
+                for idx, val in enumerate(data):
+                    db_role = data[idx][6] #fetches role from database
+            except:
+                print('there was an error')
+                conn.close()
+            finally:
+                conn.close()
+            if db_role == "Admin": #checks that matching role from username is admin
                 session['usertype'] = 'Admin'
                 resp = make_response(render_template('home.html', msg='hello '+uName, username = uName))
             else:
                 session['usertype'] = 'Staff'
                 resp = make_response(render_template('selectPDF.html', msg='hello '+uName, username = uName))
+
+            #previous method kept in for now but commented out
+            # if (uName =="Admin"):
+            #     session['usertype'] = 'Admin'
+            #     resp = make_response(render_template('home.html', msg='hello '+uName, username = uName))
+            # else:
+            #     session['usertype'] = 'Staff'
+            #     resp = make_response(render_template('selectPDF.html', msg='hello '+uName, username = uName))
         else:
             resp = make_response(render_template('login.html', msg='Incorrect login'))
         return resp
@@ -50,8 +72,25 @@ def login():
         return render_template('Login.html', msg='', username = username)
 
 def checkCredentials(uName, pw):
-    return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
+    #new login method using databse
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM Users WHERE username=?;", [uName])
+        data = cur.fetchall()
+        for idx, val in enumerate(data):
+            db_pass = data[idx][5] #fetches password from database
+    except:
+        print('there was an error')
+        conn.close()
+    finally:
+        conn.close()
+    return str(pw) == db_pass #compares database password with inputed password. Only compares hashed values
+
+    #previous method kept in for now but commented out
+    #return pw == b"$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K"
     # Long string of characters is the hashed password for admin
+
 
 
 
