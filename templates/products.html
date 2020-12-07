@@ -22,6 +22,18 @@
     {% endfor %}
   </table>
 </section>
+<div class="customerAdminPanel">
+  <form id="addProduct" onsubmit="return addProduct()">
+    <label>Product name:<input type = "text" name = "productName"><br></label>
+    <label>Storage temperature:<input type = "text" name = "productTemp"><br></label>
+    <label>Country of origin<input type = "text" name = "countryOO"><br></label>
+    <button type = "submit"> Add New Product </button>
+  </form> <br>
+
+  <form id="delCustomer" onsubmit="return delCustomer()">
+    <label>ID:<input type = "text" name = "productID"><br></label>
+    <button type = "submit"> Remove Product </button>
+  </form>
 
 
 {%endblock%}

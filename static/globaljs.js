@@ -162,3 +162,25 @@ function delCustomer() {
   }
 
 }
+
+function addProduct() {
+  // collects data from form and turn them into params
+  var productName = document.forms["addProduct"]["productName"].value;
+  var productTemp = document.forms["addProduct"]["productTemp"].value;
+  var countryOO = document.forms["addProduct"]["countryOO"].value;
+  params = 'productName='+productName+'&productTemp='+productTemp+'&countryOO='+countryOO;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/Products/AddProduct', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  //sends params to server
+  xhttp.send(params);
+  return false;
+}
