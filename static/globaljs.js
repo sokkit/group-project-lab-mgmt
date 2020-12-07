@@ -1,19 +1,15 @@
 console.log("JS Connected!")
 
-<<<<<<< HEAD
 function updateUserRole(){
+  var username = document.forms["changeDetails"]["selectedUser"].value;
   var checkBox = document.getElementById("Admin");
-=======
-function upsateUserRole(){
-  var checkBox = document.getElementById("RoleChange");
->>>>>>> da3f3b8b05d148d0ce22ca14a8051b0205c37900
   if (checkBox.checked == true){
     var role = "Admin";
   } else {
     var role = "Staff";
   }
-}
 
+}
 
 function updateUserPassword(){
   var username = document.forms["changeDetails"]["selectedUser"].value;
