@@ -184,3 +184,28 @@ function addProduct() {
   xhttp.send(params);
   return false;
 }
+
+function delProduct() {
+  var productID = document.forms["delProduct"]["productID"].value;
+  // checks if user is sure they want to delete
+  var delChoice = confirm(`Are you sure you want to delete product ${productID}?`);
+  if (delChoice == true) {
+    params = 'productID='+productID;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/Products/DelProduct', true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+    xhttp.send(params);
+    return false;
+  } else {
+    xhttp.open("GET", '/Products', true);
+  }
+
+}

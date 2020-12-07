@@ -165,7 +165,7 @@ def products():
             return render_template("home.html")
 
 @app.route("/Products/AddProduct", methods = ['POST','GET'])
-def addProduct():
+def add_product():
     if request.method == 'POST':
         #retrieve values
         productName = request.form.get('productName', default="Error")
@@ -183,6 +183,23 @@ def addProduct():
         except Exception as e:
             conn.rollback()
             msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Products/DelProduct", methods = ['POST','GET'])
+def del_product():
+    if request.method == 'POST':
+        productID= request.form.get('productID', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            cur.execute("DELETE FROM Items WHERE itemID=?;", [productID])
+            conn.commit()
+            msg = "Record successfully deleted"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in delete operation"
         finally:
             conn.close()
             return msg
@@ -237,7 +254,6 @@ def del_customer():
     if request.method == 'POST':
         name = request.form.get('name', default="Error")
         try:
-            print(name)
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
             cur.execute("DELETE FROM Customers WHERE customerName=?;", [name])
