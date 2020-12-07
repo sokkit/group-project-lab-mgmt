@@ -293,20 +293,18 @@ def userAddDetails():
             return msg
 
 @app.route("/Users/UpdatePassword", methods=['POST','GET']) #has not been tested yet
-def updateUserDetailss():
+def updateUserDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        print("recieved POST request")
         username = request.form.get('username', default="Error")
         password = request.form.get('password', default="Error")
-        print("taken in variables, beginning connection with database")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
             curs.execute("UPDATE Users SET password=? WHERE username=?",(password, username) )
             db.commit()
-            msg = "Password successfully updated"
+            msg = "User successfully added to database"
         except Exception as e:
             db.rollback()
             msg = "Error updating user"
@@ -319,10 +317,8 @@ def updateUserRole():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        console.log("recieved POST request")
         username = request.form.get('username', default="Error")
-        role = request.form.get('Role', default="Error")
-        console.log("taken in variables, beginning connection with database")
+        role = request.form.get('role', default="Error")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()

@@ -18,23 +18,23 @@
 </div>
 
 <div class="UserAdminPanel" style="top: 20%;">
-  <form name="changeDetails" id="changeDetails" onsubmit="return updateUserPassword()">
+  <form name="changePassword" onsubmit="updateUserPassword()">
     <label for="selectedUser">Select User: </label>
     <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username"><br>
     <label for="newPassword2"> Change Password: </label>
     <input type="text" id="newPassword2" name="newPassword2" placeholder="enter new password"><br>
     <label for="confirmation">Confirm changes? : </label>
-    <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
-    <button class="selectButtonLeft">Submit changes</button>
+    <input type="checkbox" id="confirmation" name="confirmation">
+    <button type="submit" class="selectButtonLeft">Submit changes</button>
   </form>
 </div>
 <div class="UserAdminPanel" style="top: 43%;">
-  <form name="changeDetails" onsubmit="updateUserRole()">
+  <form name="changeRole" onsubmit="updateUserRole()">
     <label for="selectedUser2">Select User: </label>
     <input type="text" id="selectedUser2" name="selectedUser2" placeholder="enter a username"><br>
     <label for="Admin">Admin : </label>
-    <input type="checkbox" id="Admin" name="Admin" value="Admin"><br>
-    <button class="selectButtonLeft">Submit changes</button>
+    <input type="checkbox" id="Admin" name="Admin"><br>
+    <button type="submit" class="selectButtonLeft">Submit changes</button>
   </form>
 </div>
 <div class="UserAdminPanel" style="top: 62%;">
@@ -48,10 +48,9 @@
     <label for="newPassword">Password: </label>
     <input type="password" id="newPassword" name="newPassword" placeholder="enter new password"><br>
     <label for="RoleGiven">Admin? : </label>
-    <input type="checkbox" id="RoleGiven" name="RoleGiven" value="Admin"><br>
-    <button type="submit" class="selectButtonLeft">Create User<button/>
+    <input type="checkbox" id="RoleGiven" name="RoleGiven"><br>
+    <button type="submit" class="selectButtonLeft">Create User</button>
   </form>
-</div>
 
 <p id='txt'></p>
 {%endblock%}
