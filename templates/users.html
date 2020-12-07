@@ -17,29 +17,18 @@
   {% endfor %}
 </div>
 
-<div class="UserAdminPanel">
-  <form name="selectUser">
+<div class="UserAdminPanel" style="top: 20%;">
+  <form name="changeDetails" onsumbit="updateUserPassword()">
     <label for="selectedUser">Select User: </label>
-    <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username">
-    <div>
-      <div class="selectButtonLeft" onclick="validateSelectUser()">Select</div>
-      <div class="resetButtonRight">Reset</div>
-    </div>
-  </form>
-</div>
-
-<div class="UserAdminPanel" style="top: 40%;">
-  <form name="changeDetails">
-    <label for="RoleChange">Admin? : </label>
-    <input type="checkbox" id="RoleChange" name="RoleChange" value="Admin"><br>
+    <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username"><br>
     <label for="newPassword2"> Change Password: </label>
     <input type="text" id="newPassword2" name="newPassword2" placeholder="enter new password"><br>
     <label for="confirmation">Confirm changes? : </label>
     <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
+    <button class="selectButtonLeft">Submit changes</button>
   </form>
-  <div class="button1">Submit changes</div>
 </div>
-<div class="UserAdminPanel" style="top: 70%;">
+<div class="UserAdminPanel" style="top: 50%;">
   <form name="createNewUser" onsubmit="validateNewUser()">
     <label for="newFirstname"> FirstName : </label>
     <input type="textbox" id="newFirstname" name="newFirstname"><br>

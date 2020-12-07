@@ -1,59 +1,13 @@
 console.log("JS Connected!")
 
-function upsateUserRole(){
-  var checkBox = document.getElementById("RoleChange");
-  if (checkBox.checked == true){
-    var role = "Admin";
-  } else {
-    var role = "Staff";
-  }
-}
-
-
-function updateUserPassword(){
-  var username = document.forms["changeDetails"]["selectedUser"].value;
-  var password = document.forms["changeDetails"]["newPassword2"].value;
-  var checkBox = document.getElementById("confirmation");
-  var valid = 0;
-  alert("taken in variables")
-  if (checkBox.checked == false){
-    alert("Please confirm changes before submitting");
-    return null;
-  }
-  if (username == ""){
-    valid = 1;
-    alert("Please enter a username");
-  }
-  if (password == ""){
-    valid = 1;
-    alert("Please enter a password");
-  }
-  if (valid == 0){
-    alert("One or more fields were incorrectly entered");
-  } else {
-    params = 'username='+username+'&password='+password;
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Users/UpdatePassword', true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.onload = function() {
-      if (xhttp.readyState === 4 && xhttp.status === 200) {
-        console.log(xhttp.responseText);
-        document.getElementById("txt").innerHTML = xhttp.responseText;
-      } else {
-        console.error(xhttp.statusText);
-      }
-    }
-    xhttp.send(params);
-    return false;
-  }
-}
-
 function validateNewUser(){
   var newFirstnameVar = document.forms["createNewUser"]["newFirstname"].value; //taking values from form
   var newSurnameVar = document.forms["createNewUser"]["newSurname"].value;
   var public = "No"; //we are not gonna bother with public field, it will be no by default
   var newUsernameVar = document.forms["createNewUser"]["newUsername"].value;
   var newPasswordVar = document.forms["createNewUser"]["newPassword"].value;
+  var checkBox = document.getElementById("confirmation");
+  var admin = checkBox.checked;
   var valid = 0; // 0 means its valid, 1 means its invalid
   if (newFirstnameVar == ""){ //presence checking
     valid = 1;
@@ -72,7 +26,7 @@ function validateNewUser(){
       valid = 1;
   }
   if (valid == 0){ //if all boxes are valid xhttp request is made
-    params = 'newFirstname='+newFirstnameVar+'&newSurname='+newSurnameVar+'&newPublic='+public+'&newUsername='+newUsernameVar+'&newPassword'+newPasswordVar;
+    params = 'newFirstname='+newFirstnameVar+'&newSurname='+newSurnameVar+'&newPublic='+public+'&newUsername='+newUsernameVar+'&newPassword'+newPasswordVar+'&Admin='+admin;
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", '/Users/Add', true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -113,14 +67,30 @@ function addCustomer() {
   return false;
 }
 
-function delCustomer() {
-  var name = document.forms["delCustomer"]["name"].value;
-  // checks if user is sure they want to delete
-  var delChoice = confirm(`Are you sure you want to delete ${name}?`);
-  if (delChoice == true) {
-    params = 'name='+name;
+function UserRoleChange() {
+  var username = document.forms["changeDetails"]["selectedUser"].value;
+  var password = document.forms["changeDetails"]["newPassword2"].value;
+  var checkBox = document.getElementById("confirmation");
+  var confirmation = checkBox.checked;
+  var valid = true
+  if (username == "") {
+    alert("please enter a username");
+    valid = false;
+  }
+  if (password == "") {
+    alert("please enter a password");
+    valid = false;
+  }
+  if (confirmation == false) {
+    alert("Please confirm the changes you want to make");
+    valid = false;
+  }
+  if (valid == false) {
+    alert("one or more elements in form were filled out incorrectly");
+  } else {
+    params = 'username='+username+'&password='+password';
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
+    xhttp.open("POST", '/Users/UpdatePassword', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
@@ -132,8 +102,25 @@ function delCustomer() {
     };
     xhttp.send(params);
     return false;
-  } else {
-    xhttp.open("GET", '/Customers', true);
   }
 
+
+}
+
+function delCustomer() {
+  var name = document.forms["delCustomer"]["name"].value;
+  params = 'name='+name;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  xhttp.send(params);
+  return false;
 }
