@@ -102,14 +102,14 @@ function validateNewUser(){
     valid = 1;
     alert("Please enter a username");
   }
-  if (newPasswordVar == ""){
+  if (password == ""){
     alert("Please enter a password");
       valid = 1;
   }
   if (valid == 0){ //if all boxes are valid xhttp request is made
     params = 'firstname='+firstname+'&surname='+surname+'&public='+public+'&username='+username+'&password='+password+'&role='+role;
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
+    xhttp.open("POST", '/Users/Add', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
