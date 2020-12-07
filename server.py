@@ -165,7 +165,7 @@ def products():
             return render_template("home.html")
 
 @app.route("/Products/AddProduct", methods = ['POST','GET'])
-def addProduct():
+def add_product():
     if request.method == 'POST':
         #retrieve values
         productName = request.form.get('productName', default="Error")
@@ -183,6 +183,23 @@ def addProduct():
         except Exception as e:
             conn.rollback()
             msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Products/DelProduct", methods = ['POST','GET'])
+def del_product():
+    if request.method == 'POST':
+        productID= request.form.get('productID', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            cur.execute("DELETE FROM Items WHERE itemID=?;", [productID])
+            conn.commit()
+            msg = "Record successfully deleted"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in delete operation"
         finally:
             conn.close()
             return msg
@@ -300,7 +317,6 @@ def del_customer():
     if request.method == 'POST':
         name = request.form.get('name', default="Error")
         try:
-            print(name)
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
             cur.execute("DELETE FROM Customers WHERE customerName=?;", [name])
@@ -340,20 +356,18 @@ def userAddDetails():
             return msg
 
 @app.route("/Users/UpdatePassword", methods=['POST','GET']) #has not been tested yet
-def updateUserDetailss():
+def updateUserDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        print("recieved POST request")
         username = request.form.get('username', default="Error")
         password = request.form.get('password', default="Error")
-        print("taken in variables, beginning connection with database")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
             curs.execute("UPDATE Users SET password=? WHERE username=?",(password, username) )
             db.commit()
-            msg = "Password successfully updated"
+            msg = "User successfully added to database"
         except Exception as e:
             db.rollback()
             msg = "Error updating user"
@@ -366,10 +380,8 @@ def updateUserRole():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        console.log("recieved POST request")
         username = request.form.get('username', default="Error")
-        role = request.form.get('Role', default="Error")
-        console.log("taken in variables, beginning connection with database")
+        role = request.form.get('role', default="Error")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
