@@ -238,10 +238,73 @@ def add_customer():
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
-            #insert values into databse
+            #insert values into database
             cur.execute("INSERT INTO Customers ('customerName', 'address', 'deliveryAddress')\
             VALUES (?,?,?)", #this method avoids SQL injection
             (customerName, address, deliveryAddress) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerName", methods = ['POST','GET'])
+def update_customer():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newName = request.form.get('newName', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET customerName=? WHERE customerName=?",
+            (newName, customerName,) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerAddress", methods = ['POST','GET'])
+def update_customer_address():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newAddress = request.form.get('newAddress', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET address=? WHERE customerName=?",
+            (newAddress, customerName,) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerDelivery", methods = ['POST','GET'])
+def update_customer_delivery():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newDeliveryAddress = request.form.get('newDeliveryAddress', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET deliveryAddress=? WHERE customerName=?",
+            (newDeliveryAddress, customerName,) )
             conn.commit()
             msg = "Record successfully added"
         except Exception as e:
@@ -273,18 +336,16 @@ def userAddDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        console.log("recieved POST request")
-        Firstname = request.form.get('newFirstnameVar', default="Error")
-        Surname = request.form.get('newSurnameVar', default="Error")
-        Public = request.form.get('newPublicVar', default="Error")
-        Username = request.form.get('newUsernameVar', default="Error")
-        Password = request.form.get('newPasswordVar', default="Error")
-        UserRole = request.form.get('newRole', default="False")
-        console.log("taken in variables, beginning connection with database")
+        Firstname = request.form.get('firstname', default="Error")
+        Surname = request.form.get('surname', default="Error")
+        Public = request.form.get('public', default="Error")
+        Username = request.form.get('username', default="Error")
+        Password = request.form.get('password', default="Error")
+        UserRole = request.form.get('role', default="False")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
-            curs.execute("INSERT INTO 'Users'('firstName', 'surname', 'public', 'username', 'role' ) Values (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
+            curs.execute("INSERT INTO Users ('firstName', 'surname', 'public', 'username', 'password', 'role' ) VALUES (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
             db.commit()
             msg = "User successfully added to database"
         except Exception as e:
@@ -295,20 +356,18 @@ def userAddDetails():
             return msg
 
 @app.route("/Users/UpdatePassword", methods=['POST','GET']) #has not been tested yet
-def updateUserDetailss():
+def updateUserDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        print("recieved POST request")
         username = request.form.get('username', default="Error")
         password = request.form.get('password', default="Error")
-        print("taken in variables, beginning connection with database")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
             curs.execute("UPDATE Users SET password=? WHERE username=?",(password, username) )
             db.commit()
-            msg = "Password successfully updated"
+            msg = "Password successfully changed"
         except Exception as e:
             db.rollback()
             msg = "Error updating user"
@@ -321,10 +380,8 @@ def updateUserRole():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        console.log("recieved POST request")
         username = request.form.get('username', default="Error")
-        role = request.form.get('Role', default="Error")
-        console.log("taken in variables, beginning connection with database")
+        role = request.form.get('role', default="Error")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
