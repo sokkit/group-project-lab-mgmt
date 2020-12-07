@@ -2,34 +2,40 @@ console.log("JS Connected!")
 
 function updateUserRole(){
   var username = document.forms["changeRole"]["selectedUser2"].value;
+  var valid = 0;//0 represents that data entered is valid
   if (username == ""){
-    valid = 1;
+    valid = 1;//data entered is not valid
     alert("Please enter a username");
     return null; //exits function
   }
   var checkBox = document.getElementById("Admin");
   var role = "";
-  if (checkBox.checked == true){
+  if (checkBox.checked == true){ //converts yes/no format from checkbox into "admin" and "staff"
     role = "Admin";
     alert("User is now admin");
   } else {
     role = "Staff";
     alert("User is now staff")
   }
-  params = 'username='+username+'&role='+role;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", '/Users/UpdateRole', true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.onload = function() {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      console.log(xhttp.responseText);
-      document.getElementById("txt").innerHTML = xhttp.responseText;
-    } else {
-      console.error(xhttp.statusText);
+  if (valid == 0) {
+    params = 'username='+username+'&role='+role;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/Users/UpdateRole', true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
     }
+    xhttp.send(params);
+    return false;
+  } else {
+    alert("data not sent due to incomplete field")
   }
-  xhttp.send(params);
-  return false;
+
 }
 
 function updateUserPassword(){
@@ -37,7 +43,6 @@ function updateUserPassword(){
   var password = document.forms["changePassword"]["newPassword2"].value;
   var checkBox = document.getElementById("confirmation");
   var valid = 0;
-  alert("taken in variables");
   if (checkBox.checked == false){
     alert("Please confirm changes before submitting");
     return null;
@@ -64,6 +69,7 @@ function updateUserPassword(){
       }
     }
     xhttp.send(params);
+    alert("user's password has been updated");
     return false;
   } else {
     alert("One or more fields were incorrectly entered");
@@ -101,7 +107,7 @@ function validateNewUser(){
       valid = 1;
   }
   if (valid == 0){ //if all boxes are valid xhttp request is made
-    params = 'firstname='+firstname+'&surname='+surname+'&public='+public+'&username='+username+'&password'+password+'&role'+role;
+    params = 'firstname='+firstname+'&surname='+surname+'&public='+public+'&username='+username+'&password='+password+'&role='+role;
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

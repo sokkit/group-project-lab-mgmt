@@ -271,18 +271,16 @@ def userAddDetails():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
-        console.log("recieved POST request")
-        Firstname = request.form.get('newFirstnameVar', default="Error")
-        Surname = request.form.get('newSurnameVar', default="Error")
-        Public = request.form.get('newPublicVar', default="Error")
-        Username = request.form.get('newUsernameVar', default="Error")
-        Password = request.form.get('newPasswordVar', default="Error")
-        UserRole = request.form.get('newRole', default="False")
-        console.log("taken in variables, beginning connection with database")
+        Firstname = request.form.get('firstname', default="Error")
+        Surname = request.form.get('surname', default="Error")
+        Public = request.form.get('public', default="Error")
+        Username = request.form.get('username', default="Error")
+        Password = request.form.get('password', default="Error")
+        UserRole = request.form.get('role', default="False")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
-            curs.execute("INSERT INTO 'Users'('firstName', 'surname', 'public', 'username', 'role' ) Values (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
+            curs.execute("INSERT INTO Users ('firstName', 'surname', 'public', 'username', 'password', 'role' ) VALUES (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
             db.commit()
             msg = "User successfully added to database"
         except Exception as e:
@@ -304,7 +302,7 @@ def updateUserDetails():
             curs = db.cursor()
             curs.execute("UPDATE Users SET password=? WHERE username=?",(password, username) )
             db.commit()
-            msg = "User successfully added to database"
+            msg = "Password successfully changed"
         except Exception as e:
             db.rollback()
             msg = "Error updating user"
