@@ -236,10 +236,73 @@ def add_customer():
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
-            #insert values into databse
+            #insert values into database
             cur.execute("INSERT INTO Customers ('customerName', 'address', 'deliveryAddress')\
             VALUES (?,?,?)", #this method avoids SQL injection
             (customerName, address, deliveryAddress) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerName", methods = ['POST','GET'])
+def update_customer():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newName = request.form.get('newName', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET customerName=? WHERE customerName=?",
+            (newName, customerName,) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerAddress", methods = ['POST','GET'])
+def update_customer_address():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newAddress = request.form.get('newAddress', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET address=? WHERE customerName=?",
+            (newAddress, customerName,) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+@app.route("/Customer/UpdateCustomerDelivery", methods = ['POST','GET'])
+def update_customer_delivery():
+    if request.method == 'POST':
+        #retrieve values
+        customerName = request.form.get('customerName', default="Error")
+        newDeliveryAddress = request.form.get('newDeliveryAddress', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("UPDATE Customers SET deliveryAddress=? WHERE customerName=?",
+            (newDeliveryAddress, customerName,) )
             conn.commit()
             msg = "Record successfully added"
         except Exception as e:
