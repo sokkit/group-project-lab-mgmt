@@ -269,11 +269,32 @@ def updateUserDetails():
             msg = "User successfully added to database"
         except Exception as e:
             db.rollback()
-            msg = "Error creating user"
+            msg = "Error updating user"
         finally:
             db.close()
             return msg
 
+@app.route("/Users/UpdateRole", methods=['POST','GET']) #has not been tested yet
+def updateUserDetails():
+    if request.method == 'GET':
+        return render_template("users.html")
+    if request.method == 'POST':
+        console.log("recieved POST request")
+        username = request.form.get('username', default="Error")
+        role = request.form.get('Role', default="Error")
+        console.log("taken in variables, beginning connection with database")
+        try:
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("UPDATE Users SET role=? WHERE username=?",(role, username) )
+            db.commit()
+            msg = "User successfully added to database"
+        except Exception as e:
+            db.rollback()
+            msg = "Error updating user"
+        finally:
+            db.close()
+            return msg
 
 if __name__ == "__main__":
 	app.run(debug=True)

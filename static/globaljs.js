@@ -1,14 +1,32 @@
 console.log("JS Connected!")
 
 function updateUserRole(){
-  var username = document.forms["changeDetails"]["selectedUser"].value;
+  var username = document.forms["changeDetails"]["selectedUser2"].value;
+  if (username == ""){
+    valid = 1;
+    alert("Please enter a username");
+    return null; //exits function
+  }
   var checkBox = document.getElementById("Admin");
   if (checkBox.checked == true){
     var role = "Admin";
   } else {
     var role = "Staff";
   }
-
+  params = 'username='+username+'&Role'+role;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/Users/UpdateRole', true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  }
+  xhttp.send(params);
+  return false;
 }
 
 function updateUserPassword(){
