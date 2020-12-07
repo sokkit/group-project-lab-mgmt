@@ -17,29 +17,27 @@
   {% endfor %}
 </div>
 
-<div class="UserAdminPanel">
-  <form name="selectUser">
+<div class="UserAdminPanel" style="top: 20%;">
+  <form name="changeDetails" onsumbit="updateUserPassword()">
     <label for="selectedUser">Select User: </label>
-    <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username">
-    <div>
-      <div class="selectButtonLeft" onclick="validateSelectUser()">Select</div>
-      <div class="resetButtonRight">Reset</div>
-    </div>
-  </form>
-</div>
-
-<div class="UserAdminPanel" style="top: 40%;">
-  <form name="changeDetails">
-    <label for="RoleChange">Admin? : </label>
-    <input type="checkbox" id="RoleChange" name="RoleChange" value="Admin"><br>
+    <input type="text" id="selectedUser" name="selectedUser" placeholder="enter a username"><br>
     <label for="newPassword2"> Change Password: </label>
     <input type="text" id="newPassword2" name="newPassword2" placeholder="enter new password"><br>
     <label for="confirmation">Confirm changes? : </label>
     <input type="checkbox" id="confirmation" name="confirmation" value="confirm">
+    <button class="selectButtonLeft">Submit changes</button>
   </form>
-  <div class="button1">Submit changes</div>
 </div>
-<div class="UserAdminPanel" style="top: 70%;">
+<div class="UserAdminPanel" style="top: 43%;">
+  <form name="changeDetails" onsumbit="updateUserRole()">
+    <label for="selectedUser2">Select User: </label>
+    <input type="text" id="selectedUser2" name="selectedUser2" placeholder="enter a username"><br>
+    <label for="Admin">Admin : </label>
+    <input type="checkbox" id="Admin" name="Admin" value="Admin"><br>
+    <button class="selectButtonLeft">Submit changes</button>
+  </form>
+</div>
+<div class="UserAdminPanel" style="top: 62%;">
   <form name="createNewUser" onsubmit="validateNewUser()">
     <label for="newFirstname"> FirstName : </label>
     <input type="textbox" id="newFirstname" name="newFirstname"><br>
@@ -49,7 +47,7 @@
     <input type="textbox" id="newUsername" name="newUsername"><br>
     <label for="newPassword">Password: </label>
     <input type="password" id="newPassword" name="newPassword" placeholder="enter new password"><br>
-    <label for="RoleChange">Admin? : </label>
+    <label for="RoleGiven">Admin? : </label>
     <input type="checkbox" id="RoleGiven" name="RoleGiven" value="Admin"><br>
     <button type="submit" class="selectButtonLeft">Create User<div/>
   </form>

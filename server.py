@@ -237,17 +237,34 @@ def userAddDetails():
         Public = request.form.get('newPublicVar', default="Error")
         Username = request.form.get('newUsernameVar', default="Error")
         Password = request.form.get('newPasswordVar', default="Error")
-        UserRole = request.form.get('newUserRoleVar', default="False")
-        console.log("taken in variables")
-        if UserRole == True: #field box is a yes/no so I convert a "yes" into "Admin"
-            UserRole = "Admin"
-        else:
-            UserRole = "Staff"#vice versa for "Staff"
+        UserRole = request.form.get('newRole', default="False")
         console.log("taken in variables, beginning connection with database")
         try:
             db = sqlite3.connect("database.db")
             curs = db.cursor()
             curs.execute("INSERT INTO 'Users'('firstName', 'surname', 'public', 'username', 'role' ) Values (?, ?, ?, ?, ?, ?)",(Firstname, Surname, Public, Username, Password, UserRole) )
+            db.commit()
+            msg = "User successfully added to database"
+        except Exception as e:
+            db.rollback()
+            msg = "Error creating user"
+        finally:
+            db.close()
+            return msg
+
+@app.route("/Users/UpdatePassword", methods=['POST','GET']) #has not been tested yet
+def updateUserDetails():
+    if request.method == 'GET':
+        return render_template("users.html")
+    if request.method == 'POST':
+        console.log("recieved POST request")
+        username = request.form.get('username', default="Error")
+        password = request.form.get('password', default="Error")
+        console.log("taken in variables, beginning connection with database")
+        try:
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("UPDATE Users SET password=? WHERE username=?",(password, username) )
             db.commit()
             msg = "User successfully added to database"
         except Exception as e:
