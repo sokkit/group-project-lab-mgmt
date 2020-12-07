@@ -164,6 +164,30 @@ def products():
         else:
             return render_template("home.html")
 
+@app.route("/Products/AddProduct", methods = ['POST','GET'])
+def addProduct():
+    if request.method == 'POST':
+        #retrieve values
+        productName = request.form.get('productName', default="Error")
+        productTemp = request.form.get('productTemp', default="Error")
+        countryOO = request.form.get('countryOO', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into databse
+            cur.execute("INSERT INTO Items ('productName', 'temperature', 'origin')\
+            VALUES (?,?,?)", #this method avoids SQL injection
+            (productName, productTemp, countryOO) )
+            conn.commit()
+            msg = "Product successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
+
+
 @app.route("/Customers")
 def customer():
     if request.method == 'GET':
@@ -253,7 +277,7 @@ def userAddDetails():
             return msg
 
 @app.route("/Users/UpdatePassword", methods=['POST','GET']) #has not been tested yet
-def updateUserDetails():
+def updateUserDetailss():
     if request.method == 'GET':
         return render_template("users.html")
     if request.method == 'POST':
