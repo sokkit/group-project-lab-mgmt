@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS `Users` (
 INSERT INTO 'Users'('firstName','surname', 'public', 'username','role' ) VALUES ('Joe','Bloggs','True', 'Joe01', 'Admin');
 INSERT INTO 'Users'('firstName','surname', 'public', 'username','role' ) VALUES ('Tom','Brown','True', 'Tom01', 'Staff');
 INSERT INTO 'Users'('firstName','surname', 'public', 'username', 'password', 'role' ) VALUES ('Admin','User','True', 'Admin01', "b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO8vcrKWWkch.VCxZ8drz9TOgZpGThcPG'", 'Admin');
+INSERT INTO 'Users'('firstName','surname', 'public', 'username', 'password', 'role' ) VALUES ('Admin','User','True', 'Admin', "b'$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K'", 'Admin');
+INSERT INTO 'Users'('firstName','surname', 'public', 'username', 'password', 'role' ) VALUES ('Staff','User','True', 'Staff', "b'$2b$12$5nU0TVBvc2ZD2mLE6PztrOcdB.SwZnfS5Ff7PK3rQYK.gjJtu967K'", 'Staff');
 
 CREATE TABLE IF NOT EXISTS `Customers` (
   `customerID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,

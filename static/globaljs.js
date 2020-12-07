@@ -29,7 +29,7 @@ function updateUserRole(){
   return false;
 }
 
-function updateUserPassword(){
+function updateUserPassword() {
   var username = document.forms["changeDetails"]["selectedUser"].value;
   var password = document.forms["changeDetails"]["newPassword2"].value;
   var checkBox = document.getElementById("confirmation");
@@ -47,7 +47,7 @@ function updateUserPassword(){
     valid = 1;
     alert("Please enter a password");
   }
-  if (valid == 0){
+  if (valid == 1){
     alert("One or more fields were incorrectly entered");
   } else {
     params = 'username='+username+'&password='+password;
