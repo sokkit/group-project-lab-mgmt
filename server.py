@@ -145,7 +145,7 @@ def fetchuserinfo():
 def selectpdfpage():
     return render_template("selectPDF.html")
 
-@app.route("/EditorPDF")
+@app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
     if request.method == 'GET':
         db = sqlite3.connect("database.db")
@@ -160,6 +160,13 @@ def editorPDF():
         db.close()
         print(Customers)
         return render_template("editorPDF.html", productName = Products , customerName = Customers)
+    if request.method == 'POST':
+        return render_template("HtmlToPdf.html") #Temporary Location
+
+@app.route("/PDF")
+def HtmlToPdf():
+    return render_template("HtmlToPdf.html")
+
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])
 def products():
