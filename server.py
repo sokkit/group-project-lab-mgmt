@@ -341,6 +341,7 @@ def userAddDetails():
         Public = request.form.get('public', default="Error")
         Username = request.form.get('username', default="Error")
         Password = request.form.get('password', default="Error")
+        Password = bcrypt.hashpw(Password.encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
         UserRole = request.form.get('role', default="False")
         try:
             db = sqlite3.connect("database.db")
