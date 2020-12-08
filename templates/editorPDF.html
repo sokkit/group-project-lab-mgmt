@@ -12,7 +12,7 @@
 
 <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
 
-<script type="text/javascript">
+<script>
   $(document).ready(function(){
     var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
 
@@ -23,13 +23,23 @@
 
   });
 
+  function ValidateLocation(){
+    var Location = document.forms["EditorPDFForm"]["origin"].value;
+    var Letters = /^[A-Za-z]+$/;
+    if (Location = ""){
+      alert("Location must not contain alternate characters")
+      return false;
+    }
+
+  }
+
 </script>
 
 
 
 <div class="EditorEncapsule">
   <main class="InputContent">
-    <form id='EditorForm' action="/Login" method="post"">
+    <form id='EditorForm' name = 'EditorPDFForm' action="/EditorPDF" method="post" onsubmit="return ValidateLocation">
 
       <select class="Inputlist" id = "CustomerName" type = "text" name = "CustomerName" required>
         {% for row in customerName %}
@@ -85,7 +95,7 @@
                           <option value="Coldchain">Cold chain</option>
                         </select></td>
                         <td id="RightTableColumn"><!-- origin -->
-                          <input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td>
+                          <input id = "Origin" type = "text" name = "origin" placeholder="Enter The Origin Location"></td>
                         </tr>
             </tbody>
         </table>
