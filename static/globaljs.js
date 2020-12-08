@@ -231,7 +231,7 @@ function delCustomer() {
   if (delChoice == true) {
     params = 'name='+name;
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Customer/DelCustomer', true); // true is asynchronous
+    xhttp.open("DELETE", '/Customer/DelCustomer', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {

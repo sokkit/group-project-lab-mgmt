@@ -147,7 +147,19 @@ def selectpdfpage():
 
 @app.route("/EditorPDF")
 def editorPDF():
-    return render_template("editorPDF.html")
+    if request.method == 'GET':
+        db = sqlite3.connect("database.db")
+        prodcurs = db.cursor()
+        prodcurs.execute("SELECT productName FROM items")
+        Products  = prodcurs.fetchall()
+        prodcurs.close()
+        custcurs = db.cursor()
+        custcurs.execute("SELECT customerName FROM Customers")
+        Customers  = custcurs.fetchall()
+        custcurs.close()
+        db.close()
+        print(Customers)
+        return render_template("editorPDF.html", productName = Products , customerName = Customers)
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])
 def products():
@@ -307,9 +319,9 @@ def update_customer_delivery():
             conn.close()
             return msg
 
-@app.route("/Customer/DelCustomer", methods = ['POST','GET'])
+@app.route("/Customer/DelCustomer", methods = ['DELETE','GET'])
 def del_customer():
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         name = request.form.get('name', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)

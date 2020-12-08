@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required><option>Placeholder</option><option>Placeholder 2</option><option>Placeholder 3</option></select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
+    var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
 
     $("#InsertRow").click(function(){
       $("#SingleProductTable > tbody").prepend(newrow);
@@ -30,6 +30,13 @@
 <div class="EditorEncapsule">
   <main class="InputContent">
     <form id='EditorForm' action="/Login" method="post"">
+
+      <select class="Inputlist" id = "CustomerName" type = "text" name = "CustomerName" required>
+        {% for row in customerName %}
+        <option>{{row[0]}}</option>
+        {% endfor %}
+      </select>
+
       <label for="OrderNumber">Order Number</label>
       <input class="Inputlist" id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
 
@@ -37,7 +44,7 @@
       <input class="Inputlist" id = "Date" type = "date" name = "date" required placeholder="Enter The Date">
 
       <label for="ConsignmentNumber">Consignment Number</label>
-      <select class="Inputlist" id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
+      <select class="Inputlist" id = "ConsignmentNumber" type = "text" name = "consignmentnumber" required>
         <option value="DHL">DHL</option>
         <option value="FedEx">FedEx</option>
         <option value="Royal Mail">Royal Mail</option>
@@ -62,9 +69,9 @@
             <tbody id="MainFormContent">
               <td id= "LeftTableColumn"><!-- product -->
                 <select id = "Product"  name = "product" required>
-                  <option>Placeholder</option>
-                  <option>Placeholder 2</option>
-                  <option>Placeholder 3</option>
+                  {% for row in productName %}
+                  <option>{{row[0]}}</option>
+                  {% endfor %}
                 </select></td>
                 <td><!-- Quantity -->
                   <input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
