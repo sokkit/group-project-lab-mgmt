@@ -326,9 +326,9 @@ def update_customer_delivery():
             conn.close()
             return msg
 
-@app.route("/Customer/DelCustomer", methods = ['POST','GET'])
+@app.route("/Customer/DelCustomer", methods = ['DELETE','GET'])
 def del_customer():
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         name = request.form.get('name', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
@@ -353,6 +353,7 @@ def userAddDetails():
         Public = request.form.get('public', default="Error")
         Username = request.form.get('username', default="Error")
         Password = request.form.get('password', default="Error")
+        Password = bcrypt.hashpw(Password.encode(),b'$2b$12$5nU0TVBvc2ZD2mLE6PztrO')
         UserRole = request.form.get('role', default="False")
         try:
             db = sqlite3.connect("database.db")
