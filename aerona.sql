@@ -54,11 +54,12 @@ INSERT INTO 'Items'('productName','temperature', 'origin') VALUES ('Soliris 100m
 CREATE TABLE IF NOT EXISTS `Orders` (
   `orderID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `userID`	INTEGER NOT NULL,
-  `customerID`	INTEGER NOT NULL
+  `customerID`	INTEGER NOT NULL,
+  `pdfName`	TEXT NOT NULL
 );
 
-INSERT INTO 'Orders'('userID', 'customerID') VALUES (2, 3);
-INSERT INTO 'Orders'('userID', 'customerID') VALUES (2, 4);
+INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 3, "PDF1");
+INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 4, "PDF2");
 
 CREATE TABLE IF NOT EXISTS `OrderItems` (
   `orderItemsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
