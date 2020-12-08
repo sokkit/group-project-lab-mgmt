@@ -132,21 +132,37 @@ function addCustomer() {
   var customerName = document.forms["addCustomer"]["customerName"].value;
   var address = document.forms["addCustomer"]["address"].value;
   var deliveryAddress = document.forms["addCustomer"]["deliveryAddress"].value;
-  params = 'customerName='+customerName+'&address='+address+'&deliveryAddress='+deliveryAddress;
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.onload = function() {
-    if (xhttp.readyState === 4 && xhttp.status === 200) {
-      console.log(xhttp.responseText);
-      document.getElementById("txt").innerHTML = xhttp.responseText;
-    } else {
-      console.error(xhttp.statusText);
-    }
-  };
-  //sends params to server
-  xhttp.send(params);
-  return false;
+  var valid = 0; // 0 means its valid, 1 means its invalid
+  if (customerName == ""){ //presence checking
+    valid = 1;
+    alert("Please enter a Customer Name");
+  }
+  if (address == ""){ //presence checking
+    valid = 1;
+    alert("Please enter an address");
+  }
+  if (deliveryAddress == ""){ //presence checking
+    valid = 1;
+    alert("Please enter a delivery address");
+  }
+  if (valid == 0) {
+    params = 'customerName='+customerName+'&address='+address+'&deliveryAddress='+deliveryAddress;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/Customer/AddCustomer', true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+    //sends params to server
+    xhttp.send(params);
+    return false;
+  }
+
 }
 
 function updateCustomerName() {
