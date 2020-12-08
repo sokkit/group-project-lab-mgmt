@@ -345,3 +345,56 @@ header{
     border-style: solid;
     border-color: black;
   }
+
+  .PDFcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .PDFcontent {
+    background-color: #6b6b6b;
+    border: solid;
+    border-color: black;
+    border-radius: 8px;
+    width: 400px;
+    height: 50px;
+    float: left;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .btnPDFedit {
+    float: right;
+    position: relative;
+    size: 45px 45px;
+    border: solid;
+    color: black;
+    border-radius: 8px;
+    background-color: ;
+    background-color: #b5270b;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .btnPDFview {
+    float: right;
+    position: relative;
+    size: 45px 45px;
+    border: solid;
+    color: black;
+    border-radius: 8px;
+    background-color: #0cab36;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .btnPDFview:hover {
+
+  }
+
+  .btnPDFedit:hover {
+
+  }

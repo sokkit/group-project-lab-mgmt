@@ -150,7 +150,7 @@ def selectpdfpage():
     else:
         return render_template("selectPDF.html")
 
-@app.route("/EditorPDF")
+@app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
     if request.method == 'GET':
         db = sqlite3.connect("database.db")
@@ -165,8 +165,15 @@ def editorPDF():
         db.close()
         print(Customers)
         return render_template("editorPDF.html", productName = Products , customerName = Customers)
+    if request.method == 'POST':
+        return render_template("HtmlToPdf.html") #Temporary Location
 
-@app.route("/Products")
+@app.route("/PDF")
+def HtmlToPdf():
+    return render_template("HtmlToPdf.html")
+
+
+@app.route("/Products", methods = ['POST','GET','DELETE'])
 def products():
     if request.method == 'GET':
         if session['usertype'] == None:
@@ -182,11 +189,8 @@ def products():
                 db.close()
                 return render_template("products.html", data = results)
             else:
-                return render_template("home.html", msg = "no access")
-
-@app.route("/Products/AddProduct", methods = ['POST','GET'])
-def add_product():
-    if request.method == 'POST':
+                return render_template("home.html")
+    elif request.method == 'POST':
         #retrieve values
         productName = request.form.get('productName', default="Error")
         productTemp = request.form.get('productTemp', default="Error")
@@ -206,10 +210,7 @@ def add_product():
         finally:
             conn.close()
             return msg
-
-@app.route("/Products/DelProduct", methods = ['POST','GET'])
-def del_product():
-    if request.method == 'POST':
+    elif request.method == 'DELETE':
         productID= request.form.get('productID', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
@@ -225,7 +226,6 @@ def del_product():
         finally:
             conn.close()
             return msg
-
 
 @app.route("/Customers")
 def customer():
