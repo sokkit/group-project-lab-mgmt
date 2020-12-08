@@ -146,7 +146,7 @@ def fetchuserinfo():
 @app.route("/SelectPDF")
 def selectpdfpage():
     if session['usertype'] == None:
-        return render_template('login.html', msg='Log in to use site')
+        return render_template('login.html', msg='Login to use site')
     else:
         return render_template("selectPDF.html")
 
