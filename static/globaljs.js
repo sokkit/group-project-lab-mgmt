@@ -256,7 +256,7 @@ function addProduct() {
   var countryOO = document.forms["addProduct"]["countryOO"].value;
   params = 'productName='+productName+'&productTemp='+productTemp+'&countryOO='+countryOO;
   var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", '/Products/AddProduct', true); // true is asynchronous
+  xhttp.open("POST", '/Products', true); // true is asynchronous
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.onload = function() {
     if (xhttp.readyState === 4 && xhttp.status === 200) {
@@ -278,7 +278,7 @@ function delProduct() {
   if (delChoice == true) {
     params = 'productID='+productID;
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/Products/DelProduct', true); // true is asynchronous
+    xhttp.open("DELETE", '/Products', true); // true is asynchronous
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.onload = function() {
       if (xhttp.readyState === 4 && xhttp.status === 200) {

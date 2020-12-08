@@ -161,7 +161,7 @@ def editorPDF():
         print(Customers)
         return render_template("editorPDF.html", productName = Products , customerName = Customers)
 
-@app.route("/Products")
+@app.route("/Products", methods = ['POST','GET','DELETE'])
 def products():
     if request.method == 'GET':
         if checkAdmin():
@@ -175,10 +175,7 @@ def products():
             return render_template("products.html", data = results)
         else:
             return render_template("home.html")
-
-@app.route("/Products/AddProduct", methods = ['POST','GET'])
-def add_product():
-    if request.method == 'POST':
+    elif request.method == 'POST':
         #retrieve values
         productName = request.form.get('productName', default="Error")
         productTemp = request.form.get('productTemp', default="Error")
@@ -198,10 +195,7 @@ def add_product():
         finally:
             conn.close()
             return msg
-
-@app.route("/Products/DelProduct", methods = ['POST','GET'])
-def del_product():
-    if request.method == 'POST':
+    elif request.method == 'DELETE':
         productID= request.form.get('productID', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
@@ -217,7 +211,6 @@ def del_product():
         finally:
             conn.close()
             return msg
-
 
 @app.route("/Customers")
 def customer():
