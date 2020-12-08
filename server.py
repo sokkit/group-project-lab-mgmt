@@ -194,6 +194,8 @@ def del_product():
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
+            if cur.execute("SELECT * FROM Items WHERE itemID=?;",[productID]).fetchall() == []:
+                return render_template("products.html", ID="None")
             cur.execute("DELETE FROM Items WHERE itemID=?;", [productID])
             conn.commit()
             msg = "Record successfully deleted"
