@@ -312,9 +312,9 @@ def update_customer_delivery():
             conn.close()
             return msg
 
-@app.route("/Customer/DelCustomer", methods = ['POST','GET'])
+@app.route("/Customer/DelCustomer", methods = ['DELETE','GET'])
 def del_customer():
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         name = request.form.get('name', default="Error")
         try:
             conn = sqlite3.connect(DATABASE)
