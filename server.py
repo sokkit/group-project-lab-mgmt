@@ -148,7 +148,18 @@ def selectpdfpage():
     if session['usertype'] == None:
         return render_template('login.html', msg='Login to use site')
     else:
-        return render_template("selectPDF.html")
+        @app.route("/SelectPDF")
+def selectpdfpage():
+    db = sqlite3.connect("database.db") # Opens the DB
+    curs = db.cursor()
+    curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+    pdfNames = curs.fetchall()
+    # Initializes pdfNames list which will be passed onto selectPDF.html
+    print(pdfNames)
+    curs.close()
+    db.close()
+    # Closes the file to prevent memory leaks
+    return render_template("selectPDF.html", pdfNames = pdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
