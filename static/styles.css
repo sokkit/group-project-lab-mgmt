@@ -398,3 +398,75 @@ header{
   .btnPDFedit:hover {
 
   }
+
+  .notePdfTitle {
+    text-align: center;
+    max-width: 100%;
+    color: #e0b336;
+    font-size: large;
+    padding-top: 40px;
+  }
+
+  .notePdfRef {
+    text-align: center;
+    max-width: 100%;
+    font-size: large;
+    padding: 20px;
+  }
+
+  .notePdfOrder {
+    text-align: center;
+    max-width: 100%;
+    font-size: large;
+    padding: 10px;
+  }
+
+  .notePdfPage {
+    text-align: right;
+    max-width: 100%;
+    font-size: large;
+    padding-right: 150px;
+    padding-bottom: 10px;
+  }
+
+  .notePdfAddressContainer {
+    border: solid;
+    border-radius: 10px;
+    max-width: 40%;
+    position: relative;
+    left: 30px;
+  }
+
+  #notePdfAddress {
+    padding: 10px;
+  }
+
+  .notePdfDetails {
+    position: absolute;
+    right: 40px;
+    top: 335px;
+    border: solid;
+    border-collapse: collapse;
+    border-radius: 10px;
+  }
+
+  .notePdfDetails td {
+    padding: 10px 100px 10px 10px;
+  }
+
+  .notePdfItemsContainer {
+    display: block;
+    max-width: 95%;
+    margin: auto;
+    border: solid;
+    position: relative;
+    top: 150px;
+  }
+
+ .notePdfItems th {
+    padding-right: 80px;
+  }
+
+  .notePdfItems th:first-child {
+    padding-right: 600px;
+  }

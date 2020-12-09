@@ -3,8 +3,61 @@
 
 
 {%block mainBlock%}
-<h2>PDF GOES HERE</h2>
-<p>Page under construction</p>
+<h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>PACKING/DELIVERY NOTE</h1>
 
+<h1 class="notePdfRef">REF: <h1 id="notePdfCustomerName"></h1></h1>
 
+<h1 class="notePdfOrder">ORDER: <h1 id="notePdfOrderNumber"></h1></h1>
+
+<h1 class="notePdfPage">Page: <h1 id="notePdfPageNo"></h1></h1>
+
+<div class="notePdfAddressContainer">
+  <p id="notePdfAddress">
+    Address line 1 <br>
+    Address line 2 <br>
+    Address line 3 <br>
+    Address line 4
+  </p>
+</div>
+
+<table class="notePdfDetails">
+  <tr>
+    <td>Order No</td>
+    <td id="notePdfOrderNumber">1234</td>
+  </tr>
+  <tr>
+    <td>Date:</td>
+    <td id="notePdfDate">12/13/45</td>
+  </tr>
+  <tr>
+    <td>Our Account Ref</td>
+    <td id="notePdfCustomerName">Healthcare Pharm</td>
+  </tr>
+  <tr>
+    <td>A/C Cod</td>
+    <td id="notePdfCustomerName">Healthcare Pharm</td>
+  </tr>
+  <tr>
+    <td>Consignment No</td>
+    <td id="notePdfConsignmentNumber">DHL</td>
+  </tr>
+</table>
+
+<div class="notePdfItemsContainer">
+  <table class="notePdfItems">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Batch No</th>
+      <th>Expiry Date</th>
+      <th>Temp</th>
+      <th>Origin</th>
+    </tr>
+    <!-- Some sort of Jinja table here? -->
+  </table>
+</div>
+
+<div class="notePdfWarehouseInfo">
+
+</div>
 {%endblock%}
