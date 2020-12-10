@@ -429,12 +429,16 @@ header{
     padding-bottom: 10px;
   }
 
+  .addressOrderWrapper {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-column-gap: 30em;
+  }
+
   .notePdfAddressContainer {
     border: solid;
     border-radius: 10px;
-    max-width: 40%;
-    position: relative;
-    left: 30px;
+    margin-left: 20px;
   }
 
   #notePdfAddress {
@@ -443,12 +447,10 @@ header{
   }
 
   .notePdfDetails {
-    position: absolute;
-    right: 40px;
-    top: 335px;
     border: solid;
     border-collapse: collapse;
     border-radius: 10px;
+    margin-right: 20px;
   }
 
   .notePdfDetails td {
@@ -460,8 +462,7 @@ header{
     max-width: 95%;
     margin: auto;
     border: solid;
-    position: relative;
-    top: 150px;
+    margin-top: 20px;
   }
 
  .notePdfItems th {
@@ -478,8 +479,8 @@ header{
     max-width: 95%;
     margin: auto;
     border: solid;
-    position: relative;
-    top: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .notePdfWarehouseInfo {
@@ -492,13 +493,16 @@ header{
     padding-right: 300px;
   }
 
+  .deliveryAddressContactWrapper {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-column-gap: 30em;
+  }
+
   .notePdfDeliveryAddressContainer {
     border: solid;
     border-radius: 10px;
-    max-width: 30%;
-    position: relative;
-    left: 30px;
-    top: 220px;
+    margin-left: 20px;
   }
 
   #notePdfDeliveryAddress {
@@ -508,13 +512,8 @@ header{
   .notePdfDeliveryContactContainer {
     border: solid;
     border-radius: 10px;
-    display: block;
-    margin: auto;
-    max-width: 30%;
-    position: relative;
-    left: 300px;
-    top: 148px;
     padding: 10px;
+    margin-right: 20px;
   }
 
   #notePDFContactName {
@@ -527,14 +526,12 @@ header{
     margin: auto;
     display: block;
     height: 0px;
-    position: relative;
-    top: 260px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .notePdfFrom {
     text-align: center;
-    position: relative;
-    top: 280px;
     font-size: large;
     padding-bottom: 10px;
   }
