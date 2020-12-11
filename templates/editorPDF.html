@@ -8,40 +8,21 @@
   <link rel="stylesheet" href="../static/styles.css">
 </head>
 
-<h2>Input Data</h2>
+<h1 class="EditorPDFTitle">Input Data<br></h1>
 
 <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
 
-<script>
-  $(document).ready(function(){
-    var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
-
-    $("#InsertRow").click(function(){
-      $("#SingleProductTable > tbody").prepend(newrow);
-    });
 
 
-  });
 
-  function ValidateLocation(){
-    var Location = document.forms["EditorPDFForm"]["origin"].value;
-    var Letters = /^[A-Za-z]+$/;
-    if (Location = ""){
-      alert("Location must not contain alternate characters")
-      return false;
-    }
-
-  }
-
-</script>
-
-
+<h2 class="EditorPDFTitle" id = "DISPLAYTIME">The Date Is : </h2>
 
 <div class="EditorEncapsule">
-  <main class="InputContent">
 
-    
-    <form id='EditorForm' name = 'EditorPDFForm' action="/EditorPDF" method="post" onsubmit="return ValidateLocation">
+  <main class="InputContent">
+<!-- action="/EditorPDF" -->
+
+    <form id='EditorForm' name = "EditorPDFForm" onsubmit="return ValidateExpiryDate()" method="post" >
 
       <select class="Inputlist" id = "CustomerName" type = "text" name = "CustomerName" required>
         {% for row in customerName %}
@@ -52,8 +33,8 @@
       <label for="OrderNumber">Order Number</label>
       <input class="Inputlist" id = "OrderNumber" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
 
-      <label for="Date">Date</label>
-      <input class="Inputlist" id = "Date" type = "date" name = "date" required placeholder="Enter The Date">
+      <!-- <label for="Date">Date</label>
+      <input class="Inputlist" id = "Date" type = "date" name = "date" required placeholder="Enter The Date"> -->
 
       <label for="ConsignmentNumber">Consignment Number</label>
       <select class="Inputlist" id = "ConsignmentNumber" type = "text" name = "consignmentnumber" required>
@@ -113,6 +94,23 @@
 
       <input type="button" id="InsertRow" value="Insert Row">
 
+      <label for="NumberOfPallets">Number Of Pallets</label>
+      <input class="Inputlist" id = "NumberOfPallets" type = "number" name = "numberofpallets" required placeholder="Enter The Number Of Pallets">
+
+      <label for="TotalWeight">Total Weight</label>
+      <input class="Inputlist" id = "TotalWeight" type = "text" name = "ordernumber" required placeholder="Enter The Order Number">
+
+      <select class="Inputlist" id = "WeightUnits" type = "text" name = "weightunits" required>
+        <option value="DHL">g</option>
+        <option value="FedEx">Kg</option>
+      </select>
+
+      <label for="DeliveryContactName">Delivery Contact Name</label>
+      <input class="Inputlist" id = "DeliveryContactName" type = "text" name = "deliverycontactname" required placeholder="Enter The Delivery Contacts Name">
+
+      <label for="DeliveryContactNumber">Delivery Contact Number</label>
+      <input class="Inputlist" id = "DeliveryContactNumber" type = "text" name = "deliverycontactnumber" required placeholder="Enter The Delivery Contacts Number">
+
 
       <button class="EditorFormButton" type = "submit" > Submit </button>
 
@@ -123,4 +121,41 @@
 
 
 <p> result of operation : {{ msg }} </p>
+
+
+
+<script>
+  $(document).ready(function(){
+    var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
+
+    $("#InsertRow").click(function(){
+      $("#SingleProductTable > tbody").append(newrow);
+    });
+
+
+  });
+</script>
+
+<script>
+  var CurrentDate = new Date();
+
+  function ValidateExpiryDate(){
+    document.getElementById("test").innerHTML = 12
+    var ExpiryDate_ = document.forms["EditorPDFForm"]["expirydate"].value;
+
+    if (ExpiryDate_ < CurrentDate){
+      alert("Invalid Expiry Date");
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  document.getElementById("DISPLAYTIME").innerHTML = CurrentDate;
+  console.log("Pineapple");
+
+</script>
+
+
 {%endblock%}
