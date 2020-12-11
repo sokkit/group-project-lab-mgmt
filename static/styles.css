@@ -350,3 +350,193 @@ header{
     border-style: solid;
     border-color: black;
   }
+
+  .PDFcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .PDFcontent {
+    background-color: #6b6b6b;
+    border: solid;
+    border-color: black;
+    border-radius: 8px;
+    width: 400px;
+    height: 50px;
+    float: left;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .btnPDFedit {
+    float: right;
+    position: relative;
+    size: 45px 45px;
+    border: solid;
+    color: black;
+    border-radius: 8px;
+    background-color: ;
+    background-color: #b5270b;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .btnPDFview {
+    float: right;
+    position: relative;
+    size: 45px 45px;
+    border: solid;
+    color: black;
+    border-radius: 8px;
+    background-color: #0cab36;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .btnPDFview:hover {
+
+  }
+
+  .btnPDFedit:hover {
+
+  }
+
+  .notePdfTitle {
+    text-align: center;
+    max-width: 100%;
+    color: #e0b336;
+    font-size: large;
+    padding-top: 40px;
+  }
+
+  .notePdfRef {
+    text-align: center;
+    max-width: 100%;
+    font-size: large;
+    padding: 20px;
+  }
+
+  .notePdfOrder {
+    text-align: center;
+    max-width: 100%;
+    font-size: large;
+    padding: 10px;
+  }
+
+  .notePdfPage {
+    text-align: right;
+    max-width: 100%;
+    font-size: large;
+    padding-right: 150px;
+    padding-bottom: 10px;
+  }
+
+  .addressOrderWrapper {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-column-gap: 30em;
+  }
+
+  .notePdfAddressContainer {
+    border: solid;
+    border-radius: 10px;
+    margin-left: 20px;
+  }
+
+  #notePdfAddress {
+    padding: 10px;
+    font-size: large;
+  }
+
+  .notePdfDetails {
+    border: solid;
+    border-collapse: collapse;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+
+  .notePdfDetails td {
+    padding: 10px 100px 10px 10px;
+  }
+
+  .notePdfItemsContainer {
+    display: block;
+    max-width: 95%;
+    margin: auto;
+    border: solid;
+    margin-top: 20px;
+  }
+
+ .notePdfItems th {
+    padding-right: 80px;
+  }
+
+  .notePdfItems th:first-child {
+    padding-right: 300px;
+  }
+
+  .notePdfWarehouseInfoContainer {
+    border: solid;
+    display: block;
+    max-width: 95%;
+    margin: auto;
+    border: solid;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .notePdfWarehouseInfo {
+    margin: auto;
+  }
+
+  .notePdfWarehouseInfo td {
+    border: none;
+    padding: 10px;
+    padding-right: 300px;
+  }
+
+  .deliveryAddressContactWrapper {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    grid-column-gap: 30em;
+  }
+
+  .notePdfDeliveryAddressContainer {
+    border: solid;
+    border-radius: 10px;
+    margin-left: 20px;
+  }
+
+  #notePdfDeliveryAddress {
+    padding: 10px;
+  }
+
+  .notePdfDeliveryContactContainer {
+    border: solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 20px;
+  }
+
+  #notePDFContactName {
+    color: red;
+  }
+
+  .notePdfLine {
+    border-top: 3px solid;
+    max-width: 90%;
+    margin: auto;
+    display: block;
+    height: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .notePdfFrom {
+    text-align: center;
+    font-size: large;
+    padding-bottom: 10px;
+  }

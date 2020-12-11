@@ -66,10 +66,9 @@ def login():
             resp = make_response(render_template('login.html', msg='Incorrect login'))
         return resp
     else:
-        username = 'none'
-        if 'username' in session:
-            username = escape(session['username'])
-        return render_template('Login.html', msg='', username = username)
+        session['usertype'] = None
+        session['username'] = None
+        return render_template('Login.html', msg='')
 
 def checkCredentials(uName, pw):
     #new login method using databse
@@ -102,22 +101,25 @@ def index():
 @app.route("/Users", methods=['GET'])
 def users():
     if request.method == 'GET':
-        username = request.cookies.get('username')
-        if not checkAdmin():
-            return render_template('selectPDF.html', msg = 'no access', username = username)
-        db = sqlite3.connect("database.db")
-        curs = db.cursor()
-        curs.execute("SELECT username, role FROM Users")
-        results = curs.fetchall()
-        username_array = []
-        role_array = []
-        for idx, val in enumerate(results):
-            username_array.append(results[idx][0])
-            role_array.append(results[idx][1])
-        print(username_array,role_array)
-        curs.close()
-        db.close()
-        return render_template("users.html", usernames = username_array, roles = role_array)
+        if session['usertype'] == None:
+            return render_template('login.html', msg='Log in to use site')
+        else:
+            username = request.cookies.get('username')
+            if not checkAdmin():
+                return render_template('selectPDF.html', msg = 'no access', username = username)
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("SELECT username, role FROM Users")
+            results = curs.fetchall()
+            username_array = []
+            role_array = []
+            for idx, val in enumerate(results):
+                username_array.append(results[idx][0])
+                role_array.append(results[idx][1])
+            print(username_array,role_array)
+            curs.close()
+            db.close()
+            return render_template("users.html", usernames = username_array, roles = role_array)
 
 
 @app.route("/FetchUser")
@@ -143,7 +145,19 @@ def fetchuserinfo():
 
 @app.route("/SelectPDF")
 def selectpdfpage():
-    return render_template("selectPDF.html")
+    if session['usertype'] == None:
+        return render_template('login.html', msg='Login to use site')
+    else:
+        db = sqlite3.connect("database.db") # Opens the DB
+        curs = db.cursor()
+        curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+        pdfNames = curs.fetchall()
+        # Initializes pdfNames list which will be passed onto selectPDF.html
+        print(pdfNames)
+        curs.close()
+        db.close()
+        # Closes the file to prevent memory leaks
+        return render_template("selectPDF.html", pdfNames = pdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
@@ -171,17 +185,20 @@ def HtmlToPdf():
 @app.route("/Products", methods = ['POST','GET','DELETE'])
 def products():
     if request.method == 'GET':
-        if checkAdmin():
-            db = sqlite3.connect("database.db")
-            curs = db.cursor()
-            curs.execute("SELECT * FROM Items")
-            results = curs.fetchall()
-
-            curs.close()
-            db.close()
-            return render_template("products.html", data = results)
+        if session['usertype'] == None:
+            return render_template('login.html', msg='Log in to use site')
         else:
-            return render_template("home.html")
+            if checkAdmin():
+                db = sqlite3.connect("database.db")
+                curs = db.cursor()
+                curs.execute("SELECT * FROM Items")
+                results = curs.fetchall()
+
+                curs.close()
+                db.close()
+                return render_template("products.html", data = results)
+            else:
+                return render_template("home.html")
     elif request.method == 'POST':
         #retrieve values
         productName = request.form.get('productName', default="Error")
@@ -222,23 +239,26 @@ def products():
 @app.route("/Customers")
 def customer():
     if request.method == 'GET':
-        username = request.cookies.get('username')
-        if checkAdmin():
-            try:
-                conn = sqlite3.connect(DATABASE)
-                cur = conn.cursor()
-                cur.execute("SELECT customerName, address, deliveryAddress FROM Customers")
-                data = cur.fetchall()
-                print(data)
-            except:
-                print('there was an error', data)
-                conn.close()
-            finally:
-                conn.close()
-                # return str(data)
-                return render_template('customers.html', data = data)
+        if session['usertype'] == None:
+            return render_template('login.html', msg='Log in to use site')
         else:
-            return render_template('selectPDF.html', msg = 'no access to customers page', username = username)
+            username = request.cookies.get('username')
+            if checkAdmin():
+                try:
+                    conn = sqlite3.connect(DATABASE)
+                    cur = conn.cursor()
+                    cur.execute("SELECT customerName, address, deliveryAddress FROM Customers")
+                    data = cur.fetchall()
+                    print(data)
+                except:
+                    print('there was an error', data)
+                    conn.close()
+                finally:
+                    conn.close()
+                    # return str(data)
+                    return render_template('customers.html', data = data)
+            else:
+                return render_template('selectPDF.html', msg = 'no access to customers page', username = username)
 
 @app.route("/Customer/AddCustomer", methods = ['POST','GET'])
 def add_customer():
@@ -407,6 +427,13 @@ def updateUserRole():
         finally:
             db.close()
             return msg
+
+@app.route("/LogOut", methods=['GET'])
+def log_out():
+    if request.method == 'GET':
+        username = None
+        role = None
+        return render_template("login.html")
 
 if __name__ == "__main__":
 	app.run(debug=True)
