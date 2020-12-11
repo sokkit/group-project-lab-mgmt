@@ -148,34 +148,35 @@ def selectpdfpage():
     if session['usertype'] == None:
         return render_template('login.html', msg='Login to use site')
     else:
-        @app.route("/SelectPDF")
-        def selectpdfpage():
-            db = sqlite3.connect("database.db") # Opens the DB
-            curs = db.cursor()
-            curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
-            pdfNames = curs.fetchall()
-            # Initializes pdfNames list which will be passed onto selectPDF.html
-            print(pdfNames)
-            curs.close()
-            db.close()
-            # Closes the file to prevent memory leaks
-            return render_template("selectPDF.html", pdfNames = pdfNames)
+        db = sqlite3.connect("database.db") # Opens the DB
+        curs = db.cursor()
+        curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+        pdfNames = curs.fetchall()
+        # Initializes pdfNames list which will be passed onto selectPDF.html
+        print(pdfNames)
+        curs.close()
+        db.close()
+        # Closes the file to prevent memory leaks
+        return render_template("selectPDF.html", pdfNames = pdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
     if request.method == 'GET':
-        db = sqlite3.connect("database.db")
-        prodcurs = db.cursor()
-        prodcurs.execute("SELECT productName FROM items")
-        Products  = prodcurs.fetchall()
-        prodcurs.close()
-        custcurs = db.cursor()
-        custcurs.execute("SELECT customerName FROM Customers")
-        Customers  = custcurs.fetchall()
-        custcurs.close()
-        db.close()
-        print(Customers)
-        return render_template("editorPDF.html", productName = Products , customerName = Customers)
+        if session['usertype'] == None:
+            return render_template('login.html', msg='Log in to use site')
+        if checkAdmin():
+            db = sqlite3.connect("database.db")
+            prodcurs = db.cursor()
+            prodcurs.execute("SELECT productName FROM items")
+            Products  = prodcurs.fetchall()
+            prodcurs.close()
+            custcurs = db.cursor()
+            custcurs.execute("SELECT customerName FROM Customers")
+            Customers  = custcurs.fetchall()
+            custcurs.close()
+            db.close()
+            print(Customers)
+            return render_template("editorPDF.html", productName = Products , customerName = Customers)
     if request.method == 'POST':
         return render_template("HtmlToPdf.html") #Temporary Location
 

@@ -103,6 +103,11 @@ header{
   padding: 10px;
   color: #777;
 }
+
+.EditorPDFTitle{
+  text-align: center;
+}
+
 /* formStyles */
 
 .EditorFormContent{
