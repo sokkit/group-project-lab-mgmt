@@ -162,18 +162,21 @@ def selectpdfpage():
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
     if request.method == 'GET':
-        db = sqlite3.connect("database.db")
-        prodcurs = db.cursor()
-        prodcurs.execute("SELECT productName FROM items")
-        Products  = prodcurs.fetchall()
-        prodcurs.close()
-        custcurs = db.cursor()
-        custcurs.execute("SELECT customerName FROM Customers")
-        Customers  = custcurs.fetchall()
-        custcurs.close()
-        db.close()
-        print(Customers)
-        return render_template("editorPDF.html", productName = Products , customerName = Customers)
+        if session['usertype'] == None:
+            return render_template('login.html', msg='Log in to use site')
+        if checkAdmin():
+            db = sqlite3.connect("database.db")
+            prodcurs = db.cursor()
+            prodcurs.execute("SELECT productName FROM items")
+            Products  = prodcurs.fetchall()
+            prodcurs.close()
+            custcurs = db.cursor()
+            custcurs.execute("SELECT customerName FROM Customers")
+            Customers  = custcurs.fetchall()
+            custcurs.close()
+            db.close()
+            print(Customers)
+            return render_template("editorPDF.html", productName = Products , customerName = Customers)
     if request.method == 'POST':
         return render_template("HtmlToPdf.html") #Temporary Location
 
