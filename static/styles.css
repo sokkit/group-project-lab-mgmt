@@ -444,6 +444,9 @@ header{
     border: solid;
     border-radius: 10px;
     margin-left: 20px;
+    padding: 10px;
+    padding-right: 300px;
+    padding-bottom: 65px;
     float: left;
   }
 
@@ -465,12 +468,13 @@ header{
   }
 
   .notePdfItemsContainer {
-    display: block;
+    display: grid;
     max-width: 95%;
     margin: auto;
+    margin-top: 230px;
     border: solid;
-    margin-top: 20px;
-    padding-top: 10px;
+    border-radius: 10px;
+
 
   }
 
@@ -510,8 +514,11 @@ header{
 
   .notePdfDeliveryAddressContainer {
     border: solid;
+    padding-right: 300px;
+    padding-bottom: 50px;
     border-radius: 10px;
     margin-left: 20px;
+    font-size: 15;
     float: left;
   }
 
@@ -521,8 +528,10 @@ header{
 
   .notePdfDeliveryContactContainer {
     border: solid;
+    font-size: 15;
     border-radius: 10px;
     padding: 10px;
+    padding-right: 400px;
     margin-right: 20px;
     float: right;
   }
@@ -537,7 +546,7 @@ header{
     margin: auto;
     display: block;
     height: 0px;
-    margin-top: 10px;
+    margin-top: 170px;
     margin-bottom: 10px;
   }
 

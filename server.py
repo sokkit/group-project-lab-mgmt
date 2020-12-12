@@ -188,8 +188,17 @@ def editorPDF():
 @app.route("/PDF")
 def HtmlToPdf():
     rendered = render_template("HtmlToPdf.html")
+    options = {
+        'page-size':'A4',
+        'encoding':'utf-8',
+        'margin-top':'0cm',
+        'margin-bottom':'0cm',
+        'margin-left':'0cm',
+        'margin-right':'0cm'
+    }
+
     try:
-        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG)
+        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
         file = open("out.pdf","wb")
         file.write(pdf)
         file.close()
