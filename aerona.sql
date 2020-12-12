@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS Customers;
 DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS OrderItems;
+DROP TABLE IF EXISTS CompletedPDFs;
 
 CREATE TABLE IF NOT EXISTS `Users` (
   `userID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -62,13 +63,24 @@ INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 3, "PDF1");
 INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 4, "PDF2");
 
 CREATE TABLE IF NOT EXISTS `OrderItems` (
-  `orderItemsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `itemID`	INTEGER NOT NULL,
-  `orderID`	INTEGER NOT NULL
+  `orderID`		INTEGER NOT NULL PRIMARY KEY,
+  -- orderID is orderNumber in CompltedPDFs
+  `productName`	INTEGER NOT NULL,
+  `quantity`	INTEGER NOT NULL,
+  `batchNumber`	TEXT NOT NULL,
+  `expiryDate`	TEXT NOT NULL,
+  `temperature`	TEXT NOT NULL,
+  `origin`	TEXT NOT NULL
 );
 
-INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (2, 1);
-INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (4, 1);
-INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (6, 1);
-INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (2, 2);
-INSERT INTO 'OrderItems'('itemID', 'orderID') VALUES (8, 2);
+
+CREATE TABLE IF NOT EXISTS `CompletedPDFs` (
+  `completedPDFsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `customerName`	TEXT NOT NULL,
+  `orderNumber`	TEXT NOT NULL,
+  `consignmentNumber`	TEXT NOT NULL,
+  `numOfPallets`	TEXT NOT NULL,
+  `totalWeight`	TEXT NOT NULL,
+  `contactName`	TEXT NOT NULL,
+  `contactNumber`	TEXT NOT NULL
+);
