@@ -2,9 +2,12 @@ import os
 import bcrypt
 from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
+import pdfkit
 
 DATABASE = 'database.db'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+path_wkhtmltopdf = r'wkhtmltox/bin/wkhtmltopdf.exe'
+CONFIG = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
 app = Flask(__name__)
 
@@ -68,7 +71,9 @@ def login():
     else:
         session['usertype'] = None
         session['username'] = None
-        return render_template('Login.html', msg='')
+        rendered = render_template('Login.html', msg='')
+        return rendered
+
 
 def checkCredentials(uName, pw):
     #new login method using databse
