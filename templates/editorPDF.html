@@ -21,9 +21,8 @@
 <div class="EditorEncapsule">
 
   <main class="InputContent">
-<!-- action="/EditorPDF" -->
 
-    <form id='EditorForm' name = "EditorPDFForm" onsubmit="return ValidateExpiryDate()" method="post" >
+    <form id='EditorForm' name = "EditorPDFForm" onsubmit="return addOrder()" method="POST" >
 
       <select class="Inputlist" id = "CustomerName" type = "text" name = "CustomerName" required>
         {% for row in customerName %}
@@ -62,24 +61,24 @@
           </thead>
             <tbody id="MainFormContent">
               <td id= "LeftTableColumn"><!-- product -->
-                <select id = "Product"  name = "product" required>
+                <select id = "Product1"  name = "product" required>
                   {% for row in productName %}
                   <option>{{row[0]}}</option>
                   {% endfor %}
                 </select></td>
                 <td><!-- Quantity -->
-                  <input id = "Quantity" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
+                  <input id = "Quantity1" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
                   <td><!-- Batch Number -->
-                    <input id = "BatchNumber" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td>
+                    <input id = "BatchNumber1" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td>
                     <td><!-- Expiry Date -->
-                      <input id = "ExpiryDate" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td>
+                      <input id = "ExpiryDate1" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td>
                       <td><!-- temp -->
-                        <select id = "Temperature" name = "temperature" required>
+                        <select id = "Temperature1" name = "temperature" required>
                           <option value="Ambient">Ambient</option>
                           <option value="Coldchain">Cold chain</option>
                         </select></td>
                         <td id="RightTableColumn"><!-- origin -->
-                          <input id = "Origin" type = "text" name = "origin" placeholder="Enter The Origin Location"></td>
+                          <input id = "Origin1" type = "text" name = "origin" placeholder="Enter The Origin Location"></td>
                         </tr>
             </tbody>
         </table>
@@ -115,8 +114,9 @@
 
 </div>
 
-
+<p id="NumberOfIncrements"></p>
 <p> result of operation : {{ msg }} </p>
+<p id="txt"></p>
 
 
 
@@ -129,7 +129,9 @@
 
       NameIncremental = NameIncremental + 1;
 
-      var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product"  name = "product'+NameIncremental+'" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity" type = "number" name = "quantity'+NameIncremental+'" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber" type = "text" name = "batchnumber'+NameIncremental+'" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate" type = "date" name = "expirydate'+NameIncremental+'" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature" name = "temperature'+NameIncremental+'" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin" type = "text" name = "origin'+NameIncremental+'" required placeholder="Enter The Origin Location"></td></tr>'
+      document.getElementById("NumberOfIncrements").innerHTML = NameIncremental;
+
+      var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product'+NameIncremental+'"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity'+NameIncremental+'" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber'+NameIncremental+'" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate'+NameIncremental+'" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature'+NameIncremental+'" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin'+NameIncremental+'" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
 
       $("#SingleProductTable > tbody").append(newrow);
     });
@@ -139,6 +141,7 @@
 </script>
 
 <script>
+
   var CurrentDate = new Date();
 
   function ValidateExpiryDate(){

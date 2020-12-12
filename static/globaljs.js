@@ -310,3 +310,59 @@ function delProduct() {
     xhttp.open("GET", '/Products', true);
   }
 }
+
+function addOrder() {
+  // collects data from form and turn them into params
+  var CustomerName = document.forms["EditorForm"]["CustomerName"].value;
+  var ordernumber = document.forms["EditorForm"]["ordernumber"].value;
+  var consignmentnumber = document.forms["EditorForm"]["consignmentnumber"].value;
+  var numberofpallets = document.forms["EditorForm"]["numberofpallets"].value;
+  var totalweight = document.forms["EditorForm"]["totalweight"].value;
+  var deliverycontactname = document.forms["EditorForm"]["deliverycontactname"].value;
+  var deliverycontactnumber = document.forms["EditorForm"]["deliverycontactnumber"].value;
+  var numberofincrements = document.getElementById("NumberOfIncrements");
+
+  // while (numberofincrements>0) {
+  //   var Product = document.forms["EditorForm"]["Product"+numberofincrements].value;
+  //   var Quantity = document.forms["EditorForm"]["Quantity"+numberofincrements].value;
+  //   var BatchNumber = document.forms["EditorForm"]["BatchNumber"+numberofincrements].value;
+  //   var ExpiryDate = document.forms["EditorForm"]["ExpiryDate"+numberofincrements].value;
+  //   var Temperature = document.forms["EditorForm"]["Temperature"+numberofincrements].value;
+  //   var Origin = document.forms["EditorForm"]["Origin"+numberofincrements].value;
+  //
+  //   params = 'Product='+Product+'&Quantity='+Quantity+'&BatchNumber='+BatchNumber+'&ExpiryDate='+ExpiryDate+'&Temperature='+Temperature+'&Origin='+Origin;
+  //   var xhttp = new XMLHttpRequest();
+  //   xhttp.open("POST", '/PDFProducts', true); // true is asynchronous
+  //   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //   xhttp.onload = function() {
+  //     if (xhttp.readyState === 4 && xhttp.status === 200) {
+  //       console.log(xhttp.responseText);
+  //       document.getElementById("txt").innerHTML = xhttp.responseText;
+  //     } else {
+  //       console.error(xhttp.statusText);
+  //     }
+  //   };
+  //   //sends params to server
+  //   xhttp.send(params);
+  //   return false;
+  //
+  //   numberofincrements = numberofincrements -1;
+  //
+  // }
+
+  params = 'CustomerName='+CustomerName+'&ordernumber='+ordernumber+'&consignmentnumber='+consignmentnumber+'&numberofpallets='+numberofpallets+'&totalweight='+totalweight+'&deliverycontactname='+deliverycontactname+'&deliverycontactnumber='+deliverycontactnumber;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/CompletedPDFForms', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
+  //sends params to server
+  xhttp.send(params);
+  return false;
+}
