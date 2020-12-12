@@ -187,7 +187,15 @@ def editorPDF():
 
 @app.route("/PDF")
 def HtmlToPdf():
-    return render_template("HtmlToPdf.html")
+    rendered = render_template("HtmlToPdf.html")
+    try:
+        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG)
+        file = open("out.pdf","wb")
+        file.write(pdf)
+        file.close()
+    except:
+        pass
+    return rendered
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])

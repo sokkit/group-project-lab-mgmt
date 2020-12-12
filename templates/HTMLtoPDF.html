@@ -1,8 +1,6 @@
 <script type="text/javascript" src="../static/globaljs.js"></script>
-{%extends 'index.html'%}
+<link href="{{ url_for('static', filename='styles.css',  _external=True) }}" rel="stylesheet" >
 
-
-{%block mainBlock%}
 <h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>PACKING/DELIVERY NOTE</h1>
 
 <h1 class="notePdfRef">REF: <h1 id="notePdfCustomerName"></h1></h1>
@@ -97,4 +95,3 @@
 <div class="notePdfLine"></div>
 
 <p class="notePdfFrom">From: Aerona Clinical Limited , Exeter Science Park, 6 Babbage Way, Clyst Honiton, Exeter EX5 2FN Ph: 020 8 7980623</p>
-{%endblock%}
