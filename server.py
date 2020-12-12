@@ -182,8 +182,8 @@ def editorPDF():
             db.close()
             print(Customers)
             return render_template("editorPDF.html", productName = Products , customerName = Customers)
-    if request.method == 'POST':
-        return render_template("HtmlToPdf.html") #Temporary Location
+    # if request.method == 'POST':
+    #     return render_template("HtmlToPdf.html")
 
 @app.route("/PDF")
 def HtmlToPdf():
@@ -444,6 +444,68 @@ def log_out():
         username = None
         role = None
         return render_template("login.html")
+
+
+@app.route("/PDFProducts", methods = ['POST','GET'])
+def add_PDFProduct():
+    if request.method == 'POST':
+        #retrieve values
+        ordernumber = request.form.get('ordernumber', default="Error")
+        Product = request.form.get('Product', default="Error")
+        Quantity = request.form.get('Quantity', default="Error")
+        BatchNumber = request.form.get('BatchNumber', default="Error")
+        ExpiryDate = request.form.get('ExpiryDate', default="Error")
+        Temperature = request.form.get('Temperature', default="Error")
+        Origin = request.form.get('Origin', default="Error")
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cur = conn.cursor()
+            #insert values into database
+            cur.execute("INSERT INTO OrderItems ('orderID', 'productName', 'quantity', 'batchNumber', 'expiryDate', 'temperature', 'origin')\
+            VALUES (?,?,?,?,?,?,?)", #this method avoids SQL injection
+            (ordernumber, Product, Quantity, BatchNumber, ExpiryDate, Temperature, Origin) )
+            conn.commit()
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            msg = "Why no work"
+            return msg
+
+@app.route("/CompletedPDFForms", methods = ['POST','GET'])
+def add_PDFForm():
+    if request.method == 'POST':
+        #retrieve values
+        CustomerName = request.form.get('CustomerName', default="Error")
+        ordernumber = request.form.get('ordernumber', default="Error")
+        consignmentnumber = request.form.get('consignmentnumber', default="Error")
+        numberofpallets = request.form.get('numberofpallets', default="Error")
+        totalweight = request.form.get('totalweight', default="Error")
+        deliverycontactname = request.form.get('deliverycontactname', default="Error")
+        deliverycontactnumber = request.form.get('deliverycontactnumber', default="Error")
+        print(CustomerName*10)
+        try:
+            print("step 1")
+            conn = sqlite3.connect(DATABASE)
+            print("step 2")
+            cur = conn.cursor()
+            print("step 3")
+            #insert values into database
+            cur.execute("INSERT INTO CompletedPDFs ('CustomerName', 'orderNumber', 'consignmentNumber', 'numOfPallets', 'totalWeight', 'contactName', 'contactNumber')\
+            VALUES (CustomerName,ordernumber,consignmentnumber,numberofpallets,totalweight,deliverycontactname,deliverycontactnumber)", #this method avoids SQL injection
+            (CustomerName, ordernumber, consignmentnumber, numberofpallets, totalweight, deliverycontactname, deliverycontactnumber) )
+            print("PleaseWORK"*200)
+            conn.commit()
+            print("WORK"*200)
+            msg = "Record successfully added"
+        except Exception as e:
+            conn.rollback()
+            msg = "error in insert operation"
+        finally:
+            conn.close()
+            return msg
 
 if __name__ == "__main__":
 	app.run(debug=True)
