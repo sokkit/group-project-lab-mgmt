@@ -125,6 +125,7 @@
   var NameIncremental = 1;
 
   $(document).ready(function(){
+    document.getElementById("NumberOfIncrements").innerHTML = NameIncremental;
     $("#InsertRow").click(function(){
 
       NameIncremental = NameIncremental + 1;
@@ -162,8 +163,8 @@
   function ValidateNotAlphabetical(){
     var Letters = /^[A-Za-z]+$/;
     var ToCheckNonAlphabetical = document.forms["EditorForm"]["TotalWeight"].value;
-    console.log(ToCheckNonAlphabetical);
-    console.log(Letters);
+    // console.log(ToCheckNonAlphabetical);
+    // console.log(Letters);
     if(ToCheckNonAlphabetical.match(Letters)){
       return false;
       alert("This Weight Contains Invalid Characters");

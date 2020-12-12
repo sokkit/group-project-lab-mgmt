@@ -189,7 +189,11 @@ def editorPDF():
 def HtmlToPdf():
     rendered = render_template("HtmlToPdf.html")
     try:
-        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG)
+        options = {
+          # "enable-local-file-access": None,
+          # "disable-smart-shrinking": ""
+        }
+        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
         file = open("out.pdf","wb")
         file.write(pdf)
         file.close()
@@ -478,7 +482,6 @@ def add_PDFProduct():
             msg = "error in insert operation"
         finally:
             conn.close()
-            msg = "Why no work"
             return msg
 
 @app.route("/CompletedPDFForms", methods = ['POST','GET'])

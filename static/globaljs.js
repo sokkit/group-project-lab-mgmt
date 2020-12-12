@@ -320,35 +320,36 @@ function addOrder() {
   var totalweight = document.forms["EditorForm"]["totalweight"].value;
   var deliverycontactname = document.forms["EditorForm"]["deliverycontactname"].value;
   var deliverycontactnumber = document.forms["EditorForm"]["deliverycontactnumber"].value;
-  var numberofincrements = document.getElementById("NumberOfIncrements");
+  var numberofincrements = document.getElementById("NumberOfIncrements").innerHTML;
+  console.log(numberofincrements)
+  while (numberofincrements>0) {
+    var ordernumber = document.forms["EditorForm"]["ordernumber"].value;
+    var Product = document.forms["EditorForm"]["Product"+numberofincrements].value;
+    var Quantity = document.forms["EditorForm"]["Quantity"+numberofincrements].value;
+    var BatchNumber = document.forms["EditorForm"]["BatchNumber"+numberofincrements].value;
+    var ExpiryDate = document.forms["EditorForm"]["ExpiryDate"+numberofincrements].value;
+    var Temperature = document.forms["EditorForm"]["Temperature"+numberofincrements].value;
+    var Origin = document.forms["EditorForm"]["Origin"+numberofincrements].value;
+    console.log(Origin)
+    params = 'ordernumber='+ordernumber+'&Product='+Product+'&Quantity='+Quantity+'&BatchNumber='+BatchNumber+'&ExpiryDate='+ExpiryDate+'&Temperature='+Temperature+'&Origin='+Origin;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", '/PDFProducts', true); // true is asynchronous
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onload = function() {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+        console.log(xhttp.responseText);
+        document.getElementById("txt").innerHTML = xhttp.responseText;
+      } else {
+        console.error(xhttp.statusText);
+      }
+    };
+    //sends params to server
+    xhttp.send(params);
+    // return false;
 
-  // while (numberofincrements>0) {
-  //   var Product = document.forms["EditorForm"]["Product"+numberofincrements].value;
-  //   var Quantity = document.forms["EditorForm"]["Quantity"+numberofincrements].value;
-  //   var BatchNumber = document.forms["EditorForm"]["BatchNumber"+numberofincrements].value;
-  //   var ExpiryDate = document.forms["EditorForm"]["ExpiryDate"+numberofincrements].value;
-  //   var Temperature = document.forms["EditorForm"]["Temperature"+numberofincrements].value;
-  //   var Origin = document.forms["EditorForm"]["Origin"+numberofincrements].value;
-  //
-  //   params = 'Product='+Product+'&Quantity='+Quantity+'&BatchNumber='+BatchNumber+'&ExpiryDate='+ExpiryDate+'&Temperature='+Temperature+'&Origin='+Origin;
-  //   var xhttp = new XMLHttpRequest();
-  //   xhttp.open("POST", '/PDFProducts', true); // true is asynchronous
-  //   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //   xhttp.onload = function() {
-  //     if (xhttp.readyState === 4 && xhttp.status === 200) {
-  //       console.log(xhttp.responseText);
-  //       document.getElementById("txt").innerHTML = xhttp.responseText;
-  //     } else {
-  //       console.error(xhttp.statusText);
-  //     }
-  //   };
-  //   //sends params to server
-  //   xhttp.send(params);
-  //   return false;
-  //
-  //   numberofincrements = numberofincrements -1;
-  //
-  // }
+    numberofincrements = numberofincrements -1;
+    console.log(numberofincrements)
+  }
 
   params = 'CustomerName='+CustomerName+'&ordernumber='+ordernumber+'&consignmentnumber='+consignmentnumber+'&numberofpallets='+numberofpallets+'&totalweight='+totalweight+'&deliverycontactname='+deliverycontactname+'&deliverycontactnumber='+deliverycontactnumber;
   var xhttp = new XMLHttpRequest();
