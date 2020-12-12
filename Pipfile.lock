@@ -141,6 +141,7 @@
             "hashes": [
                 "sha256:05f1c631e8d9ab877886955da825e48b459e097886a21448ab17b34c60cfd66c",
                 "sha256:6a866c9659e62a81abd72cdb32b400762d76085b964beb0b15106d573a539677",
+                "sha256:a315a665c266db28fb751891d0661fe5e750ced812cb4eadb3ce63afba9a7475",
                 "sha256:ef1da35b78d534197e7ce4a604a4a190e9aa769e56634957535f3479a50d8cd1"
             ],
             "index": "pypi",
@@ -151,6 +152,7 @@
                 "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0",
                 "sha256:7582ad22678f0fcd81102833f60ef8d0e57288b6b5fb00323d101be910e35705"
             ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.20"
         },
         "six": {
@@ -158,6 +160,7 @@
                 "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
                 "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
             ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.15.0"
         },
         "werkzeug": {
