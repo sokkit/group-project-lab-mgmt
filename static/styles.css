@@ -471,11 +471,11 @@ header{
   }
 
  .notePdfItems th {
-    padding-right: 80px;
+    padding-right: 10px;
   }
 
   .notePdfItems th:first-child {
-    padding-right: 300px;
+    padding-right: 400px;
   }
 
   .notePdfWarehouseInfoContainer {
