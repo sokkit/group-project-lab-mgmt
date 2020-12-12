@@ -187,7 +187,9 @@ def editorPDF():
 
 @app.route("/PDF")
 def HtmlToPdf():
-    return render_template("HtmlToPdf.html")
+    rendered = render_template('HtmlToPdf.html', msg='')
+    return rendered
+
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])
