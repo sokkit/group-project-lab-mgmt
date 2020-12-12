@@ -457,6 +457,7 @@ def add_PDFProduct():
         ExpiryDate = request.form.get('ExpiryDate', default="Error")
         Temperature = request.form.get('Temperature', default="Error")
         Origin = request.form.get('Origin', default="Error")
+        print(f" values {ordernumber}, {Product}, {Quantity}, {BatchNumber}, {ExpiryDate}, {Temperature}, {Origin}")
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
@@ -485,7 +486,6 @@ def add_PDFForm():
         totalweight = request.form.get('totalweight', default="Error")
         deliverycontactname = request.form.get('deliverycontactname', default="Error")
         deliverycontactnumber = request.form.get('deliverycontactnumber', default="Error")
-        print(CustomerName*10)
         try:
             print("step 1")
             conn = sqlite3.connect(DATABASE)
@@ -493,12 +493,10 @@ def add_PDFForm():
             cur = conn.cursor()
             print("step 3")
             #insert values into database
-            cur.execute("INSERT INTO CompletedPDFs ('CustomerName', 'orderNumber', 'consignmentNumber', 'numOfPallets', 'totalWeight', 'contactName', 'contactNumber')\
-            VALUES (CustomerName,ordernumber,consignmentnumber,numberofpallets,totalweight,deliverycontactname,deliverycontactnumber)", #this method avoids SQL injection
+            cur.execute("INSERT INTO CompletedPDFs ('customerName', 'orderNumber', 'consignmentNumber', 'numOfPallets', 'totalWeight', 'contactName', 'contactNumber')\
+            VALUES (?,?,?,?,?,?,?)", #this method avoids SQL injection
             (CustomerName, ordernumber, consignmentnumber, numberofpallets, totalweight, deliverycontactname, deliverycontactnumber) )
-            print("PleaseWORK"*200)
             conn.commit()
-            print("WORK"*200)
             msg = "Record successfully added"
         except Exception as e:
             conn.rollback()
