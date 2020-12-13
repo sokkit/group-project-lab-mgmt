@@ -93,6 +93,8 @@
       </div>
 
       <input type="button" id="InsertRow" value="Insert Row">
+      <input type="button" id="DeleteRow" value="Delete Row" onclick="DeleteLastRow()">
+
 
       <label for="NumberOfPallets">Number Of Pallets</label>
       <input class="Inputlist" id = "NumberOfPallets" type = "number" name = "numberofpallets" required placeholder="Enter The Number Of Pallets">
@@ -163,8 +165,6 @@
   function ValidateNotAlphabetical(){
     var Letters = /^[A-Za-z]+$/;
     var ToCheckNonAlphabetical = document.forms["EditorForm"]["TotalWeight"].value;
-    // console.log(ToCheckNonAlphabetical);
-    // console.log(Letters);
     if(ToCheckNonAlphabetical.match(Letters)){
       return false;
       alert("This Weight Contains Invalid Characters");
@@ -172,12 +172,17 @@
     else{
       return true;
     }
-
-
-
-
   }
 
+  function DeleteLastRow(){
+    console.log("Test")
+    if (NameIncremental > 1){
+      console.log("Hello")
+      document.getElementById("SingleProductTable").deleteRow((NameIncremental));
+      NameIncremental = NameIncremental - 1;
+      console.log(NameIncremental)
+    }
+  }
 </script>
 
 
