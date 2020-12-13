@@ -74,6 +74,10 @@ CREATE TABLE IF NOT EXISTS `OrderItems` (
   `origin`	TEXT NOT NULL
 );
 
+INSERT INTO 'OrderItems'('orderID','productName', 'quantity', 'batchNumber', 'expiryDate', 'temperature', 'origin') VALUES ('1','Dapsone 50mg caps','454', '1', '2020-12-26', 'Ambient', 'UK');
+INSERT INTO 'OrderItems'('orderID','productName', 'quantity', 'batchNumber', 'expiryDate', 'temperature', 'origin') VALUES ('1','Busulfan 6mg inj','454', '1', '2020-12-23', 'Ambient', 'China');
+INSERT INTO 'OrderItems'('orderID','productName', 'quantity', 'batchNumber', 'expiryDate', 'temperature', 'origin') VALUES ('2','Labetalol 100mg tablets','211', '2', '2020-12-11', 'Cold Chain', 'Wales');
+INSERT INTO 'OrderItems'('orderID','productName', 'quantity', 'batchNumber', 'expiryDate', 'temperature', 'origin') VALUES ('2','Keytruda 100mg inj','211', '30', '2020-11-11', 'Cold Chain', 'Wales');
 
 CREATE TABLE IF NOT EXISTS `CompletedPDFs` (
   `completedPDFsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -85,3 +89,6 @@ CREATE TABLE IF NOT EXISTS `CompletedPDFs` (
   `contactName`	TEXT NOT NULL,
   `contactNumber`	TEXT NOT NULL
 );
+
+INSERT INTO 'CompletedPDFs'('customerName','orderNumber', 'consignmentNumber', 'numOfPallets', 'totalWeight', 'contactName', 'contactNumber') VALUES ('Delta Med','1','DHL', '1', '22kg', 'John', '00000111111');
+INSERT INTO 'CompletedPDFs'('customerName','orderNumber', 'consignmentNumber', 'numOfPallets', 'totalWeight', 'contactName', 'contactNumber') VALUES ('Abbvie GmBH','2','DHL', '1', '54kg', 'John', '00000111111');
