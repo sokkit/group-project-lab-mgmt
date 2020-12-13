@@ -38,6 +38,14 @@ function updateUserRole(){
 
 }
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 function updateUserPassword(){
   var username = document.forms["changePassword"]["selectedUser"].value;
   var password = document.forms["changePassword"]["newPassword2"].value;
@@ -367,6 +375,7 @@ function addOrder() {
   xhttp.send(params);
 
   // send order number to PDF route
+  sleep(2000)
   console.log("sending order number")
   params = 'ordernumber='+ordernumber;
   console.log("Big Test")
