@@ -170,7 +170,7 @@ def editorPDF():
     if request.method == 'GET':
         if session['usertype'] == None:
             return render_template('login.html', msg='Log in to use site')
-        if checkAdmin():
+        else:
             db = sqlite3.connect("database.db")
             prodcurs = db.cursor()
             prodcurs.execute("SELECT productName FROM items")
