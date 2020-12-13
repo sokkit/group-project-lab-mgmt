@@ -481,6 +481,10 @@ header{
  .notePdfItems th {
     padding-right: 10px;
   }
+ .notePdfItems td{
+   padding-right: 10px;
+   border: none;
+ }
 
   .notePdfItems th:first-child {
     padding-right: 400px;
@@ -515,7 +519,7 @@ header{
   .notePdfDeliveryAddressContainer {
     border: solid;
     padding-right: 300px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     border-radius: 10px;
     margin-left: 20px;
     font-size: 15;

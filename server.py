@@ -190,8 +190,17 @@ def editorPDF():
 def HtmlToPdf():
     if request.method == 'POST':
         ordernumber = request.form.get('ordernumber', default="Error")
-        print(ordernumber)
-        rendered = render_template("HtmlToPdf.html")
+        db = sqlite3.connect("database.db") # Opens the DB
+        curs = db.cursor()
+        curs.execute("SELECT customerName, orderNumber, consignmentNumber, numOfPallets, totalWeight, contactName, contactNumber FROM CompletedPDFs WHERE orderNumber=?;", [request.form.get("ordernumber")])
+        completed_pdfs = curs.fetchall()
+        completed_pdfs = list(completed_pdfs[0])
+        curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
+        order_items = curs.fetchall()
+        curs.close()
+        db.close()
+
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
@@ -202,13 +211,15 @@ def HtmlToPdf():
         }
 
         try:
-            pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
+            pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
             file = open("out.pdf","wb")
             file.write(pdf)
             file.close()
         except:
             pass
         return rendered
+    else:
+        return render_template("HTMLtoPDF.html")
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])

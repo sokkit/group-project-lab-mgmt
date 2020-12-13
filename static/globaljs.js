@@ -350,7 +350,6 @@ function addOrder() {
     numberofincrements = numberofincrements -1;
     console.log(numberofincrements)
   }
-
   // send order info to database
   params = 'CustomerName='+CustomerName+'&ordernumber='+ordernumber+'&consignmentnumber='+consignmentnumber+'&numberofpallets='+numberofpallets+'&totalweight='+totalweight+'&deliverycontactname='+deliverycontactname+'&deliverycontactnumber='+deliverycontactnumber;
   var xhttp = new XMLHttpRequest();
@@ -370,6 +369,7 @@ function addOrder() {
   // send order number to PDF route
   console.log("sending order number")
   params = 'ordernumber='+ordernumber;
+  console.log("Big Test")
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", '/PDF', true); // true is asynchronous
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
