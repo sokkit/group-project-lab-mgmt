@@ -481,7 +481,7 @@ def add_PDFProduct():
             VALUES (?,?,?,?,?,?,?)", #this method avoids SQL injection
             (ordernumber, Product, Quantity, BatchNumber, ExpiryDate, Temperature, Origin) )
             conn.commit()
-            msg = "Record successfully added"
+            msg = "Product successfully added"
         except Exception as e:
             conn.rollback()
             msg = "error in insert operation"
