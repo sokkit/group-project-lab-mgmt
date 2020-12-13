@@ -186,26 +186,29 @@ def editorPDF():
     # if request.method == 'POST':
     #     return render_template("HtmlToPdf.html")
 
-@app.route("/PDF")
+@app.route("/PDF", methods = ['POST', 'GET'])
 def HtmlToPdf():
-    rendered = render_template("HtmlToPdf.html")
-    options = {
-        'page-size':'A4',
-        'encoding':'utf-8',
-        'margin-top':'0cm',
-        'margin-bottom':'0cm',
-        'margin-left':'0cm',
-        'margin-right':'0cm'
-    }
+    if request.method == 'POST':
+        ordernumber = request.form.get('ordernumber', default="Error")
+        print(ordernumber)
+        rendered = render_template("HtmlToPdf.html")
+        options = {
+            'page-size':'A4',
+            'encoding':'utf-8',
+            'margin-top':'0cm',
+            'margin-bottom':'0cm',
+            'margin-left':'0cm',
+            'margin-right':'0cm'
+        }
 
-    try:
-        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
-        file = open("out.pdf","wb")
-        file.write(pdf)
-        file.close()
-    except:
-        pass
-    return rendered
+        try:
+            pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
+            file = open("out.pdf","wb")
+            file.write(pdf)
+            file.close()
+        except:
+            pass
+        return rendered
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])
