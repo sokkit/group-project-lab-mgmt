@@ -63,7 +63,8 @@ INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 3, "PDF1");
 INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 4, "PDF2");
 
 CREATE TABLE IF NOT EXISTS `OrderItems` (
-  `orderID`		INTEGER NOT NULL PRIMARY KEY,
+  `orderItemsID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `orderID`		INTEGER NOT NULL,
   -- orderID is orderNumber in CompltedPDFs
   `productName`	INTEGER NOT NULL,
   `quantity`	INTEGER NOT NULL,

@@ -464,6 +464,7 @@ def log_out():
 @app.route("/PDFProducts", methods = ['POST','GET'])
 def add_PDFProduct():
     if request.method == 'POST':
+
         #retrieve values
         ordernumber = request.form.get('ordernumber', default="Error")
         Product = request.form.get('Product', default="Error")
@@ -473,6 +474,7 @@ def add_PDFProduct():
         Temperature = request.form.get('Temperature', default="Error")
         Origin = request.form.get('Origin', default="Error")
         print(f" values {ordernumber}, {Product}, {Quantity}, {BatchNumber}, {ExpiryDate}, {Temperature}, {Origin}")
+
         try:
             conn = sqlite3.connect(DATABASE)
             cur = conn.cursor()
@@ -482,9 +484,11 @@ def add_PDFProduct():
             (ordernumber, Product, Quantity, BatchNumber, ExpiryDate, Temperature, Origin) )
             conn.commit()
             msg = "Product successfully added"
+            print(msg)
         except Exception as e:
             conn.rollback()
-            msg = "error in insert operation"
+            msg = "error in insert product operation"
+            print(msg)
         finally:
             conn.close()
             return msg
