@@ -1,7 +1,7 @@
 <script type="text/javascript" src="../static/globaljs.js"></script>
 <link href="{{ url_for('static', filename='styles.css',  _external=True) }}" rel="stylesheet" >
 
-<h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>PACKING/DELIVERY NOTE</h1>
+<h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>COLLECTION NOTE</h1>
 
 <h1 class="notePdfRef">REF: <h1 id="notePdfCustomerName"></h1></h1>
 
@@ -12,10 +12,8 @@
 <div class="addressOrderWrapper">
   <div class="notePdfAddressContainer">
     <div id="notePdfAddress">
-      {{completed_pdfs[0]}}
-      {% for line in company_address_lines %}
-      <p>{{line}}</p>
-      {% endfor %}
+      <p><b>From</b></p>
+      <p>CDL (London) Limited <br>21-22 The IO Centre<br>Armstrong Road<br>The Royal Arsenal<br>Woolwich<br>London<br>SE18 6RS</p>
     </div>
   </div>
 

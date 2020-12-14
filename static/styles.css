@@ -11,14 +11,39 @@ body {
 
 header{
   position: relative;
-  background-color: #0324fc;
+  background-color: white;
   font-size: 30px;
-  font-family: sans-serif;
-  padding: 4px;
-  padding-bottom: 20px;
-  color: white;
+  font-family: arial;
+
+  color: black;
   align-items: right;
-  text-indent: 20px;
+}
+
+#Logo{
+  margin: 10px;
+  border: 0;
+  padding: 0;
+}
+
+.header_logout{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-family: arial;
+  font-weight: lighter;
+  text-align: center;
+  cursor: pointer;
+  color: #2f2f2f;
+  background-color: white;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 0;
+  font-size: 2vw;
+  margin-top: 10px;
+  outline: none;
+
 }
 
 
@@ -446,7 +471,7 @@ header{
     margin-left: 20px;
     padding: 10px;
     padding-right: 300px;
-    padding-bottom: 65px;
+    padding-bottom: 5px;
     float: left;
   }
 
@@ -519,7 +544,7 @@ header{
   .notePdfDeliveryAddressContainer {
     border: solid;
     padding-right: 300px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     border-radius: 10px;
     margin-left: 20px;
     font-size: 15;
