@@ -153,6 +153,9 @@ def fetchuserinfo():
 def selectpdfpage():
     db = sqlite3.connect("database.db") # Opens the DB
     curs = db.cursor()
+    curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+    AllpdfNames = curs.fetchall()
+    AllpdfNames = list(AllpdfNames)
     if session['usertype'] == None: #if user is not an admin it will only display their PDF's
         curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , (currentUsername)) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
         pdfNames = curs.fetchall()
@@ -163,10 +166,9 @@ def selectpdfpage():
     pdfNames = list(pdfNames)
     print(pdfNames)
     curs.close()
-
     db.close()
     # Closes the file to prevent memory leaks
-    return render_template("selectPDF.html", pdfNames = pdfNames)
+    return render_template("selectPDF.html", pdfNames = pdfNames, pdfNameList = AllpdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
@@ -556,9 +558,33 @@ def add_PDFForm():
             conn.close()
             return msg
 
-@app.route("/SelectPDF/Copy")
+@app.route("/selectPDF/Copy" , methods = ['POST','GET'])
 def copyPDF():
-    print("test")
+    if request.method == 'POST':
+        selectedPDFname = request.form.get('selectedPDFname', default="Error")
+        print("Selected PDF: " + selectedPDFname)
+        newPDFname = request.form.get('newPdfName', default='Error')
+        print("new PDF name: " + newPDFname)
+        try:
+            db = sqlite3.connect("database.db")
+            curs = db.cursor()
+            curs.execute("INSERT INTO Orders (userID, customerID, pdfName)\
+            SELECT Orders.userID, Orders.customerID, ?\
+            FROM Orders\
+            WHERE pdfName= ?",
+            (selectedPDFname, newPDFname))
+
+            print("After SQL")
+            msg = "Successfully copied PDF"
+            #INSERT INTO Orders (Orders.userID, Orders.customerID, Orders.pdfName) (SELECT Orders.userID, Orders.customerID, Orders.pdfName FROM Orders WHERE Orders.pdfName = ? AND Orders.pdfName = ?
+        except Exception as e:
+            conn.rollback()
+            msg = "Failed to copy PDF"
+            print(e)
+        finally:
+            db.close()
+            return msg
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
