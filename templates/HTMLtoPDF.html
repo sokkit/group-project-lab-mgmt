@@ -12,6 +12,7 @@
 <div class="addressOrderWrapper">
   <div class="notePdfAddressContainer">
     <div id="notePdfAddress">
+      {{completed_pdfs[0]}}
       {% for line in company_address_lines %}
       <p>{{line}}</p>
       {% endfor %}
@@ -84,6 +85,7 @@
   <div class="notePdfDeliveryAddressContainer">
     <div id="notePdfDeliveryAddress">
       <b>Delivery Address:<br></b>
+      {{completed_pdfs[0]}}
       {% for line in delivery_address_lines %}
       <p>{{line}}</p>
       {% endfor %}
