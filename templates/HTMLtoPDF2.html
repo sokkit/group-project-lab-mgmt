@@ -1,0 +1,105 @@
+<script type="text/javascript" src="../static/globaljs.js"></script>
+<link href="{{ url_for('static', filename='styles.css',  _external=True) }}" rel="stylesheet" >
+
+<h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>COLLECTION NOTE</h1>
+
+<h1 class="notePdfRef">REF: <h1 id="notePdfCustomerName"></h1></h1>
+
+<h1 class="notePdfOrder">ORDER: <h1 id="notePdfOrderNumber"></h1></h1>
+
+<h1 class="notePdfPage">Page: <h1 id="notePdfPageNo"></h1></h1>
+
+<div class="addressOrderWrapper">
+  <div class="notePdfAddressContainer">
+    <div id="notePdfAddress">
+      <p><b>From</b></p>
+      <p>CDL (London) Limited <br>21-22 The IO Centre<br>Armstrong Road<br>The Royal Arsenal<br>Woolwich<br>London<br>SE18 6RS</p>
+    </div>
+  </div>
+
+  <table class="notePdfDetails">
+    <tr>
+      <td>Order No</td>
+      <td id="notePdfOrderNumber">1234</td>
+    </tr>
+    <tr>
+      <td>Date:</td>
+      <td id="notePdfDate">{{curdate}}</td>
+    </tr>
+    <tr>
+      <td>Our Account Ref</td>
+      <td id="notePdfCustomerName">{{completed_pdfs[0]}}</td>
+    </tr>
+    <tr>
+      <td>A/C Cod</td>
+      <td id="notePdfCustomerName">{{completed_pdfs[0]}}</td>
+    </tr>
+    <tr>
+      <td>Consignment No</td>
+      <td id="notePdfConsignmentNumber">{{completed_pdfs[2]}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="notePdfItemsContainer">
+  <table class="notePdfItems">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Batch No</th>
+      <th>Expiry Date</th>
+      <th>Temp</th>
+      <th>Origin</th>
+    </tr>
+    {% for row in order_items %}
+    <tr>
+      <td>{{row[0]}}</td>
+      <td>{{row[1]}}</td>
+      <td>{{row[2]}}</td>
+      <td>{{row[3]}}</td>
+      <td>{{row[4]}}</td>
+      <td>{{row[5]}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="notePdfWarehouseInfoContainer">
+  <table class="notePdfWarehouseInfo">
+    <tr>
+      <td>No of Pallets: {{completed_pdfs[3]}}</td>
+      <td>Total Weight: {{completed_pdfs[4]}}</td>
+      <td>Dimension:</td>
+    </tr>
+    <tr>
+      <td>Transport Company: {{completed_pdfs[2]}}<p id="notePdfConsignmentNumber"></p></td>
+      <td></td>
+      <td>Date: <p id="notePdfDate"></p></td>
+    </tr>
+  </table>
+</div>
+
+<div class="deliveryAddressContactWrapper">
+  <div class="notePdfDeliveryAddressContainer">
+    <div id="notePdfDeliveryAddress">
+      <b>Delivery Address:<br></b>
+      {{completed_pdfs[0]}}
+      {% for line in delivery_address_lines %}
+      <p>{{line}}</p>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <div class="notePdfDeliveryContactContainer">
+    <p><b>Delivery Contact</b></p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p id="notePDFContactName">{{completed_pdfs[5]}}, <br>{{completed_pdfs[6]}}</p>
+  </div>
+</div>
+<div class="notePdfLine"></div>
+
+<p class="notePdfFrom">From: Aerona Clinical Limited , Exeter Science Park, 6 Babbage Way, Clyst Honiton, Exeter EX5 2FN Ph: 020 8 7980623</p>
