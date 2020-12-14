@@ -79,7 +79,7 @@
                   <td><!-- Batch Number -->
                     <input id = "BatchNumber1" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td>
                     <td><!-- Expiry Date -->
-                      <input id = "ExpiryDate1" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td>
+                      <input id = "ExpiryDate1" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date" onblur="ValidateExpiryDate()"></td>
                       <td><!-- temp -->
                         <select id = "Temperature1" name = "temperature" required>
                           <option value="Ambient">Ambient</option>
@@ -108,7 +108,7 @@
       <input class="Inputlist" id = "NumberOfPallets" type = "number" name = "numberofpallets" required placeholder="Enter The Number Of Pallets">
 
       <label for="TotalWeight">Total Weight</label>
-      <input class="Inputlist" id = "TotalWeight" type = "text" name = "totalweight" required placeholder="Enter The Total Weight" onblur = "ValidateNotAlphabetical()">
+      <input class="Inputlist" id = "TotalWeight" type = "text" name = "totalweight" required placeholder="Enter The Total Weight">
 
       <label for="DeliveryContactName">Delivery Contact Name</label>
       <input class="Inputlist" id = "DeliveryContactName" type = "text" name = "deliverycontactname" required placeholder="Enter The Delivery Contacts Name">
@@ -117,7 +117,7 @@
       <input class="Inputlist" id = "DeliveryContactNumber" type = "text" name = "deliverycontactnumber" required placeholder="Enter The Delivery Contacts Number">
 
 
-      <button class="EditorFormButton" type = "submit" > Submit </button>
+      <button class="EditorFormButton" type = "submit" onclick="setTimeout(myFunction,3000);" > Submit </button>
 
     </form>
   </main>
@@ -154,10 +154,11 @@
 <script>
 
   var CurrentDate = new Date();
+  document.getElementById("DISPLAYTIME").innerHTML = CurrentDate;
 
   function ValidateExpiryDate(){
-    document.getElementById("test").innerHTML = 12
     var ExpiryDate_ = document.forms["EditorPDFForm"]["expirydate"].value;
+    console.log(ExpiryDate_)
 
     if (ExpiryDate_ < CurrentDate){
       alert("Invalid Expiry Date");
@@ -168,19 +169,12 @@
     }
   }
 
-  document.getElementById("DISPLAYTIME").innerHTML = CurrentDate;
 
-  function ValidateNotAlphabetical(){
-    var Letters = /^[A-Za-z]+$/;
-    var ToCheckNonAlphabetical = document.forms["EditorForm"]["TotalWeight"].value;
-    if(ToCheckNonAlphabetical.match(Letters)){
-      return false;
-      alert("This Weight Contains Invalid Characters");
-    }
-    else{
-      return true;
-    }
-  }
+function resetForm(){
+  var form = document.getElementById("EditorForm");
+  console.log("Pineapple")
+  form.reset();
+}
 
   function DeleteLastRow(){
     if (NameIncremental > 1){
