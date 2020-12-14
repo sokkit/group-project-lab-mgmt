@@ -198,14 +198,21 @@ def HtmlToPdf():
         completed_pdfs = list(completed_pdfs[0])
         curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
         order_items = curs.fetchall()
+        curs.execute("SELECT address, deliveryAddress FROM Customers WHERE customerName=?;", [completed_pdfs[0]])
+        addresses = curs.fetchall()
+        addresses = list(addresses[0])
+        company_address = addresses[0]
+        company_address_lines = company_address.split(",")
+        delivery_address = addresses[1]
+        delivery_address_lines = delivery_address.split(",")
         curs.close()
         db.close()
 
-        curtime = time.strftime("%d/%m/%y",time.localtime())
+        curtime = str(time.strftime("%d/%m/%y",time.localtime()))
         print(curtime)
         print("tried /shrug")
 
-        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime)
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
