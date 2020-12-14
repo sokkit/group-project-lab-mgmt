@@ -75,11 +75,11 @@
                 </datalist>
                 </td>
                 <td><!-- Quantity -->
-                  <input id = "Quantity1" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
+                  <input id = "Quantity1" type = "number" name = "quantity" required placeholder="Enter The Quantity" min="0"></td>
                   <td><!-- Batch Number -->
                     <input id = "BatchNumber1" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td>
                     <td><!-- Expiry Date -->
-                      <input id = "ExpiryDate1" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date" onblur="ValidateExpiryDate()"></td>
+                      <input id = "ExpiryDate1" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td>
                       <td><!-- temp -->
                         <select id = "Temperature1" name = "temperature" required>
                           <option value="Ambient">Ambient</option>
@@ -105,7 +105,7 @@
 
 
       <label for="NumberOfPallets">Number Of Pallets</label>
-      <input class="Inputlist" id = "NumberOfPallets" type = "number" name = "numberofpallets" required placeholder="Enter The Number Of Pallets">
+      <input class="Inputlist" id = "NumberOfPallets" type = "number" name = "numberofpallets" required placeholder="Enter The Number Of Pallets" min="0">
 
       <label for="TotalWeight">Total Weight</label>
       <input class="Inputlist" id = "TotalWeight" type = "text" name = "totalweight" required placeholder="Enter The Total Weight">
@@ -117,7 +117,7 @@
       <input class="Inputlist" id = "DeliveryContactNumber" type = "text" name = "deliverycontactnumber" required placeholder="Enter The Delivery Contacts Number">
 
 
-      <button class="EditorFormButton" type = "submit" onclick="setTimeout(myFunction,3000);" > Submit </button>
+      <button class="EditorFormButton" type = "submit"> Submit </button>
 
     </form>
   </main>
@@ -142,7 +142,7 @@
 
       document.getElementById("NumberOfIncrements").innerHTML = NameIncremental;
 
-      var newrow = '<tr><td id= "LeftTableColumn"><input list="ProductList" id = "Product'+NameIncremental+'"  name = "product" required placeholder="Enter The Product" spellcheck="false"><datalist id="ProductList">{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</datalist></td><td><input id = "Quantity'+NameIncremental+'" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber'+NameIncremental+'" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate'+NameIncremental+'" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature'+NameIncremental+'" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin'+NameIncremental+'" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
+      var newrow = '<tr><td id= "LeftTableColumn"><input list="ProductList" id = "Product'+NameIncremental+'"  name = "product" required placeholder="Enter The Product" spellcheck="false"><datalist id="ProductList">{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</datalist></td><td><input id = "Quantity'+NameIncremental+'" type = "number" name = "quantity" required placeholder="Enter The Quantity" min="0"></td><td><input id = "BatchNumber'+NameIncremental+'" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate'+NameIncremental+'" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature'+NameIncremental+'" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin'+NameIncremental+'" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
 
       $("#SingleProductTable > tbody").append(newrow);
     });
@@ -155,26 +155,6 @@
 
   var CurrentDate = new Date();
   document.getElementById("DISPLAYTIME").innerHTML = CurrentDate;
-
-  function ValidateExpiryDate(){
-    var ExpiryDate_ = document.forms["EditorPDFForm"]["expirydate"].value;
-    console.log(ExpiryDate_)
-
-    if (ExpiryDate_ < CurrentDate){
-      alert("Invalid Expiry Date");
-      return false;
-    }
-    else{
-      return true;
-    }
-  }
-
-
-function resetForm(){
-  var form = document.getElementById("EditorForm");
-  console.log("Pineapple")
-  form.reset();
-}
 
   function DeleteLastRow(){
     if (NameIncremental > 1){
