@@ -211,10 +211,9 @@ def HtmlToPdf():
         db.close()
 
         curtime = str(time.strftime("%d/%m/%y",time.localtime()))
-        print(curtime)
-        print("tried /shrug")
 
         rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        rendered2 = render_template("HTMLtoPDF2.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
@@ -226,12 +225,18 @@ def HtmlToPdf():
 
         try:
             pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
-            file = open("out.pdf","wb")
+            file = open(orderNumber+".pdf","wb")
             file.write(pdf)
             file.close()
         except Exception as e:
             print(e)
-            pass
+        try:
+            pdf = pdfkit.from_string(rendered2, ordernumber+"COLLECTION.pdf", configuration=CONFIG, options=options)
+            file = open(orderNumber+"COLLECTION.pdf","wb")
+            file.write(pdf)
+            file.close()
+        except Exception as e:
+            print(e)
         return rendered
     else:
         return render_template("HTMLtoPDF.html")
