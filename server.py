@@ -150,10 +150,11 @@ def fetchuserinfo():
 
 @app.route("/SelectPDF")
 def selectpdfpage():
+    currentUsername = request.cookies.get('username')
     db = sqlite3.connect("database.db") # Opens the DB
     curs = db.cursor()
-    if session['usertype'] == None: #if user is not an admin it will only display their PDF's
-        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , (currentUsername)) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
+    if session['usertype'] == "Staff": #if user is not an admin it will only display their PDF's
+        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , [currentUsername]) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
         pdfNames = curs.fetchall()
     else:
         curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
