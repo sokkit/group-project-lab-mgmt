@@ -11,12 +11,11 @@
 
 <div class="addressOrderWrapper">
   <div class="notePdfAddressContainer">
-    <p id="notePdfAddress">
-      Address line 1 <br>
-      Address line 2 <br>
-      Address line 3 <br>
-      Address line 4
-    </p>
+    <div id="notePdfAddress">
+      {% for line in company_address_lines %}
+      <p>{{line}}</p>
+      {% endfor %}
+    </div>
   </div>
 
   <table class="notePdfDetails">
@@ -83,13 +82,13 @@
 
 <div class="deliveryAddressContactWrapper">
   <div class="notePdfDeliveryAddressContainer">
-    <p id="notePdfDeliveryAddress">
+    <div id="notePdfDeliveryAddress">
       <b>Delivery Address:<br></b>
-      {{completed_pdfs[5]}} <br>
-      Address line 2 <br>
-      Address line 3 <br>
-      Address line 4
-    </p>
+      {% for line in delivery_address_lines %}
+      <p>{{line}}</p>
+      {% endfor %}
+    </div>
+
   </div>
 
   <div class="notePdfDeliveryContactContainer">
