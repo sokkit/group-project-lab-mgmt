@@ -160,8 +160,10 @@ def selectpdfpage():
         curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
         pdfNames = curs.fetchall()
         # Initializes pdfNames list which will be passed onto selectPDF.html
+    pdfNames = list(pdfNames)
     print(pdfNames)
     curs.close()
+
     db.close()
     # Closes the file to prevent memory leaks
     return render_template("selectPDF.html", pdfNames = pdfNames)
