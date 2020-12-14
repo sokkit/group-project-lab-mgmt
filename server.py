@@ -566,14 +566,14 @@ def copyPDF():
         newPDFname = request.form.get('newPdfName', default='Error')
         print("new PDF name: " + newPDFname)
         try:
-            db = sqlite3.connect("database.db")
-            curs = db.cursor()
+            conn = sqlite3.connect(DATABASE)
+            curs = conn.cursor()
             curs.execute("INSERT INTO Orders (userID, customerID, pdfName)\
             SELECT Orders.userID, Orders.customerID, ?\
             FROM Orders\
-            WHERE pdfName= ?",
-            (selectedPDFname, newPDFname))
-
+            WHERE pdfName=?;",
+            (newPDFname, selectedPDFname,))
+            conn.commit()
             print("After SQL")
             msg = "Successfully copied PDF"
             #INSERT INTO Orders (Orders.userID, Orders.customerID, Orders.pdfName) (SELECT Orders.userID, Orders.customerID, Orders.pdfName FROM Orders WHERE Orders.pdfName = ? AND Orders.pdfName = ?
@@ -582,8 +582,9 @@ def copyPDF():
             msg = "Failed to copy PDF"
             print(e)
         finally:
-            db.close()
-            return msg
+            curs.close()
+            conn.close()
+            return render_template("selectPDF.html")
 
 
 if __name__ == "__main__":
