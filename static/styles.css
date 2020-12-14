@@ -383,7 +383,7 @@ header{
     text-align: center;
   }
 
-  .btnPDFview {
+  .btnPDFcopy {
     float: right;
     position: relative;
     size: 45px 45px;
@@ -396,12 +396,12 @@ header{
     text-align: center;
   }
 
-  .btnPDFview:hover {
-
+  .btnPDFcopy:hover {
+    background-color: #0a8a2b;
   }
 
   .btnPDFedit:hover {
-
+    background-color: #942009;
   }
 
   .notePdfTitle {
@@ -481,6 +481,10 @@ header{
  .notePdfItems th {
     padding-right: 10px;
   }
+ .notePdfItems td{
+   padding-right: 10px;
+   border: none;
+ }
 
   .notePdfItems th:first-child {
     padding-right: 400px;
@@ -515,7 +519,7 @@ header{
   .notePdfDeliveryAddressContainer {
     border: solid;
     padding-right: 300px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     border-radius: 10px;
     margin-left: 20px;
     font-size: 15;

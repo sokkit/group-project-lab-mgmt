@@ -30,15 +30,15 @@
     </tr>
     <tr>
       <td>Our Account Ref</td>
-      <td id="notePdfCustomerName">Healthcare Pharm</td>
+      <td id="notePdfCustomerName">{{completed_pdfs[0]}}</td>
     </tr>
     <tr>
       <td>A/C Cod</td>
-      <td id="notePdfCustomerName">Healthcare Pharm</td>
+      <td id="notePdfCustomerName">{{completed_pdfs[0]}}</td>
     </tr>
     <tr>
       <td>Consignment No</td>
-      <td id="notePdfConsignmentNumber">DHL</td>
+      <td id="notePdfConsignmentNumber">{{completed_pdfs[2]}}</td>
     </tr>
   </table>
 </div>
@@ -53,19 +53,28 @@
       <th>Temp</th>
       <th>Origin</th>
     </tr>
-    <!-- Some sort of Jinja table here? -->
+    {% for row in order_items %}
+    <tr>
+      <td>{{row[0]}}</td>
+      <td>{{row[1]}}</td>
+      <td>{{row[2]}}</td>
+      <td>{{row[3]}}</td>
+      <td>{{row[4]}}</td>
+      <td>{{row[5]}}</td>
+    </tr>
+    {% endfor %}
   </table>
 </div>
 
 <div class="notePdfWarehouseInfoContainer">
   <table class="notePdfWarehouseInfo">
     <tr>
-      <td>No of Pallets: <p id="notePdfPallets"></p></td>
-      <td>Total Weight: </td>
+      <td>No of Pallets: {{completed_pdfs[3]}}</td>
+      <td>Total Weight: {{completed_pdfs[4]}}</td>
       <td>Dimension:</td>
     </tr>
     <tr>
-      <td>Transport Company: <p id="notePdfConsignmentNumber"></p></td>
+      <td>Transport Company: {{completed_pdfs[2]}}<p id="notePdfConsignmentNumber"></p></td>
       <td></td>
       <td>Date: <p id="notePdfDate"></p></td>
     </tr>
@@ -75,8 +84,8 @@
 <div class="deliveryAddressContactWrapper">
   <div class="notePdfDeliveryAddressContainer">
     <p id="notePdfDeliveryAddress">
-      <b>Delivery Address:</b>
-      Address line 1 <br>
+      <b>Delivery Address:<br></b>
+      {{completed_pdfs[5]}} <br>
       Address line 2 <br>
       Address line 3 <br>
       Address line 4
@@ -89,7 +98,7 @@
     <br>
     <br>
     <br>
-    <p id="notePDFContactName">Zoran Dimitrov, <br>+389 (0) 71 443 740 </p>
+    <p id="notePDFContactName">{{completed_pdfs[5]}}, <br>{{completed_pdfs[6]}}</p>
   </div>
 </div>
 <div class="notePdfLine"></div>

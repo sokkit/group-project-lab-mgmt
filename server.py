@@ -150,10 +150,11 @@ def fetchuserinfo():
 
 @app.route("/SelectPDF")
 def selectpdfpage():
+    currentUsername = request.cookies.get('username')
     db = sqlite3.connect("database.db") # Opens the DB
     curs = db.cursor()
-    if session['usertype'] == None: #if user is not an admin it will only display their PDF's
-        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , (currentUsername)) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
+    if session['usertype'] == "Staff": #if user is not an admin it will only display their PDF's
+        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , [currentUsername]) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
         pdfNames = curs.fetchall()
     else:
         curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
@@ -186,26 +187,40 @@ def editorPDF():
     # if request.method == 'POST':
     #     return render_template("HtmlToPdf.html")
 
-@app.route("/PDF")
+@app.route("/PDF", methods = ['POST', 'GET'])
 def HtmlToPdf():
-    rendered = render_template("HtmlToPdf.html")
-    options = {
-        'page-size':'A4',
-        'encoding':'utf-8',
-        'margin-top':'0cm',
-        'margin-bottom':'0cm',
-        'margin-left':'0cm',
-        'margin-right':'0cm'
-    }
+    if request.method == 'POST':
+        ordernumber = request.form.get('ordernumber', default="Error")
+        db = sqlite3.connect("database.db") # Opens the DB
+        curs = db.cursor()
+        curs.execute("SELECT customerName, orderNumber, consignmentNumber, numOfPallets, totalWeight, contactName, contactNumber FROM CompletedPDFs WHERE orderNumber=?;", [request.form.get("ordernumber")])
+        completed_pdfs = curs.fetchall()
+        completed_pdfs = list(completed_pdfs[0])
+        curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
+        order_items = curs.fetchall()
+        curs.close()
+        db.close()
 
-    try:
-        pdf = pdfkit.from_string(rendered, 'out.pdf', configuration=CONFIG, options=options)
-        file = open("out.pdf","wb")
-        file.write(pdf)
-        file.close()
-    except:
-        pass
-    return rendered
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items)
+        options = {
+            'page-size':'A4',
+            'encoding':'utf-8',
+            'margin-top':'0cm',
+            'margin-bottom':'0cm',
+            'margin-left':'0cm',
+            'margin-right':'0cm'
+        }
+
+        try:
+            pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
+            file = open("out.pdf","wb")
+            file.write(pdf)
+            file.close()
+        except:
+            pass
+        return rendered
+    else:
+        return render_template("HTMLtoPDF.html")
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])

@@ -38,6 +38,14 @@ function updateUserRole(){
 
 }
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 function updateUserPassword(){
   var username = document.forms["changePassword"]["selectedUser"].value;
   var password = document.forms["changePassword"]["newPassword2"].value;
@@ -321,7 +329,7 @@ function addOrder() {
   var deliverycontactname = document.forms["EditorForm"]["deliverycontactname"].value;
   var deliverycontactnumber = document.forms["EditorForm"]["deliverycontactnumber"].value;
   var numberofincrements = document.getElementById("NumberOfIncrements").innerHTML;
-  console.log(numberofincrements)
+  // send product details to database
   while (numberofincrements>0) {
     var ordernumber = document.forms["EditorForm"]["ordernumber"].value;
     var Product = document.forms["EditorForm"]["Product"+numberofincrements].value;
@@ -350,7 +358,7 @@ function addOrder() {
     numberofincrements = numberofincrements -1;
     console.log(numberofincrements)
   }
-
+  // send order info to database
   params = 'CustomerName='+CustomerName+'&ordernumber='+ordernumber+'&consignmentnumber='+consignmentnumber+'&numberofpallets='+numberofpallets+'&totalweight='+totalweight+'&deliverycontactname='+deliverycontactname+'&deliverycontactnumber='+deliverycontactnumber;
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", '/CompletedPDFForms', true); // true is asynchronous
@@ -364,6 +372,24 @@ function addOrder() {
     }
   };
   //sends params to server
+  xhttp.send(params);
+
+  // send order number to PDF route
+  sleep(2000)
+  console.log("sending order number")
+  params = 'ordernumber='+ordernumber;
+  console.log("Big Test")
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", '/PDF', true); // true is asynchronous
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.onload = function() {
+    if (xhttp.readyState === 4 && xhttp.status === 200) {
+      console.log(xhttp.responseText);
+      document.getElementById("txt").innerHTML = xhttp.responseText;
+    } else {
+      console.error(xhttp.statusText);
+    }
+  };
   xhttp.send(params);
   return false;
 }
