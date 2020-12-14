@@ -12,8 +12,9 @@
 <div class="PDFcontainer">
   {% for PDF in pdfNames %}
   <div class="PDFcontent">{{PDF[0]}}
+    <input type="hidden" id="PDF{{loop.index}}" value="{{PDF[0]}}">
     <button class="btnPDFedit">Edit</button>
-    <button class="btnPDFcopy">Copy</button>
+    <button class="btnPDFcopy" onclick="createPDF_Copy({{loop.index}})">Copy</button>
   </div><br>
   {% endfor %}
 </div>

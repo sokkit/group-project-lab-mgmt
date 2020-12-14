@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `firstName`	TEXT NOT NULL,
   `surname`	TEXT NOT NULL,
   `public`  TEXT NOT NULL,
-  `username`  TEXT NOT NULL,
+  `username`  TEXT NOT NULL UNIQUE,
   `password`  TEXT,
   `role`  TEXT NOT NULL
 );
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `Orders` (
   `orderID`		INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `userID`	INTEGER NOT NULL,
   `customerID`	INTEGER NOT NULL,
-  `pdfName`	TEXT NOT NULL
+  `pdfName`	TEXT NOT NULL UNIQUE
 );
 
 INSERT INTO 'Orders'('userID', 'customerID', 'pdfName') VALUES (2, 3, "PDF1");
