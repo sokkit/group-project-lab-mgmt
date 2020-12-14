@@ -1,5 +1,9 @@
 console.log("JS Connected!")
 
+function pageReload(){
+  window.location.reload();
+}
+
 function updateUserRole(){
   var username = document.forms["changeRole"]["selectedUser2"].value;
   var valid = 0;//0 represents that data entered is valid

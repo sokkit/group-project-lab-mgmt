@@ -22,7 +22,7 @@
     <label>Name:<input type = "text" name = "customerName"><br></label>
     <label>Address:<input type = "text" name = "address"><br></label>
     <label>Delivery Address:<input type = "text" name = "deliveryAddress"><br></label>
-    <button type = "submit"> Add New Customer </button>
+    <button type = "submit" onclick="setTimeout(pageReload,100);"> Add New Customer </button>
   </form> <br>
 </div>
 <div class="customerAdminPanel" style="top: 70%">
@@ -30,20 +30,20 @@
     <label>Name:<input type = "text" name = "customerName"><br></label>
   </form>
   <form id="updateCustomerName" onsubmit="return updateCustomerName()">
-    <label>New Name. Leave empty if not updating this field:<input type = "text" name = "newName"></label><button type = "submit"> Update Name </button>
+    <label>New Name. Leave empty if not updating this field:<input type = "text" name = "newName"></label><button type = "submit" onclick="setTimeout(pageReload,100);"> Update Name </button>
   </form>
   <form id="updateCustomerAddress" onsubmit="return updateCustomerAddress()">
-    <label>New Address. Leave empty if not updating this field:<input type = "text" name = "newAddress"></label><button type = "submit"> Update Address </button>
+    <label>New Address. Leave empty if not updating this field:<input type = "text" name = "newAddress"></label><button type = "submit" onclick="setTimeout(pageReload,100);"> Update Address </button>
   </form>
   <form id="updateCustomerDelivery" onsubmit="return updateCustomerDelivery()">
-    <label>New Delivery Address. Leave empty if not updating this field:<input type = "text" name = "newDeliveryAddress"></label><button type = "submit"> Update Delivery Address </button>
+    <label>New Delivery Address. Leave empty if not updating this field:<input type = "text" name = "newDeliveryAddress"></label><button type = "submit" onclick="setTimeout(pageReload,100);"> Update Delivery Address </button>
   </form>
 </div>
 
 <div class="customerAdminPanel" style="top: 90%">
   <form id="delCustomer" onsubmit="return delCustomer()">
     <label>Name:<input type = "text" name = "name"><br></label>
-    <button type = "submit"> Remove Customer </button>
+    <button type = "submit" onclick="setTimeout(pageReload,100);"> Remove Customer </button>
   </form>
 </div>
 

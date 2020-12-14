@@ -24,15 +24,15 @@
 </section>
 <div class="customerAdminPanel">
   <form id="addProduct" onsubmit="return addProduct()">
-    <label>Product name:<input type = "text" name = "productName"><br></label>
-    <label>Storage temperature:<input type = "text" name = "productTemp"><br></label>
-    <label>Country of origin<input type = "text" name = "countryOO"><br></label>
-    <button type = "submit"> Add New Product </button>
+    <label>Product name:<input type = "text" name = "productName" required><br></label>
+    <label>Storage temperature:<input type = "text" name = "productTemp" required><br></label>
+    <label>Country of origin<input type = "text" name = "countryOO" required><br></label>
+    <button type = "submit" onclick="setTimeout(pageReload,100);"> Add New Product </button>
   </form> <br>
 
   <form id="delProduct" onsubmit="return delProduct()">
-    <label>ID:<input type = "text" name = "productID"><br></label>
-    <button type = "submit"> Remove Product </button>
+    <label>ID:<input type = "text" name = "productID" required><br></label>
+    <button type = "submit" onclick="setTimeout(pageReload,100);" > Remove Product </button>
   </form>
 
 
