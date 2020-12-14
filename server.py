@@ -2,6 +2,7 @@ import os
 import bcrypt
 from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
+import time
 import pdfkit
 
 DATABASE = 'database.db'
@@ -150,21 +151,24 @@ def fetchuserinfo():
 
 @app.route("/SelectPDF")
 def selectpdfpage():
-    currentUsername = request.cookies.get('username')
     db = sqlite3.connect("database.db") # Opens the DB
     curs = db.cursor()
-    if session['usertype'] == "Staff": #if user is not an admin it will only display their PDF's
-        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , [currentUsername]) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
+    curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+    AllpdfNames = curs.fetchall()
+    AllpdfNames = list(AllpdfNames)
+    if session['usertype'] == None: #if user is not an admin it will only display their PDF's
+        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , (currentUsername)) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
         pdfNames = curs.fetchall()
     else:
         curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
         pdfNames = curs.fetchall()
         # Initializes pdfNames list which will be passed onto selectPDF.html
+    pdfNames = list(pdfNames)
     print(pdfNames)
     curs.close()
     db.close()
     # Closes the file to prevent memory leaks
-    return render_template("selectPDF.html", pdfNames = pdfNames)
+    return render_template("selectPDF.html", pdfNames = pdfNames, pdfNameList = AllpdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
@@ -208,7 +212,10 @@ def HtmlToPdf():
         curs.close()
         db.close()
 
-        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        curtime = str(time.strftime("%d/%m/%y",time.localtime()))
+
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        rendered2 = render_template("HTMLtoPDF2.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
@@ -219,12 +226,17 @@ def HtmlToPdf():
         }
 
         try:
-            pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
-            file = open("out.pdf","wb")
+            pdf = pdfkit.from_string(rendered, "pdfs/"+ordernumber+".pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+".pdf","wb")
+        except Exception as e:
+            print(e)
+        try:
+            pdf = pdfkit.from_string(rendered2, "pdfs/"+ordernumber+"COLLECTION.pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+"COLLECTION.pdf","wb")
             file.write(pdf)
             file.close()
-        except:
-            pass
+        except Exception as e:
+            print(e)
         return rendered
     else:
         return render_template("HTMLtoPDF.html")
@@ -545,6 +557,35 @@ def add_PDFForm():
         finally:
             conn.close()
             return msg
+
+@app.route("/selectPDF/Copy" , methods = ['POST','GET'])
+def copyPDF():
+    if request.method == 'POST':
+        selectedPDFname = request.form.get('selectedPDFname', default="Error")
+        print("Selected PDF: " + selectedPDFname)
+        newPDFname = request.form.get('newPdfName', default='Error')
+        print("new PDF name: " + newPDFname)
+        try:
+            conn = sqlite3.connect(DATABASE)
+            curs = conn.cursor()
+            curs.execute("INSERT INTO Orders (userID, customerID, pdfName)\
+            SELECT Orders.userID, Orders.customerID, ?\
+            FROM Orders\
+            WHERE pdfName=?;",
+            (newPDFname, selectedPDFname,))
+            conn.commit()
+            print("After SQL")
+            msg = "Successfully copied PDF"
+            #INSERT INTO Orders (Orders.userID, Orders.customerID, Orders.pdfName) (SELECT Orders.userID, Orders.customerID, Orders.pdfName FROM Orders WHERE Orders.pdfName = ? AND Orders.pdfName = ?
+        except Exception as e:
+            conn.rollback()
+            msg = "Failed to copy PDF"
+            print(e)
+        finally:
+            curs.close()
+            conn.close()
+            return render_template("selectPDF.html")
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
