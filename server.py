@@ -224,15 +224,13 @@ def HtmlToPdf():
         }
 
         try:
-            pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
-            file = open(orderNumber+".pdf","wb")
-            file.write(pdf)
-            file.close()
+            pdf = pdfkit.from_string(rendered, "pdfs/"+ordernumber+".pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+".pdf","wb")
         except Exception as e:
             print(e)
         try:
-            pdf = pdfkit.from_string(rendered2, ordernumber+"COLLECTION.pdf", configuration=CONFIG, options=options)
-            file = open(orderNumber+"COLLECTION.pdf","wb")
+            pdf = pdfkit.from_string(rendered2, "pdfs/"+ordernumber+"COLLECTION.pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+"COLLECTION.pdf","wb")
             file.write(pdf)
             file.close()
         except Exception as e:
