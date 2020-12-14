@@ -558,5 +558,9 @@ def add_PDFForm():
             conn.close()
             return msg
 
+@app.route("/SelectPDF/Copy")
+def copyPDF():
+    print("test")
+
 if __name__ == "__main__":
 	app.run(debug=True)

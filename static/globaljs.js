@@ -393,3 +393,11 @@ function addOrder() {
   xhttp.send(params);
   return false;
 }
+
+function createPDF_Copy(selectedPDF){
+  var nameOfPDF = "";
+  alert(selectedPDF);
+  var nameOfPDF = document.getElementById("PDF" + selectedPDF).value;
+  alert(nameOfPDF);
+
+}
