@@ -214,8 +214,8 @@ def HtmlToPdf():
 
         curtime = str(time.strftime("%d/%m/%y",time.localtime()))
 
-        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
-        rendered2 = render_template("HTMLtoPDF2.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines, ordernumber=ordernumber)
+        rendered2 = render_template("HTMLtoPDF2.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines, ordernumber=ordernumber)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',

@@ -3,9 +3,9 @@
 
 <h1 class="notePdfTitle">AERONA CLINICAL LIMITED <br><br>COLLECTION NOTE</h1>
 
-<h1 class="notePdfRef">REF: <h1 id="notePdfCustomerName"></h1></h1>
+<h1 class="notePdfRef">REF: {{completed_pdfs[0]}} <h1 id="notePdfCustomerName"></h1></h1>
 
-<h1 class="notePdfOrder">ORDER: <h1 id="notePdfOrderNumber"></h1></h1>
+<h1 class="notePdfOrder">ORDER: {{ordernumber}} <h1 id="notePdfOrderNumber"></h1></h1>
 
 <h1 class="notePdfPage">Page: <h1 id="notePdfPageNo"></h1></h1>
 
@@ -20,7 +20,7 @@
   <table class="notePdfDetails">
     <tr>
       <td>Order No</td>
-      <td id="notePdfOrderNumber">1234</td>
+      <td id="notePdfOrderNumber">{{ordernumber}}</td>
     </tr>
     <tr>
       <td>Date:</td>
@@ -74,7 +74,7 @@
     <tr>
       <td>Transport Company: {{completed_pdfs[2]}}<p id="notePdfConsignmentNumber"></p></td>
       <td></td>
-      <td>Date: <p id="notePdfDate"></p></td>
+      <td>Date: {{curdate}} <p id="notePdfDate"></p></td>
     </tr>
   </table>
 </div>
