@@ -394,10 +394,47 @@ function addOrder() {
   return false;
 }
 
-function createPDF_Copy(selectedPDF){
+function createPDF_Copy(selectedPDF){//takes in value of what row/button is pressed
   var nameOfPDF = "";
-  alert(selectedPDF);
-  var nameOfPDF = document.getElementById("PDF" + selectedPDF).value;
-  alert(nameOfPDF);
+  nameOfPDF = document.getElementById("PDF" + selectedPDF).value;//the "selectedPDF" value is used to create the ID which contains the value we want to get, in this case "pdfName"
+  var txt;
+  var pdfNameList =  "";
+  var pdfNamesList = document.getElementById("AllpdfNamesList").value;//creates variable that has all the pdf names to check for uniqueness
+  var answer = window.confirm("Are you sure you want to create a copy of: " + nameOfPDF + "?");
+
+  if (answer) {
+    var newPDFname = prompt("Please enter a new name for the PDF created (must be unique):" , nameOfPDF + "(copy)");
+    if (newPDFname == null || newPDFname == "" || pdfNamesList.includes(newPDFname)) {
+      txt = "Error with PDF name, please try again";
+      document.getElementById("selectPDFmessage").innerHTML = txt;
+      alert("PDF name was not valid");
+    } else {
+      alert("PDF name was valid");
+      console.log("Creating copy of PDF file: " + nameOfPDF);
+      params = 'newPdfName='+ newPDFname+'&selectedPDFname='+nameOfPDF;
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", '/selectPDF/Copy', true); // true is asynchronous
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.onload = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+          console.log(xhttp.responseText);
+          document.getElementById("txt").innerHTML = xhttp.responseText;
+        } else {
+          console.error(xhttp.statusText);
+        }
+      };
+      xhttp.send(params);
+      txt = "Copy of '" + nameOfPDF + "' successfully sent to server";
+      document.getElementById("selectPDFmessage").innerHTML = txt;
+      return false;
+    }
+
+  }
+  else {
+    txt = "User cancelled creating new PDF";
+    document.getElementById("selectPDFmessage").innerHTML = txt;
+    return null;
+  }
 
 }

@@ -1,14 +1,15 @@
 <script type="text/javascript" src="../static/globaljs.js"></script>
 {%extends 'index.html'%}
-
-
 {%block mainBlock%}
+<meta property="text/html" content="">
+<input type="hidden" id="AllpdfNamesList" value="{{pdfNameList}}">
 <h2>Select PDF</h2>
 <p>Page under construction</p>
 {%if msg%}
 {{ msg }}
 {%endif%}
 
+<p id="txt"></p>
 <div class="PDFcontainer">
   {% for PDF in pdfNames %}
   <div class="PDFcontent">{{PDF[0]}}
@@ -18,6 +19,7 @@
   </div><br>
   {% endfor %}
 </div>
+<p style="float: right" id="selectPDFmessage"></p>
 <div class="PDFredirect">
   <button onclick="location.href = 'http://127.0.0.1:5000/EditorPDF';">New PDF</button>
 </div>
