@@ -2,6 +2,7 @@ import os
 import bcrypt
 from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
+import time
 import pdfkit
 
 DATABASE = 'database.db'
@@ -200,7 +201,11 @@ def HtmlToPdf():
         curs.close()
         db.close()
 
-        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items)
+        curtime = time.strftime("%d/%m/%y",time.localtime())
+        print(curtime)
+        print("tried /shrug")
+
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
@@ -215,7 +220,8 @@ def HtmlToPdf():
             file = open("out.pdf","wb")
             file.write(pdf)
             file.close()
-        except:
+        except Exception as e:
+            print(e)
             pass
         return rendered
     else:
