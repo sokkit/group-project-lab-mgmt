@@ -37,8 +37,19 @@
       <input class="Inputlist" id = "Date" type = "date" name = "date" required placeholder="Enter The Date"> -->
 
       <label for="ConsignmentNumber">Consignment Number</label>
-      <input class="Inputlist" id = "ConsignmentNumber" type = "text" name = "consignmentnumber" required placeholder="Enter The Consignment Number">
-      
+      <input list="Couriers" class="Inputlist" id = "ConsignmentNumber" name = "consignmentnumber" required placeholder="Enter The Consignment Number">
+      <datalist id="Couriers">
+        <option>DHL</option>
+        <option>FedEx</option>
+        <option>DPD</option>
+        <option>Royal Mail</option>
+        <option>UPS</option>
+        <option>Yodel</option>
+        <option>Hermes</option>
+
+      </datalist>
+
+
       <div class="EditorFormContent">
         <!-- Multiple Entry Section -->
         <div class="SingleProduct">
@@ -56,11 +67,13 @@
           </thead>
             <tbody id="MainFormContent">
               <td id= "LeftTableColumn"><!-- product -->
-                <select id = "Product1"  name = "product" required>
+                <input list="ProductList" id = "Product1"  name = "product" required placeholder="Enter The Product" spellcheck="false">
+                <datalist id="ProductList">
                   {% for row in productName %}
                   <option>{{row[0]}}</option>
                   {% endfor %}
-                </select></td>
+                </datalist>
+                </td>
                 <td><!-- Quantity -->
                   <input id = "Quantity1" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td>
                   <td><!-- Batch Number -->
@@ -129,7 +142,7 @@
 
       document.getElementById("NumberOfIncrements").innerHTML = NameIncremental;
 
-      var newrow = '<tr><td id= "LeftTableColumn"><select id = "Product'+NameIncremental+'"  name = "product" required>{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</select></td><td><input id = "Quantity'+NameIncremental+'" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber'+NameIncremental+'" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate'+NameIncremental+'" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature'+NameIncremental+'" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin'+NameIncremental+'" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
+      var newrow = '<tr><td id= "LeftTableColumn"><input list="ProductList" id = "Product'+NameIncremental+'"  name = "product" required placeholder="Enter The Product" spellcheck="false"><datalist id="ProductList">{% for row in productName %}<option>{{row[0]}}</option>{% endfor %}</datalist></td><td><input id = "Quantity'+NameIncremental+'" type = "number" name = "quantity" required placeholder="Enter The Quantity"></td><td><input id = "BatchNumber'+NameIncremental+'" type = "text" name = "batchnumber" required placeholder="Enter The Batch Number"></td><td><input id = "ExpiryDate'+NameIncremental+'" type = "date" name = "expirydate" required placeholder="Enter The Expiry Date"></td><td><select id = "Temperature'+NameIncremental+'" name = "temperature" required><option value="Ambient">Ambient</option><option value="Coldchain">Cold chain</option></select></td><td id="RightTableColumn"><input id = "Origin'+NameIncremental+'" type = "text" name = "origin" required placeholder="Enter The Origin Location"></td></tr>'
 
       $("#SingleProductTable > tbody").append(newrow);
     });
