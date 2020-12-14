@@ -2,8 +2,8 @@ import os
 import bcrypt
 from flask import Flask, redirect, request, render_template, make_response, escape, session
 import sqlite3
+import time
 import pdfkit
-import tempfile
 
 DATABASE = 'database.db'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -151,24 +151,24 @@ def fetchuserinfo():
 
 @app.route("/SelectPDF")
 def selectpdfpage():
-    if session['usertype'] == None:
-        return render_template('login.html', msg='Log in to use site')
+    db = sqlite3.connect("database.db") # Opens the DB
+    curs = db.cursor()
+    curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+    AllpdfNames = curs.fetchall()
+    AllpdfNames = list(AllpdfNames)
+    if session['usertype'] == None: #if user is not an admin it will only display their PDF's
+        curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , (currentUsername)) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
+        pdfNames = curs.fetchall()
     else:
-        currentUsername = request.cookies.get('username')
-        db = sqlite3.connect("database.db") # Opens the DB
-        curs = db.cursor()
-        if session['usertype'] == "Staff": #if user is not an admin it will only display their PDF's
-            curs.execute("SELECT pdfName FROM Orders WHERE Orders.userID IN (SELECT userID from Users WHERE Users.username = ?)" , [currentUsername]) # Executes the SQL query // we need "currentUsername" to be the username of the user currently logged in
-            pdfNames = curs.fetchall()
-        else:
-            curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
-            pdfNames = curs.fetchall()
-            # Initializes pdfNames list which will be passed onto selectPDF.html
-        print(pdfNames)
-        curs.close()
-        db.close()
-        # Closes the file to prevent memory leaks
-        return render_template("selectPDF.html", pdfNames = pdfNames)
+        curs.execute("SELECT pdfName FROM Orders") # Executes the SQL query
+        pdfNames = curs.fetchall()
+        # Initializes pdfNames list which will be passed onto selectPDF.html
+    pdfNames = list(pdfNames)
+    print(pdfNames)
+    curs.close()
+    db.close()
+    # Closes the file to prevent memory leaks
+    return render_template("selectPDF.html", pdfNames = pdfNames, pdfNameList = AllpdfNames)
 
 @app.route("/EditorPDF", methods = ['POST','GET'] )
 def editorPDF():
@@ -192,7 +192,7 @@ def editorPDF():
     #     return render_template("HtmlToPdf.html")
 
 @app.route("/PDF", methods = ['POST', 'GET'])
-def render_pdf_custom_header():
+def HtmlToPdf():
     if request.method == 'POST':
         ordernumber = request.form.get('ordernumber', default="Error")
         db = sqlite3.connect("database.db") # Opens the DB
@@ -212,155 +212,34 @@ def render_pdf_custom_header():
         curs.close()
         db.close()
 
-        main_content = render_template('HTMLtoPDF.html', completed_pdfs = completed_pdfs, order_items = order_items, company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        curtime = str(time.strftime("%d/%m/%y",time.localtime()))
+
+        rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
+        rendered2 = render_template("HTMLtoPDF2.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
         options = {
             'page-size':'A4',
             'encoding':'utf-8',
-            'margin-top':'7cm',
-            'margin-bottom':'7cm',
+            'margin-top':'0cm',
+            'margin-bottom':'0cm',
             'margin-left':'0cm',
-            'header-spacing': '5',
-            'enable-local-file-access':""
+            'margin-right':'0cm'
         }
-
-
-
-        add_pdf_header(options)
-        add_pdf_footer(options)
 
         try:
-            pdf = pdfkit.from_string(main_content, False, options=options, configuration=CONFIG)
-        finally:
-            os.remove(options['--header-html'])
-            os.remove(options['--footer-html'])
-
-        response = build_response(pdf)
-        return response
-
-def add_pdf_header(options):
-    if request.method == 'POST':
-        ordernumber = request.form.get('ordernumber', default="Error")
-        db = sqlite3.connect("database.db") # Opens the DB
-        curs = db.cursor()
-        curs.execute("SELECT customerName, orderNumber, consignmentNumber, numOfPallets, totalWeight, contactName, contactNumber FROM CompletedPDFs WHERE orderNumber=?;", [request.form.get("ordernumber")])
-        completed_pdfs = curs.fetchall()
-        completed_pdfs = list(completed_pdfs[0])
-        curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
-        order_items = curs.fetchall()
-        curs.execute("SELECT address, deliveryAddress FROM Customers WHERE customerName=?;", [completed_pdfs[0]])
-        addresses = curs.fetchall()
-        addresses = list(addresses[0])
-        company_address = addresses[0]
-        company_address_lines = company_address.split(",")
-        delivery_address = addresses[1]
-        delivery_address_lines = delivery_address.split(",")
-        curs.close()
-        db.close()
-        header_footer_options = {
-            'page-size':'A4',
-            'encoding':'utf-8',
-            'margin-top':'2cm',
-            'margin-bottom':'2cm',
-            'margin-left':'0cm',
-            'enable-local-file-access':""
-        }
-        with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as header:
-            options['--header-html'] = header.name
-            header.write(
-                render_template('header.html', options = header_footer_options, completed_pdfs = completed_pdfs, order_items = order_items, company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines).encode('utf-8')
-            )
-        return
-
-def add_pdf_footer(options):
-    if request.method == 'POST':
-        ordernumber = request.form.get('ordernumber', default="Error")
-        db = sqlite3.connect("database.db") # Opens the DB
-        curs = db.cursor()
-        curs.execute("SELECT customerName, orderNumber, consignmentNumber, numOfPallets, totalWeight, contactName, contactNumber FROM CompletedPDFs WHERE orderNumber=?;", [request.form.get("ordernumber")])
-        completed_pdfs = curs.fetchall()
-        completed_pdfs = list(completed_pdfs[0])
-        curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
-        order_items = curs.fetchall()
-        curs.execute("SELECT address, deliveryAddress FROM Customers WHERE customerName=?;", [completed_pdfs[0]])
-        addresses = curs.fetchall()
-        addresses = list(addresses[0])
-        company_address = addresses[0]
-        company_address_lines = company_address.split(",")
-        delivery_address = addresses[1]
-        delivery_address_lines = delivery_address.split(",")
-        curs.close()
-        db.close()
-        header_footer_options = {
-            'page-size':'A4',
-            'encoding':'utf-8',
-            'margin-top':'2cm',
-            'margin-bottom':'2cm',
-            'margin-left':'0cm',
-            'enable-local-file-access':""
-        }
-        with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as footer:
-            options['--footer-html'] = footer.name
-            footer.write(
-                render_template('footer.html', options = header_footer_options, completed_pdfs = completed_pdfs, order_items = order_items,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines).encode('utf-8')
-            )
-        return
-
-def build_response(pdf):
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    filename = 'pdf-from-html.pdf'
-    response.headers['Content-Disposition'] = ('attachment; filename=' + filename)
-    file = open("pdf-from-html.pdf","wb")
-    file.write(pdf)
-    file.close()
-    return response
-
-# def HtmlToPdf():
-#     if request.method == 'POST':
-#         ordernumber = request.form.get('ordernumber', default="Error")
-#         db = sqlite3.connect("database.db") # Opens the DB
-#         curs = db.cursor()
-#         curs.execute("SELECT customerName, orderNumber, consignmentNumber, numOfPallets, totalWeight, contactName, contactNumber FROM CompletedPDFs WHERE orderNumber=?;", [request.form.get("ordernumber")])
-#         completed_pdfs = curs.fetchall()
-#         completed_pdfs = list(completed_pdfs[0])
-#         curs.execute("SELECT productName, quantity, batchNumber, expiryDate, temperature, origin FROM OrderItems WHERE orderID=?;", [request.form.get("ordernumber")])
-#         order_items = curs.fetchall()
-#         curs.execute("SELECT address, deliveryAddress FROM Customers WHERE customerName=?;", [completed_pdfs[0]])
-#         addresses = curs.fetchall()
-#         addresses = list(addresses[0])
-#         company_address = addresses[0]
-#         company_address_lines = company_address.split(",")
-#         delivery_address = addresses[1]
-#         delivery_address_lines = delivery_address.split(",")
-#         curs.close()
-#         db.close()
-#
-#         curtime = str(time.strftime("%d/%m/%y",time.localtime()))
-#         print(curtime)
-#         print("tried /shrug")
-#
-#         rendered = render_template("HTMLtoPDF.html", completed_pdfs = completed_pdfs, order_items = order_items, curdate=curtime,  company_address_lines = company_address_lines, delivery_address_lines = delivery_address_lines)
-#         options = {
-#             'page-size':'A4',
-#             'encoding':'utf-8',
-#             'margin-top':'0cm',
-#             'margin-bottom':'0cm',
-#             'margin-left':'0cm',
-#             'margin-right':'0cm'
-#         }
-#
-#         try:
-#             pdf = pdfkit.from_string(rendered, ordernumber+".pdf", configuration=CONFIG, options=options)
-#             file = open("out.pdf","wb")
-#             file.write(pdf)
-#             file.close()
-#         except Exception as e:
-#             print(e)
-#             pass
-#         return rendered
-#     else:
-#         return render_template("HTMLtoPDF.html")
-
+            pdf = pdfkit.from_string(rendered, "pdfs/"+ordernumber+".pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+".pdf","wb")
+        except Exception as e:
+            print(e)
+        try:
+            pdf = pdfkit.from_string(rendered2, "pdfs/"+ordernumber+"COLLECTION.pdf", configuration=CONFIG, options=options)
+            file = open("pdfs/"+orderNumber+"COLLECTION.pdf","wb")
+            file.write(pdf)
+            file.close()
+        except Exception as e:
+            print(e)
+        return rendered
+    else:
+        return render_template("HTMLtoPDF.html")
 
 
 @app.route("/Products", methods = ['POST','GET','DELETE'])
@@ -678,6 +557,34 @@ def add_PDFForm():
         finally:
             conn.close()
             return msg
+
+@app.route("/selectPDF/Copy" , methods = ['POST','GET'])
+def copyPDF():
+    if request.method == 'POST':
+        selectedPDFname = request.form.get('selectedPDFname', default="Error")
+        print("Selected PDF: " + selectedPDFname)
+        newPDFname = request.form.get('newPdfName', default='Error')
+        print("new PDF name: " + newPDFname)
+        try:
+            conn = sqlite3.connect(DATABASE)
+            curs = conn.cursor()
+            curs.execute("INSERT INTO Orders (userID, customerID, pdfName)\
+            SELECT Orders.userID, Orders.customerID, ?\
+            FROM Orders\
+            WHERE pdfName=?;",
+            (newPDFname, selectedPDFname,))
+            conn.commit()
+            print("After SQL")
+            msg = "Successfully copied PDF"
+            #INSERT INTO Orders (Orders.userID, Orders.customerID, Orders.pdfName) (SELECT Orders.userID, Orders.customerID, Orders.pdfName FROM Orders WHERE Orders.pdfName = ? AND Orders.pdfName = ?
+        except Exception as e:
+            conn.rollback()
+            msg = "Failed to copy PDF"
+            print(e)
+        finally:
+            curs.close()
+            conn.close()
+            return render_template("selectPDF.html")
 
 
 if __name__ == "__main__":
