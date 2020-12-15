@@ -102,7 +102,7 @@ def checkCredentials(uName, pw):
 
 @app.route("/Index")
 def index():
-    return render_template('index.html')
+    return render_template('index.html', msg="Welcome")
 
 @app.route("/Users", methods=['GET'])
 def users():
@@ -584,7 +584,7 @@ def copyPDF():
         finally:
             curs.close()
             conn.close()
-            return render_template("selectPDF.html")
+            return msg
 
 
 if __name__ == "__main__":
